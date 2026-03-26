@@ -1,0 +1,4 @@
+[04-Aug-2023 08:23:16 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home/websitet/mr247bet.com/news/wp-content/themes/viral-pro/index.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/websitet/mr247bet.com/news/wp-content/themes/viral-pro/index.php on line 7

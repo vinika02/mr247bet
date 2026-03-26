@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>.a{fill:none;}</style>
+  </defs>
+  <g transform="matrix(1, 0.002799, 0, 1, 0, -0.03355)" style="">
+    <rect class="a" width="24" height="24" transform="translate(0 0)"/>
+    <path d="M23.75,22.538l-7.714-7.714a.77.77,0,0,0-.116-.076,9.013,9.013,0,1,0-1.173,1.173.92.92,0,0,0,.076.115l7.714,7.714a.857.857,0,0,0,1.213-1.212M9,16.287A7.286,7.286,0,1,1,16.286,9,7.294,7.294,0,0,1,9,16.287" style="fill: rgb(255, 253, 253);"/>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>.a{fill:none;}</style>
+  </defs>
+  <g transform="translate(20747 7426)">
+    <rect class="a" width="24" height="24" transform="translate(-20747 -7426)"/>
+    <path d="M0,13.227H.027A2.766,2.766,0,0,1,0,12.848V2.667A2.666,2.666,0,0,1,2.667,0H21.333A2.666,2.666,0,0,1,24,2.667V12.848a2.666,2.666,0,0,1-2.667,2.667H6.46L0,21.333Z" transform="translate(-20747 -7425)" style="fill: rgb(255, 255, 255);"/>
+  </g>
+</svg>
