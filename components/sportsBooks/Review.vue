@@ -6,7 +6,7 @@ let changePosition = ref(false)
 
 // Handling classes color depending on sportsbookRating prop  
 let rankCheck = computed(() => {
-    return post.acf.sportsbookRating > 3.5 ? true : false
+    return post?.acf.sportsbookRating > 3.5 ? true : false
 })
 
 onMounted(() => {
@@ -42,7 +42,7 @@ onMounted(() => {
                     <div class="review-main">
                         <img :src="post._embedded['wp:featuredmedia'][0].source_url" class="review-logo img-thumbnail"
                             alt="">
-                        <h2 class="review-title">{{ post.acf.sportsbookName }}</h2>
+                        <h2 class="review-title">{{ post?.acf.sportsbookName }}</h2>
                     </div>
 
 
@@ -50,7 +50,7 @@ onMounted(() => {
                     <div class="rating-intro">
                         <div class="review-rating mt-5">
                             <div class="rating-circle">
-                                <span class="rating-number">{{ post.acf.sportsbookRating }}</span>
+                                <span class="rating-number">{{ post?.acf.sportsbookRating }}</span>
                                 <div :class="[rankCheck ? 'ratingGreen' : 'rating-bg-rank']"></div>
                             </div>
                             <div class="rating-info">
@@ -102,13 +102,13 @@ onMounted(() => {
                         <div class="col-md-6">
                             <h5><i class="bi bi-hand-thumbs-up"></i>What we like</h5>
                             <ul>
-                                <li v-for="pros in post.acf.sportsbookPros">{{ pros }}</li>
+                                <li v-for="pros in post?.acf.sportsbookPros">{{ pros }}</li>
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <h5><i class="bi bi-hand-thumbs-down"></i>What we don't like</h5>
                             <ul>
-                                <li v-for="cons in post.acf.sportsbookCons">{{ cons }}</li>
+                                <li v-for="cons in post?.acf.sportsbookCons">{{ cons }}</li>
                             </ul>
                         </div>
                     </div>
@@ -121,7 +121,7 @@ onMounted(() => {
                         <div class="rating-intro">
                             <div class="review-rating">
                                 <div class="rating-circle">
-                                    <span class="rating-number">{{ post.acf.sportsbookRating }}</span>
+                                    <span class="rating-number">{{ post?.acf.sportsbookRating }}</span>
                                     <div :class="[rankCheck ? 'ratingGreen' : 'rating-bg-rank']"></div>
                                 </div>
                                 <div class="rating-info">
@@ -144,27 +144,27 @@ onMounted(() => {
 
                         <div class="review-visit">
 
-                            <NuxtLink :to="post.acf.affiliateLink ? post.acf.affiliateLink : post.acf.sportsbookUrl"
-                                target="_blank" :rel="post.acf.affiliateLink ? 'noopener' : 'nofollow noopener'">
+                            <NuxtLink v-if="post?.acf.affiliateLink" :to="post?.acf.affiliateLink ? post?.acf.affiliateLink : post?.acf.sportsbookUrl"
+                                target="_blank" :rel="post?.acf.affiliateLink ? 'noopener' : 'nofollow noopener'">
                                 <button type="button" class="primary-btn">
                                     Visit Sportsbook
                                 </button>
                             </NuxtLink>
 
-                            <NuxtLink :to="post.acf.affiliateTerms ? post.acf.affiliateTerms : post.acf.sportsbookTerms"
-                                target="_blank" :rel="post.acf.affiliateTerms ? 'noopener' : 'nofollow noopener'">T&C Apply
+                            <NuxtLink v-if="post?.acf.affiliateTerms" :to="post?.acf.affiliateTerms ? post?.acf.affiliateTerms : post?.acf.sportsbookTerms"
+                                target="_blank" :rel="post?.acf.affiliateTerms ? 'noopener' : 'nofollow noopener'">T&C Apply
                             </NuxtLink>
                         </div>
 
                         <div class="review-bonus">
                             <p>Welcome Bonus</p>
-                            <h4>{{ post.acf.sportsbookBonusTitle }}</h4>
-                            <NuxtLink :to="post.acf.affiliateBonus ? post.acf.affiliateBonus : post.acf.sportsbookBonusUrl"
-                                target="_blank" :rel="post.acf.affiliateBonus ? 'noopener' : 'nofollow noopener'">
+                            <h4>{{ post?.acf.sportsbookBonusTitle }}</h4>
+                            <NuxtLink v-if="post?.acf.affiliateBonus" :to="post?.acf.affiliateBonus ? post?.acf.affiliateBonus : post?.acf.sportsbookBonusUrl"
+                                target="_blank" :rel="post?.acf.affiliateBonus ? 'noopener' : 'nofollow noopener'">
                                 <button type="button" class="primary-btn">Claim offer and play</button>
                             </NuxtLink>
-                            <NuxtLink :to="post.acf.affiliateTerms ? post.acf.affiliateTerms : post.acf.sportsbookTerms"
-                                target="_blank" :rel="post.acf.affiliateTerms ? 'noopener' : 'nofollow noopener'"> Full
+                            <NuxtLink v-if="post?.acf.affiliateTerms" :to="post?.acf.affiliateTerms ? post?.acf.affiliateTerms : post?.acf.sportsbookTerms"
+                                target="_blank" :rel="post?.acf.affiliateTerms ? 'noopener' : 'nofollow noopener'"> Full
                                 terms apply</NuxtLink>
                         </div>
 
@@ -188,28 +188,28 @@ onMounted(() => {
                         <SportsBooksReviewTabsNav />
                         <!-- Tab Content -->
                         <div class="tab-content" id="myTabContent">
-                            <SportsBooksReviewTabGeneralPane :website="post.acf.sportsbookUrl"
-                                :languages="post.acf.sportsbookLang" :established="post.acf.sportsbookEst"
-                                :company="post.acf.sportsbookCompany" :licenses="post.acf.sportsbookLicences"
-                                :affiliateProgram="post.acf.sportsbookAffiliate"
-                                :acceptedCountries="post.acf.sportsbookAccCountries"
-                                :restrictedCountries="post.acf.sportsbookResCountries"
-                                :sportsbookType="post.acf.sportsbookType" :affiliateLink="post?.acf.affiliateLink" />
+                            <SportsBooksReviewTabGeneralPane :website="post?.acf.sportsbookUrl"
+                                :languages="post?.acf.sportsbookLang" :established="post?.acf.sportsbookEst"
+                                :company="post?.acf.sportsbookCompany" :licenses="post?.acf.sportsbookLicences"
+                                :affiliateProgram="post?.acf.sportsbookAffiliate"
+                                :acceptedCountries="post?.acf.sportsbookAccCountries"
+                                :restrictedCountries="post?.acf.sportsbookResCountries"
+                                :sportsbookType="post?.acf.sportsbookType" :affiliateLink="post?.acf.affiliateLink" />
 
-                            <SportsBooksReviewTabPaymentsPane :depositMethods="post.acf.sportsbookDepositMethods"
-                                :currencies="post.acf.sportsbookCurrencies"
-                                :withdrawalMethods="post.acf.sportsbookWithdrawalMethods"
-                                :withdrawalTimes="post.acf.sportsbookWithdrawalTimes"
-                                :withdrawalLimit="post.acf.sportsbookWithdrawalLimit" />
+                            <SportsBooksReviewTabPaymentsPane :depositMethods="post?.acf.sportsbookDepositMethods"
+                                :currencies="post?.acf.sportsbookCurrencies"
+                                :withdrawalMethods="post?.acf.sportsbookWithdrawalMethods"
+                                :withdrawalTimes="post?.acf.sportsbookWithdrawalTimes"
+                                :withdrawalLimit="post?.acf.sportsbookWithdrawalLimit" />
 
-                            <SportsBooksReviewTabGamesPane :gameProviders="post.acf.sportsbookProviders" />
+                            <SportsBooksReviewTabGamesPane :gameProviders="post?.acf.sportsbookProviders" />
 
-                            <SportsBooksReviewTabResponsibleGamingPane :depositTool="post.acf.sportsbookDepositTool"
-                                :wagerTool="post.acf.sportsbookWagerLimit" :lossLimit="post.acf.sportsbookLossLimit"
-                                :timeLimit="post.acf.sportsbookTimeLimit" :selfExclusion="post.acf.sportsbookSelfExclusion"
-                                :coolOff="post.acf.sportsbookCoolOff" :realityCheck="post.acf.sportsbookRealityCheck"
-                                :selfAssessment="post.acf.sportsbookSelfAssessment"
-                                :withdrawalLock="post.acf.sportsbookWithdrawalLock" />
+                            <SportsBooksReviewTabResponsibleGamingPane :depositTool="post?.acf.sportsbookDepositTool"
+                                :wagerTool="post?.acf.sportsbookWagerLimit" :lossLimit="post?.acf.sportsbookLossLimit"
+                                :timeLimit="post?.acf.sportsbookTimeLimit" :selfExclusion="post?.acf.sportsbookSelfExclusion"
+                                :coolOff="post?.acf.sportsbookCoolOff" :realityCheck="post?.acf.sportsbookRealityCheck"
+                                :selfAssessment="post?.acf.sportsbookSelfAssessment"
+                                :withdrawalLock="post?.acf.sportsbookWithdrawalLock" />
 
                         </div>
                     </div>

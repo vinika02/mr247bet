@@ -5,23 +5,23 @@ const { item } = defineProps(['item'])
 <template>
     <div class="card-wrapper">
         <div class="card">
-            <NuxtLink :to="`/casinos/all/${item?.slug}`" class="info"><i class="bi bi-info"></i></NuxtLink>
+            <NuxtLink  v-if="item?.slug"  :to="`/casinos/all/${item?.slug}`" class="info"><i class="bi bi-info"></i></NuxtLink>
             <div class="img-wrapper">
-                <NuxtLink :to="`/casinos/all/${item?.slug}`">
+                <NuxtLink v-if="item?.slug"  :to="`/casinos/all/${item?.slug}`">
                     <img :src="item?._embedded['wp:featuredmedia'][0].source_url" class="card-img-top"
-                        :alt="`${item.acf.casinoName.replace(/\s+/g, '-')}-image`"
-                        :title="`Image of ${item.acf.casinoName} brand`" loading="eager" width="120" height="80">
+                        :alt="`${item?.acf.casinoName.replace(/\s+/g, '-')}-image`"
+                        :title="`Image of ${item?.acf.casinoName} brand`" loading="eager" width="120" height="80">
                 </NuxtLink>
             </div>
             <div class="card-body">
                 <div class="rating">
                     <i class="bi bi-star-fill"></i>
-                    <p>{{ item.acf.casinoRating }}</p>
+                    <p>{{ item?.acf.casinoRating }}</p>
                 </div>
-                <h4 class="card-title">{{ item.acf.casinoName }}</h4>
+                <h4 class="card-title">{{ item?.acf.casinoName }}</h4>
                 <div class="text-center">
-                    <NuxtLink class="primary-btn" :to="item.acf.affiliateLink ? item.acf.affiliateLink : item.acf.casinoUrl"
-                        target="_blank" :rel="item.acf.affiliateLink ? 'noopener' : 'nofollow noopener'">
+                    <NuxtLink v-if="item?.acf.affiliateLink" class="primary-btn" :to="item?.acf.affiliateLink ? item?.acf.affiliateLink : item?.acf.casinoUrl"
+                        target="_blank" :rel="item?.acf.affiliateLink ? 'noopener' : 'nofollow noopener'">
                         Play
                     </NuxtLink>
                 </div>

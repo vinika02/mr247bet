@@ -3,7 +3,7 @@ const { data: featuredCasinos } = await useFetch(() => '/AWS/posts?perPage=20&pa
     {
         transform: (featuredCasinos) =>
             featuredCasinos.filter((casino) =>
-                casino.acf.casinoSubcategory.includes('Featured')
+                casino?.acf.casinoSubcategory.includes('Featured')
             )
     }
 )

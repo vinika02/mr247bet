@@ -6,7 +6,7 @@ let changePosition = ref(false)
 
 // Handling classes color depending on casinoRating prop  
 let rankCheck = computed(() => {
-    return post.acf.casinoRating > 3.5 ? true : false
+    return post?.acf.casinoRating > 3.5 ? true : false
 })
 
 onMounted(() => {
@@ -40,13 +40,13 @@ onMounted(() => {
                     <div class="review-main">
                         <img :src="post?._embedded['wp:featuredmedia'][0].source_url" class="review-logo img-thumbnail"
                             alt="">
-                        <h2 class="review-title">{{ post.acf.casinoName }}</h2>
+                        <h2 class="review-title">{{ post?.acf.casinoName }}</h2>
                     </div>
 
                     <div class="rating-intro">
                         <div class="review-rating mt-5">
                             <div class="rating-circle">
-                                <span class="rating-number">{{ post.acf.casinoRating }}</span>
+                                <span class="rating-number">{{ post?.acf.casinoRating }}</span>
                                 <div :class="[rankCheck ? 'ratingGreen' : 'rating-bg-rank']"></div>
                             </div>
                             <div class="rating-info">
@@ -90,13 +90,13 @@ onMounted(() => {
                         <div class="col-md-6">
                             <h5><i class="bi bi-hand-thumbs-up"></i>What we like</h5>
                             <ul>
-                                <li v-for="pros in post.acf.casinoPros">{{ pros }}</li>
+                                <li v-for="pros in post?.acf.casinoPros">{{ pros }}</li>
                             </ul>
                         </div>
                         <div class="col-md-6">
                             <h5><i class="bi bi-hand-thumbs-down"></i>What we don't like</h5>
                             <ul>
-                                <li v-for="cons in post.acf.casinoCons">{{ cons }}</li>
+                                <li v-for="cons in post?.acf.casinoCons">{{ cons }}</li>
                             </ul>
                         </div>
                     </div>
@@ -109,7 +109,7 @@ onMounted(() => {
                         <div class="rating-intro">
                             <div class="review-rating">
                                 <div class="rating-circle">
-                                    <span class="rating-number">{{ post.acf.casinoRating }}</span>
+                                    <span class="rating-number">{{ post?.acf.casinoRating }}</span>
                                     <div :class="[rankCheck ? 'ratingGreen' : 'rating-bg-rank']">
                                     </div>
                                 </div>
@@ -122,26 +122,26 @@ onMounted(() => {
 
                         <div class="review-visit">
 
-                            <NuxtLink :to="post.acf.affiliateLink ? post.acf.affiliateLink : post.acf.casinoUrl"
-                                target="_blank" :rel="post.acf.affiliateLink ? 'noopener' : 'nofollow noopener'">
+                            <NuxtLink  v-if="post?.acf.affiliateLink"  :to="post?.acf.affiliateLink ? post?.acf.affiliateLink : post?.acf.casinoUrl"
+                                target="_blank" :rel="post?.acf.affiliateLink ? 'noopener' : 'nofollow noopener'">
                                 <button type="button" class="primary-btn">Visit
                                     Casino</button>
                             </NuxtLink>
 
-                            <NuxtLink :to="post.acf.affiliateTerms ? post.acf.affiliateTerms : post.acf.casinoTerms"
-                                target="_blank" :rel="post.acf.affiliateTerms ? 'noopener' : 'nofollow noopener'">T&C Apply
+                            <NuxtLink v-if="post?.acf.affiliateTerms" :to="post?.acf.affiliateTerms ? post?.acf.affiliateTerms : post?.acf.casinoTerms"
+                                target="_blank" :rel="post?.acf.affiliateTerms ? 'noopener' : 'nofollow noopener'">T&C Apply
                             </NuxtLink>
                         </div>
 
                         <div class="review-bonus">
                             <p>Welcome Bonus</p>
-                            <h4>{{ post.acf.casinoBonusTitle }}</h4>
-                            <NuxtLink :to="post.acf.affiliateBonus ? post.acf.affiliateBonus : post.acf.casinoBonusUrl"
-                                target="_blank" :rel="post.acf.affiliateBonus ? 'noopener' : 'nofollow noopener'">
+                            <h4>{{ post?.acf.casinoBonusTitle }}</h4>
+                            <NuxtLink v-if="post?.acf.affiliateBonus" :to="post?.acf.affiliateBonus ? post?.acf.affiliateBonus : post?.acf.casinoBonusUrl"
+                                target="_blank" :rel="post?.acf.affiliateBonus ? 'noopener' : 'nofollow noopener'">
                                 <button type="button" class="primary-btn">Claim offer and play</button>
                             </NuxtLink>
-                            <NuxtLink :to="post.acf.affiliateTerms ? post.acf.affiliateTerms : post.acf.casinoTerms"
-                                target="_blank" :rel="post.acf.affiliateTerms ? 'noopener' : 'nofollow noopener'">Full terms
+                            <NuxtLink v-if="post?.acf.affiliateTerms" :to="post?.acf.affiliateTerms ? post?.acf.affiliateTerms : post?.acf.casinoTerms"
+                                target="_blank" :rel="post?.acf.affiliateTerms ? 'noopener' : 'nofollow noopener'">Full terms
                                 apply</NuxtLink>
                         </div>
 
@@ -165,27 +165,27 @@ onMounted(() => {
                         <CasinosReviewTabsNav />
 
                         <div class="tab-content" id="myTabContent">
-                            <CasinosReviewTabGeneralPane :website="post.acf.casinoUrl" :languages="post.acf.casinoLang"
-                                :established="post.acf.casinoEst" :company="post.acf.casinoCompany"
-                                :licenses="post.acf.casinoLicences" :affiliateProgram="post.acf.casinoAffiliate"
-                                :acceptedCountries="post.acf.casinoAccCountries"
-                                :restrictedCountries="post.acf.casinoResCountries" :casinoType="post.acf.casinoType"
+                            <CasinosReviewTabGeneralPane :website="post?.acf.casinoUrl" :languages="post?.acf.casinoLang"
+                                :established="post?.acf.casinoEst" :company="post?.acf.casinoCompany"
+                                :licenses="post?.acf.casinoLicences" :affiliateProgram="post?.acf.casinoAffiliate"
+                                :acceptedCountries="post?.acf.casinoAccCountries"
+                                :restrictedCountries="post?.acf.casinoResCountries" :casinoType="post?.acf.casinoType"
                                 :affiliateLink="post?.acf.affiliateLink" />
 
-                            <CasinosReviewTabPaymentsPane :depositMethods="post.acf.casinoDepositMethods"
-                                :currencies="post.acf.casinoCurrencies"
-                                :withdrawalMethods="post.acf.casinoWithdrawalMethods"
-                                :withdrawalTimes="post.acf.casinoWithdrawalTimes"
-                                :withdrawalLimit="post.acf.casinoWithdrawalLimit" />
+                            <CasinosReviewTabPaymentsPane :depositMethods="post?.acf.casinoDepositMethods"
+                                :currencies="post?.acf.casinoCurrencies"
+                                :withdrawalMethods="post?.acf.casinoWithdrawalMethods"
+                                :withdrawalTimes="post?.acf.casinoWithdrawalTimes"
+                                :withdrawalLimit="post?.acf.casinoWithdrawalLimit" />
 
-                            <CasinosReviewTabGamesPane :gameProviders="post.acf.casinoGameProviders" />
+                            <CasinosReviewTabGamesPane :gameProviders="post?.acf.casinoGameProviders" />
 
-                            <CasinosReviewTabResponsibleGamingPane :depositTool="post.acf.casinoDepositTool"
-                                :wagerTool="post.acf.casinoWagerLimit" :lossLimit="post.acf.casinoLossLimit"
-                                :timeLimit="post.acf.casinoTimeLimit" :selfExclusion="post.acf.casinoSelfExclusion"
-                                :coolOff="post.acf.casinoCoolOff" :realityCheck="post.acf.casinoRealityCheck"
-                                :selfAssessment="post.acf.casinoSelfAssessment"
-                                :withdrawalLock="post.acf.casinoWithdrawalLock" />
+                            <CasinosReviewTabResponsibleGamingPane :depositTool="post?.acf.casinoDepositTool"
+                                :wagerTool="post?.acf.casinoWagerLimit" :lossLimit="post?.acf.casinoLossLimit"
+                                :timeLimit="post?.acf.casinoTimeLimit" :selfExclusion="post?.acf.casinoSelfExclusion"
+                                :coolOff="post?.acf.casinoCoolOff" :realityCheck="post?.acf.casinoRealityCheck"
+                                :selfAssessment="post?.acf.casinoSelfAssessment"
+                                :withdrawalLock="post?.acf.casinoWithdrawalLock" />
 
                         </div>
                     </div>

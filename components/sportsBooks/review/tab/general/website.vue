@@ -9,7 +9,7 @@ const { website, affiliateLink } = defineProps(['website', 'affiliateLink'])
             <span>Website</span>
         </p>
         <div class="details-text">
-            <NuxtLink :to="affiliateLink ? affiliateLink : website" target="_blank"
+            <NuxtLink v-if="affiliateLink" :to="affiliateLink ? affiliateLink : website" target="_blank"
                 :rel="affiliateLink ? 'noopener' : 'nofollow noopener'">{{ website }}</NuxtLink>
         </div>
     </div>

@@ -13,7 +13,7 @@ if (items.value === undefined) {
         {
             transform: (featuredCasinos) =>
                 featuredCasinos.filter((casino) =>
-                    casino.acf.casinoSubcategory.includes('Featured')
+                    casino?.acf.casinoSubcategory.includes('Featured')
                 )
         }
     )

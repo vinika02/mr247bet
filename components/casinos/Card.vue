@@ -5,9 +5,9 @@ const { imgUrl, name, size, casinoRating, casinoTerms, casinoUrl, fullPath, slug
 <template>
     <div :class="`col-xl-${size ? size : '2'} col-md-6 mt-4`">
         <div class="category-card">
-            <NuxtLink :to="`${fullPath}/${slug}`" class="info"><i class="bi bi-info"></i></NuxtLink>
+            <NuxtLink v-if="slug"  :to="`${fullPath}/${slug}`" class="info"><i class="bi bi-info"></i></NuxtLink>
             <div class="img-wrapper">
-                <NuxtLink :to="`${fullPath}/${slug}`"> <img :src=imgUrl class="card-img-top"
+                <NuxtLink v-if="slug" :to="`${fullPath}/${slug}`"> <img :src=imgUrl class="card-img-top"
                         :alt="`${name.replace(/\s+/g, '-')}-image`"></NuxtLink>
             </div>
             <div class="card-body">
@@ -17,14 +17,14 @@ const { imgUrl, name, size, casinoRating, casinoTerms, casinoUrl, fullPath, slug
                 </div>
                 <h5 class="card-title">{{ name }}</h5>
                 <div class="text-center">
-                    <NuxtLink class="primary-btn" :to="affiliateLink ? affiliateLink : casinoUrl" target="_blank"
+                    <NuxtLink v-if="affiliateLink" class="primary-btn" :to="affiliateLink ? affiliateLink : casinoUrl" target="_blank"
                         :rel="affiliateLink ? 'noopener' : 'nofollow noopener'">
                         Play
                     </NuxtLink>
 
                 </div>
                 <p class="card-terms">
-                    <NuxtLink :to="affiliateTerms ? affiliateTerms : casinoTerms" target="_blank"
+                    <NuxtLink v-if="affiliateTerms" :to="affiliateTerms ? affiliateTerms : casinoTerms" target="_blank"
                         :rel="affiliateTerms ? 'noopener' : 'nofollow noopener'">
                         T&C Apply
                     </NuxtLink>
