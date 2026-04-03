@@ -11,8 +11,8 @@ class WpdiscuzCache implements WpDiscuzConstants {
     private $helper;
 
     public function __construct($options, $helper) {
-        $this->options = $options;
-        $this->helper = $helper;
+        $this->options      = $options;
+        $this->helper       = $helper;
         $this->wpUploadsDir = wp_upload_dir();
         add_action("admin_post_purgeAllCaches", [&$this, "purgeAllCaches"]);
         add_action("admin_post_purgePostCaches", [&$this, "purgePostCaches"]);
@@ -20,6 +20,7 @@ class WpdiscuzCache implements WpDiscuzConstants {
         add_action("wpdiscuz_reset_comments_cache", [&$this, "resetCommentsCache"]);
         add_action("wpdiscuz_reset_comments_extra_cache", [&$this, "resetExtraCache"]);
         add_action("comment_post", [&$this, "commentPost"], 248, 3);
+        add_action("edit_comment", [&$this, "editComment"], 249, 2);
     }
 
     public function purgeAllCaches() {
@@ -124,7 +125,7 @@ class WpdiscuzCache implements WpDiscuzConstants {
                 @unlink($fileInfo["path"]);
                 return [];
             }
-            if (is_readable($fileInfo["path"]) && ($cache = maybe_unserialize(file_get_contents($fileInfo["path"])))) {
+            if (is_readable($fileInfo["path"]) && ($cache = maybe_unserialize(file_get_contents($fileInfo["path"]))) && is_array($cache)) {
                 return $cache;
             }
         }
@@ -161,51 +162,59 @@ class WpdiscuzCache implements WpDiscuzConstants {
     }
 
     private function getUserCacheFileinfo($userKey) {
-        $dirs = $this->getCacheDirectories();
+        $dirs     = $this->getCacheDirectories();
         $fileName = md5($userKey);
         return [
             "basedir" => $dirs["users"],
-            "dir" => $dirs["users"],
-            "name" => $fileName,
-            "path" => $dirs["users"] . $fileName,
+            "dir"     => $dirs["users"],
+            "name"    => $fileName,
+            "path"    => $dirs["users"] . $fileName,
         ];
     }
 
     private function getCommentsCacheFileinfo($commentsArgs) {
-        $dirs = $this->getCacheDirectories();
-        $fileDir = $dirs["comments"] . $commentsArgs["post_id"] . "/";
+        $dirs     = $this->getCacheDirectories();
+        $fileDir  = $dirs["comments"] . $commentsArgs["post_id"] . "/";
         $fileName = md5(implode(",", $commentsArgs["user_roles"]) . $commentsArgs["wpdType"] . $commentsArgs["last_parent_id"] . $commentsArgs["page"] . $commentsArgs["order"] . $commentsArgs["orderby"]) . "_" . $commentsArgs["last_parent_id"];
         return [
             "basedir" => $dirs["comments"],
-            "name" => $fileName,
-            "path" => $fileDir . $fileName,
-            "dir" => $fileDir,
+            "name"    => $fileName,
+            "path"    => $fileDir . $fileName,
+            "dir"     => $fileDir,
         ];
     }
 
     private function getExtraCacheFileinfo($commentsArgs) {
-        $dirs = $this->getCacheDirectories();
-        $fileDir = $dirs["comments"] . $commentsArgs["post_id"] . "/" . $dirs["extra"] . "/";
+        $dirs     = $this->getCacheDirectories();
+        $fileDir  = $dirs["comments"] . $commentsArgs["post_id"] . "/" . $dirs["extra"] . "/";
         $fileName = md5(implode(",", $commentsArgs["user_roles"]) . $commentsArgs["wpdType"] . $commentsArgs["last_parent_id"] . $commentsArgs["page"] . $commentsArgs["order"] . $commentsArgs["orderby"]) . "_" . $commentsArgs["last_parent_id"];
         return [
             "basedir" => $dirs["extra"],
-            "name" => $fileName,
-            "path" => $fileDir . $fileName,
-            "dir" => $fileDir,
+            "name"    => $fileName,
+            "path"    => $fileDir . $fileName,
+            "dir"     => $fileDir,
         ];
     }
 
     private function getCacheDirectories() {
         return [
             "comments" => $this->wpUploadsDir["basedir"] . self::COMMENTS_CACHE_DIR,
-            "users" => $this->wpUploadsDir["basedir"] . self::USERS_CACHE_DIR,
-            "extra" => self::EXTRA_CACHE_DIR,
+            "users"    => $this->wpUploadsDir["basedir"] . self::USERS_CACHE_DIR,
+            "extra"    => self::EXTRA_CACHE_DIR,
         ];
     }
 
     public function commentPost($comment_ID, $approved, $commentdata) {
         if (!empty($commentdata['comment_post_ID'])) {
             $this->resetCommentsCache($commentdata['comment_post_ID']);
+            $this->resetUsersCache();
+        }
+    }
+
+    public function editComment($comment_ID, $commentdata) {
+        if (!empty($commentdata['comment_post_ID'])) {
+            $this->resetCommentsCache($commentdata['comment_post_ID']);
+            $this->resetUsersCache();
         }
     }
 

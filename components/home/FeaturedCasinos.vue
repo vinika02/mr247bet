@@ -40,7 +40,7 @@ useState('featuredCasinos', () => orderedFeaturedCasinos.value)
                 <div v-if="pending">
                     Loading...
                 </div>
-                <CardFeatured v-else v-for="casino in orderedFeaturedCasinos" :casino="casino" :key="casino.id" />
+                <CardFeatured v-else v-for="casino in orderedFeaturedCasinos" :casino="casino" :key="casino?.id" />
             </div>
             <!-- ======= Promotion ======= -->
             <div class="row gy-4 mt-4">

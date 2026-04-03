@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     PublishPress\Checklistss
  * @author      PublishPress <help@publishpress.com>
@@ -31,9 +32,11 @@ class Util
             $post_type = $current_screen->post_type;
         } elseif (isset($_REQUEST['post_type'])) {
             $post_type = sanitize_key($_REQUEST['post_type']);
-        } elseif ('post.php' == $pagenow
+        } elseif (
+            'post.php' == $pagenow
             && $post_id
-            && !empty(get_post($post_id)->post_type)) {
+            && !empty(get_post($post_id)->post_type)
+        ) {
             $post_type = get_post($post_id)->post_type;
         } elseif ('edit.php' == $pagenow && empty($_REQUEST['post_type'])) {
             $post_type = 'post';
@@ -161,4 +164,105 @@ class Util
 
         return $directorySeparator;
     }
+
+    /**
+     * Load Pro Banner Right Sidebar
+     */
+    public static function ppch_pro_sidebar()
+    {
+        ?>
+        <div class="ppch-advertisement-right-sidebar">
+            
+            <div class="advertisement-box-content postbox ppch-advert">
+                <div class="postbox-header ppch-advert">
+                    <h3 class="advertisement-box-header hndle is-non-sortable">
+                        <span><?php echo esc_html__('Need PublishPress Checklists Support?', 'publishpress-checklists'); ?></span>
+                    </h3>
+                </div>
+
+                <div class="inside ppch-advert">
+                    <p>
+                        <?php echo esc_html__('If you need help or have a new feature request, let us know.', 'publishpress-checklists'); ?>
+                        <a
+                            class="advert-link" href="https://wordpress.org/plugins/publishpress-checklists/" target="_blank">
+                            <?php echo esc_html__('Request Support', 'publishpress-checklists'); ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" width="24" height="24" class="linkIcon">
+                                <path d="M18.2 17c0 .7-.6 1.2-1.2 1.2H7c-.7 0-1.2-.6-1.2-1.2V7c0-.7.6-1.2 1.2-1.2h3.2V4.2H7C5.5 4.2 4.2 5.5 4.2 7v10c0 1.5 1.2 2.8 2.8 2.8h10c1.5 0 2.8-1.2 2.8-2.8v-3.6h-1.5V17zM14.9 3v1.5h3.7l-6.4 6.4 1.1 1.1 6.4-6.4v3.7h1.5V3h-6.3z"></path>
+                            </svg>
+                        </a>
+                    </p>
+                    <p>
+                        <?php echo esc_html__('Detailed documentation is also available on the plugin website.', 'publishpress-checklists'); ?>
+                        <a
+                            class="advert-link" href="https://publishpress.com/docs-category/checklists/" target="_blank">
+                            <?php echo esc_html__('View Knowledge Base', 'publishpress-checklists'); ?>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" width="24" height="24" class="linkIcon">
+                                <path d="M18.2 17c0 .7-.6 1.2-1.2 1.2H7c-.7 0-1.2-.6-1.2-1.2V7c0-.7.6-1.2 1.2-1.2h3.2V4.2H7C5.5 4.2 4.2 5.5 4.2 7v10c0 1.5 1.2 2.8 2.8 2.8h10c1.5 0 2.8-1.2 2.8-2.8v-3.6h-1.5V17zM14.9 3v1.5h3.7l-6.4 6.4 1.1 1.1 6.4-6.4v3.7h1.5V3h-6.3z"></path>
+                            </svg>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+
+    /**
+     * Check if Checklists Pro active
+     */
+    public static function isChecklistsProActive()
+    {
+        if (defined('PPCHPRO_VERSION')) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if Rank Math plugin is activated
+     * 
+     * @return bool
+     */
+    public static function isRankMathActivated()
+    {
+        return class_exists('RankMath') || is_plugin_active('seo-by-rank-math/rank-math.php');
+    }
+
+    /**
+     * Check if All in One SEO plugin is activated
+     * 
+     * @return bool
+     */
+    public static function isAllInOneSeoActivated()
+    {
+        return class_exists('AIOSEO\\Plugin\\AIOSEO') || is_plugin_active('all-in-one-seo-pack/all-in-one-seo-pack.php');
+    }
+
+    /**
+     * Check if WooCommerce plugin is activated
+     */
+    public static function isWooCommerceActivated()
+    {
+        return class_exists('WooCommerce') || is_plugin_active('woocommerce/woocommerce.php');
+    }
+
+    /**
+     * Check if Yoast SEO plugin is activated
+     */
+    public static function isYoastSeoActivated()
+    {
+        return class_exists('WPSEO_Options') || is_plugin_active('wordpress-seo/wp-seo.php') || is_plugin_active(
+                'wordpress-seo-premium/wp-seo-premium.php'
+            );
+    }
+
+    /**
+     * Check if ACF plugin is activated
+     */
+    public static function isACFActivated()
+    {
+        return class_exists('ACF') || is_plugin_active('advanced-custom-fields/advanced-custom-fields.php');
+    }
+
+
 }

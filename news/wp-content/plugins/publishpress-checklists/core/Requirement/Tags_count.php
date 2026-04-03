@@ -16,7 +16,7 @@ class Tags_count extends Base_counter
     /**
      * The priority for the action to load the requirement
      */
-    const PRIORITY = 9;
+    const PRIORITY = 10;
 
     /**
      * The name of the requirement, in a slug format
@@ -26,9 +26,16 @@ class Tags_count extends Base_counter
     public $name = 'tags_count';
 
     /**
+     * The name of the group, used for the tabs
+     * 
+     * @var string
+     */
+    public $group = 'tags';
+
+    /**
      * @var int
      */
-    public $position = 40;
+    public $position = 60;
 
     /**
      * Initialize the language strings for the instance
@@ -57,10 +64,11 @@ class Tags_count extends Base_counter
      */
     public function get_current_status($post, $option_value)
     {
-        $tags = wp_get_post_tags($post->ID);
+        $post_id = isset($post->ID) ? $post->ID : 0;
+        $tags = wp_get_post_tags($post_id);
 
         $count = count($tags);
 
-        return ($count >= $option_value[0]) && ($count <= $option_value[1]);
+        return ($count >= $option_value[0]) && ($option_value[1] == 0 || $count <= $option_value[1]);
     }
 }

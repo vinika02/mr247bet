@@ -222,7 +222,7 @@ class IS_Index_Manager extends IS_Base_Options {
 			$this->index_opt->save();
 
 			$redirect_to = add_query_arg( array( 'message' => 'index-reset' ) );
-			wp_safe_redirect( $redirect_to );
+			wp_safe_redirect( esc_url_raw( $redirect_to ) );
 			exit();
 		} else {
 			if ( ! empty( $_REQUEST['message'] )
@@ -400,6 +400,10 @@ class IS_Index_Manager extends IS_Base_Options {
 	 */
 	public function ajax_create_index() {
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+			_e( "Error: You don't have permission to create index. ", "add-search-to-menu" );
+			wp_die();
+		}
 		$page = ! empty( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
 		$total   = 0;
 		$results = '';
@@ -594,7 +598,7 @@ class IS_Index_Manager extends IS_Base_Options {
 		$exec_time     = $this->calc_exec_time();
 		$max_exec_time = @ini_get( 'max_execution_time' ) * .8;
 		$max_exec_time = min( $max_exec_time, 45 );
-		$max_per_page  = 100;
+		$max_per_page  = apply_filters( 'is_index_max_per_page', 100 );
 		$multiplier    = 2;
 		$per_page      = $this->build_per_page;
 		$build_offset  = $this->build_offset;

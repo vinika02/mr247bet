@@ -31,16 +31,10 @@ class Group_Control_Query extends Group_Control_Base {
 		return $this->init_fields_by_name( $args['name'] );
 	}
 
-	/**
-	 * Build the group-controls array
-	 * Note: this method completely overrides any settings done in Group_Control_Posts
-	 * @param string $name
-	 *
-	 * @return array
-	 */
-	protected function init_fields_by_name( $name ) {
+	protected function get_fields_array( $name ) {
 		$fields = [];
 
+		$tab_keys = $this->get_tabs_keys( $name );
 		$name .= '_';
 
 		$fields['post_type'] = [
@@ -56,9 +50,9 @@ class Group_Control_Query extends Group_Control_Base {
 			'type' => Controls_Manager::TABS,
 		];
 
-		$tabs_wrapper = $name . 'query_args';
-		$include_wrapper = $name . 'query_include';
-		$exclude_wrapper = $name . 'query_exclude';
+		$tabs_wrapper = $tab_keys['tabs_wrapper'];
+		$include_wrapper = $tab_keys['include_wrapper'];
+		$exclude_wrapper = $tab_keys['exclude_wrapper'];
 
 		$fields['query_include'] = [
 			'type' => Controls_Manager::TAB,
@@ -68,9 +62,6 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_type!' => [
 					'current_query',
 					'by_id',
-					'related',
-					'upsells',
-					'cross_sells',
 				],
 			],
 		];
@@ -104,9 +95,6 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_type!' => [
 					'by_id',
 					'current_query',
-					'related',
-					'upsells',
-					'cross_sells',
 				],
 			],
 			'label_block' => true,
@@ -131,9 +119,6 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_type!' => [
 					'by_id',
 					'current_query',
-					'related',
-					'upsells',
-					'cross_sells',
 				],
 			],
 			'tabs_wrapper' => $tabs_wrapper,
@@ -155,9 +140,6 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_type!' => [
 					'by_id',
 					'current_query',
-					'related',
-					'upsells',
-					'cross_sells',
 				],
 			],
 			'tabs_wrapper' => $tabs_wrapper,
@@ -173,9 +155,6 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_type!' => [
 					'by_id',
 					'current_query',
-					'related',
-					'upsells',
-					'cross_sells',
 				],
 			],
 		];
@@ -194,9 +173,6 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_type!' => [
 					'by_id',
 					'current_query',
-					'related',
-					'upsells',
-					'cross_sells',
 				],
 			],
 			'label_block' => true,
@@ -218,9 +194,6 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_type!' => [
 					'by_id',
 					'current_query',
-					'related',
-					'upsells',
-					'cross_sells',
 				],
 			],
 			'tabs_wrapper' => $tabs_wrapper,
@@ -244,9 +217,6 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_type!' => [
 					'by_id',
 					'current_query',
-					'related',
-					'upsells',
-					'cross_sells',
 				],
 			],
 			'tabs_wrapper' => $tabs_wrapper,
@@ -269,9 +239,6 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_type!' => [
 					'by_id',
 					'current_query',
-					'related',
-					'upsells',
-					'cross_sells',
 				],
 			],
 			'tabs_wrapper' => $tabs_wrapper,
@@ -290,9 +257,6 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_type!' => [
 					'by_id',
 					'current_query',
-					'related',
-					'upsells',
-					'cross_sells',
 				],
 			],
 		];
@@ -305,9 +269,6 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_type!' => [
 					'by_id',
 					'current_query',
-					'related',
-					'upsells',
-					'cross_sells',
 				],
 			],
 			'description' => esc_html__( 'Use this setting to skip over posts (e.g. \'2\' to skip over 2 posts).', 'elementor-pro' ),
@@ -334,9 +295,6 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_type!' => [
 					'by_id',
 					'current_query',
-					'related',
-					'upsells',
-					'cross_sells',
 				],
 			],
 			'separator' => 'before',
@@ -354,9 +312,6 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_type!' => [
 					'by_id',
 					'current_query',
-					'related',
-					'upsells',
-					'cross_sells',
 				],
 			],
 			'description' => esc_html__( 'Setting a ‘Before’ date will show all the posts published until the chosen date (inclusive).', 'elementor-pro' ),
@@ -374,9 +329,6 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_type!' => [
 					'by_id',
 					'current_query',
-					'related',
-					'upsells',
-					'cross_sells',
 				],
 			],
 			'description' => esc_html__( 'Setting an ‘After’ date will show all the posts published since the chosen date (inclusive).', 'elementor-pro' ),
@@ -390,6 +342,8 @@ class Group_Control_Query extends Group_Control_Base {
 				'post_date' => esc_html__( 'Date', 'elementor-pro' ),
 				'post_title' => esc_html__( 'Title', 'elementor-pro' ),
 				'menu_order' => esc_html__( 'Menu Order', 'elementor-pro' ),
+				'modified' => esc_html__( 'Last Modified', 'elementor-pro' ),
+				'comment_count' => esc_html__( 'Comment Count', 'elementor-pro' ),
 				'rand' => esc_html__( 'Random', 'elementor-pro' ),
 			],
 			'condition' => [
@@ -433,12 +387,28 @@ class Group_Control_Query extends Group_Control_Base {
 			'label' => esc_html__( 'Query ID', 'elementor-pro' ),
 			'type' => Controls_Manager::TEXT,
 			'default' => '',
+			'ai' => [
+				'active' => false,
+			],
 			'description' => esc_html__( 'Give your Query a custom unique id to allow server side filtering', 'elementor-pro' ),
 			'separator' => 'before',
 			'dynamic' => [
 				'active' => true,
 			],
 		];
+
+		return $fields;
+	}
+
+	/**
+	 * Build the group-controls array
+	 * Note: this method completely overrides any settings done in Group_Control_Posts
+	 * @param string $name
+	 *
+	 * @return array
+	 */
+	protected function init_fields_by_name( $name ) {
+		$fields = $this->get_fields_array( $name );
 
 		static::init_presets();
 
@@ -585,6 +555,14 @@ class Group_Control_Query extends Group_Control_Base {
 	protected function get_default_options() {
 		return [
 			'popover' => false,
+		];
+	}
+
+	protected function get_tabs_keys( $name ) {
+		return [
+			'tabs_wrapper' => $name . '_query_args',
+			'include_wrapper' => $name . '_query_include',
+			'exclude_wrapper' => $name . '_query_exclude',
 		];
 	}
 }

@@ -26,7 +26,7 @@ let orderedFeaturedCasinos = [playOjo, pledoo, slotNite, dreamVegas, pubCasino, 
                 <div class="section-header">
                     <h2>Featured Casinos</h2>
                 </div>
-                <CardFeatured v-for="casino in orderedFeaturedCasinos" :casino="casino" :key="casino.id" />
+                <CardFeatured v-for="casino in orderedFeaturedCasinos" :casino="casino" :key="casino?.id" />
             </div>
             <!-- ======= Promotion ======= -->
             <div class="row gy-4 mt-4">

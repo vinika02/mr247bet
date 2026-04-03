@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package PublishPress
  * @author  PublishPress
@@ -34,6 +35,7 @@ use PublishPress\Checklists\Core\Legacy\Util;
 use PublishPress\Checklists\Core\Requirement\Base_requirement;
 
 if (!class_exists('PPCH_Settings')) {
+    #[\AllowDynamicProperties]
     class PPCH_Settings extends Module
     {
         const SETTINGS_SLUG = 'ppch-settings';
@@ -69,7 +71,19 @@ if (!class_exists('PPCH_Settings')) {
                     'post_types'               => [
                         'post' => 'on',
                     ],
+                    'disable_publish_button'   => Base_requirement::VALUE_NO,
                     'show_warning_icon_submit' => Base_requirement::VALUE_YES,
+                    'openai_api_key'           => '',
+                    'delete_data_on_uninstall' => 'off',
+                    'who_can_ignore_option'      => Base_requirement::VALUE_YES,
+                    // Custom icons and colors for checklist items
+                    'complete_icon'               => 'dashicons-yes',
+                    'incomplete_icon'             => 'dashicons-no',
+                    'required_complete_color'     => '#66bb6a',
+                    'required_incomplete_color'   => '#ef5350',
+                    'recommended_complete_color'  => '#66bb6a',
+                    'recommended_incomplete_color' => '#ef5350',
+                    'enable_rename_label_editor_panel' => Base_requirement::VALUE_YES,
                 ],
                 'autoload'             => true,
                 'add_menu'             => true,
@@ -88,11 +102,16 @@ if (!class_exists('PPCH_Settings')) {
 
             add_action('publishpress_checklists_admin_submenu', [$this, 'action_admin_submenu'], 990);
 
+            add_action('wp_ajax_ppch_reset_custom_labels', [$this, 'ajax_reset_custom_labels']);
+            add_action('admin_notices', [$this, 'display_reset_labels_notice']);
+
             add_action('admin_head-edit.php', [$this, 'remove_quick_edit_status_row']);
+            add_action('admin_head-edit.php', [$this, 'remove_quick_edit_row']);
             add_action('admin_print_styles', [$this, 'action_admin_print_styles']);
             add_action('admin_print_scripts', [$this, 'action_admin_print_scripts']);
             add_action('admin_enqueue_scripts', [$this, 'action_admin_enqueue_scripts']);
             add_filter('publishpress_checklists_validate_module_settings', [$this, 'validate_module_settings'], 10, 2);
+            add_filter('publishpress_checklists_settings_tabs', [$this, 'settings_tab']);
         }
 
         /**
@@ -119,7 +138,22 @@ if (!class_exists('PPCH_Settings')) {
         public function action_admin_enqueue_scripts()
         {
             if ($this->isWhitelistedSettingsView()) {
-                // Enqueue scripts
+                if (isset($_GET['page']) && $_GET['page'] === 'ppch-settings') {
+                    wp_enqueue_script(
+                        'ppch-settings',
+                        $this->module_url . 'lib/settings.js',
+                        ['jquery', 'wp-color-picker'],
+                        PPCH_VERSION
+                    );
+
+                    wp_localize_script('ppch-settings', 'ppchToolsSettings', [
+                        'ajaxUrl' => admin_url('admin-ajax.php'),
+                        'resetLabelsNonce' => wp_create_nonce('ppch_reset_custom_labels'),
+                        'resetLabelsConfirm' => __('Are you sure you want to reset all renamed checklist items to their default labels? This action cannot be undone.', 'publishpress-checklists'),
+                        'resetLabelsLoading' => __('Resetting...', 'publishpress-checklists'),
+                        'resetLabelsButton' => __('Reset All Renamed Labels', 'publishpress-checklists'),
+                    ]);
+                }
             }
         }
 
@@ -138,28 +172,60 @@ if (!class_exists('PPCH_Settings')) {
             }
 
             if (isset($_GET['page']) && $_GET['page'] === 'ppch-settings') {
+                wp_enqueue_style('wp-color-picker');
                 wp_enqueue_script('jquery-ui-core');
                 wp_enqueue_script('jquery-ui-tabs');
             }
         }
 
         /**
-         * Remove the status field row in quick edit.
+         * Remove the status field row in quick edit for enabled post types.
          */
         public function remove_quick_edit_status_row()
         {
+
             $status = isset($this->module->options->disable_quick_edit_publish) ? $this->module->options->disable_quick_edit_publish : 'yes';
-            if($status == 'yes'){
-            ?>
-            <script type="text/javascript">
-                jQuery(document).ready(function($) {
-                    $('label.inline-edit-status').each(function () {
-			            $(this).remove();
-                    });
-                });
-            </script>
-            <?php
+            if ($status == 'yes') :
+                $post_type = (!empty($_GET['post_type'])) ? sanitize_text_field($_GET['post_type']) : 'post';
+                $post_types = array_keys($this->get_post_types());
+                if (in_array($post_type, $post_types)) :
+?>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function($) {
+                            $('label.inline-edit-status').each(function() {
+                                $(this).remove();
+                            });
+                        });
+                    </script>
+                <?php
+                endif;
+            endif;
+        }
+
+        /**
+         * Remove quick edit option.
+         */
+        public function remove_quick_edit_row()
+        {
+            // If the current user can manage options, don't remove Quick Edit
+            if (current_user_can('manage_options')) {
+                return;
             }
+
+            $status = isset($this->module->options->disable_quick_edit_completely) ? $this->module->options->disable_quick_edit_completely : 'yes';
+            if ($status == 'yes') :
+                $post_type = (!empty($_GET['post_type'])) ? sanitize_text_field($_GET['post_type']) : 'post';
+                $post_types = array_keys($this->get_post_types());
+                if (in_array($post_type, $post_types)) :
+                ?>
+                    <script type="text/javascript">
+                        jQuery(document).ready(function($) {
+                            $('span.inline').remove();
+                        });
+                    </script>
+            <?php
+                endif;
+            endif;
         }
 
         /**
@@ -173,7 +239,7 @@ if (!class_exists('PPCH_Settings')) {
             <script type="text/javascript">
                 var ma_admin_url = '<?php echo esc_url(get_admin_url()); ?>';
             </script>
-            <?php
+        <?php
         }
 
         /**
@@ -182,115 +248,125 @@ if (!class_exists('PPCH_Settings')) {
         public function print_default_settings()
         {
             $legacyPlugin = Factory::getLegacyPlugin();
-            ?>
-            <form class="basic-settings"
-                  action="<?php echo esc_url(menu_page_url($this->module->settings_slug, false)); ?>" method="post">
 
-                <?php
-                /**
-                 * @param array $tabs
-                 *
-                 * @return array
-                 */
-                $tabs = apply_filters('publishpress_checklists_settings_tabs', []);
-                if (!empty($tabs)) {
-                    echo '<ul id="publishpress-checklists-settings-tabs" class="nav-tab-wrapper">';
-                    $i = 0;
-                    foreach ($tabs as $tabLink => $tabLabel) {
-                        echo '<li class="nav-tab ' . ($i === 0 ? 'nav-tab-active' : '') . '">';
-                        echo '<a href="' . esc_url($tabLink) . '">' . esc_html($tabLabel) . '</a>';
-                        echo '</li>';
-                        $i++;
-                    }
-                    echo '</ul>';
-                }
-                ?>
+        ?>
 
-                <?php settings_fields($this->module->options_group_name); ?>
-                <?php do_settings_sections($this->module->options_group_name); ?>
+            <div class="pp-columns-wrapper<?php echo (!Util::isChecklistsProActive()) ? ' pp-enable-sidebar' : '' ?>">
+                <div class="pp-column-left">
+                    <form class="basic-settings"
+                        action="<?php echo esc_url(menu_page_url($this->module->settings_slug, false)); ?>" method="post">
 
-                <?php
-                foreach ($legacyPlugin->class_names as $slug => $class_name) {
-                    $mod_data = $legacyPlugin->$slug->module;
+                        <?php
+                        /**
+                         * @param array $tabs
+                         *
+                         * @return array
+                         */
+                        $tabs = apply_filters('publishpress_checklists_settings_tabs', []);
+                        if (!empty($tabs)) {
+                            echo '<ul id="publishpress-checklists-settings-tabs" class="nav-tab-wrapper">';
+                            $i = 0;
+                            foreach ($tabs as $tabLink => $tabLabel) {
+                                echo '<li class="nav-tab ' . ($i === 0 ? 'nav-tab-active' : '') . '">';
+                                echo '<a href="' . esc_url($tabLink) . '">' . esc_html($tabLabel) . '</a>';
+                                echo '</li>';
+                                $i++;
+                            }
+                            echo '</ul>';
+                        }
+                        ?>
 
-                    if ($mod_data->autoload
-                        || $mod_data->slug === $this->module->slug
-                        || !isset($mod_data->general_options)
-                        || $mod_data->options->enabled != 'on') {
-                        continue;
-                    }
+                        <?php settings_fields($this->module->options_group_name); ?>
+                        <?php do_settings_sections($this->module->options_group_name); ?>
 
-                    echo sprintf('<h3>%s</h3>', esc_html($mod_data->title));
-                    echo sprintf('<p>%s</p>', esc_html($mod_data->short_description));
+                        <?php
+                        foreach ($legacyPlugin->class_names as $slug => $class_name) {
+                            $mod_data = $legacyPlugin->$slug->module;
 
-                    echo '<input name="checklists_module_name[]" type="hidden" value="' . esc_attr(
-                            $mod_data->name
-                        ) . '" />';
+                            if (
+                                $mod_data->autoload
+                                || $mod_data->slug === $this->module->slug
+                                || !isset($mod_data->general_options)
+                                || $mod_data->options->enabled != 'on'
+                            ) {
+                                continue;
+                            }
 
-                    $legacyPlugin->$slug->print_configure_view();
-                }
+                            echo sprintf('<h3>%s</h3>', esc_html($mod_data->title));
+                            echo sprintf('<p>%s</p>', esc_html($mod_data->short_description));
 
-                // Check if we have any feature user can toggle.
-                $featuresCount = 0;
+                            echo '<input name="checklists_module_name[]" type="hidden" value="' . esc_attr(
+                                $mod_data->name
+                            ) . '" />';
 
-                foreach ($legacyPlugin->modules as $mod_name => $mod_data) {
-                    if (!$mod_data->autoload && $mod_data->slug !== $this->module->slug) {
-                        $featuresCount++;
-                    }
-                }
-                ?>
+                            $legacyPlugin->$slug->print_configure_view();
+                        }
 
-                <?php if ($featuresCount > 0) : ?>
-                    <div id="modules-wrapper">
-                        <h3><?php echo esc_html__('Features', 'publishpress-checklists'); ?></h3>
-                        <p><?php echo esc_html__(
-                                'Feel free to select only the features you need.',
-                                'publishpress-checklists'
-                            ); ?></p>
+                        // Check if we have any feature user can toggle.
+                        $featuresCount = 0;
 
-                        <table class="form-table">
-                            <tbody>
-                            <tr>
-                                <th scope="row"><?php echo esc_html__(
-                                        'Enabled features',
+                        foreach ($legacyPlugin->modules as $mod_name => $mod_data) {
+                            if (!$mod_data->autoload && $mod_data->slug !== $this->module->slug) {
+                                $featuresCount++;
+                            }
+                        }
+                        ?>
+
+                        <?php if ($featuresCount > 0) : ?>
+                            <div id="modules-wrapper">
+                                <h3><?php echo esc_html__('Features', 'publishpress-checklists'); ?></h3>
+                                <p><?php echo esc_html__(
+                                        'Feel free to select only the features you need.',
                                         'publishpress-checklists'
-                                    ); ?></th>
-                                <td>
-                                    <?php foreach ($legacyPlugin->modules as $mod_name => $mod_data) : ?>
+                                    ); ?></p>
 
-                                        <?php if ($mod_data->autoload || $mod_data->slug === $this->module->slug) {
-                                            continue;
-                                        } ?>
+                                <table class="form-table">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"><?php echo esc_html__(
+                                                                'Enabled features',
+                                                                'publishpress-checklists'
+                                                            ); ?></th>
+                                            <td>
+                                                <?php foreach ($legacyPlugin->modules as $mod_name => $mod_data) : ?>
 
-                                        <label for="feature-<?php echo esc_attr($mod_data->slug); ?>">
-                                            <input id="feature-<?php echo esc_attr($mod_data->slug); ?>"
-                                                   name="publishpress_checklists_settings_options[features][<?php echo esc_attr(
-                                                       $mod_data->slug
-                                                   ); ?>]" <?php echo ($mod_data->options->enabled == 'on') ? "checked=\"checked\"" : ""; ?>
-                                                   type="checkbox">
-                                            &nbsp;&nbsp;&nbsp;<?php echo esc_html($mod_data->title); ?>
-                                        </label>
-                                        <br>
-                                    <?php endforeach; ?>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                                    <?php if ($mod_data->autoload || $mod_data->slug === $this->module->slug) {
+                                                        continue;
+                                                    } ?>
 
-                        <?php echo '<input name="checklists_module_name[]" type="hidden" value="' . esc_attr(
-                                $this->module->name
-                            ) . '" />'; ?>
-                    </div>
+                                                    <label for="feature-<?php echo esc_attr($mod_data->slug); ?>">
+                                                        <input id="feature-<?php echo esc_attr($mod_data->slug); ?>"
+                                                            name="publishpress_checklists_settings_options[features][<?php echo esc_attr(
+                                                                                                                            $mod_data->slug
+                                                                                                                        ); ?>]" <?php echo ($mod_data->options->enabled == 'on') ? "checked=\"checked\"" : ""; ?>
+                                                            type="checkbox">
+                                                        &nbsp;&nbsp;&nbsp;<?php echo esc_html($mod_data->title); ?>
+                                                    </label>
+                                                    <br>
+                                                <?php endforeach; ?>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <?php echo '<input name="checklists_module_name[]" type="hidden" value="' . esc_attr(
+                                    $this->module->name
+                                ) . '" />'; ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php
+                        wp_nonce_field('edit-publishpress-settings');
+
+                        submit_button(null, 'primary', 'submit', false); ?>
+                    </form>
+                </div><!-- .pp-column-left -->
+                <?php if (!Util::isChecklistsProActive()) :  ?>
+                    <div class="pp-column-right">
+                        <?php Util::ppch_pro_sidebar(); ?>
+                    </div><!-- .pp-column-right -->
                 <?php endif; ?>
-
-                <?php
-                wp_nonce_field('edit-publishpress-settings');
-
-                submit_button(null, 'primary', 'submit', false); ?>
-            </form>
-            <?php
-
-            ?>
+            </div><!-- .pp-columns-wrapper -->
             <div class="publishpress-modules">
                 <?php $this->print_modules(); ?>
             </div>
@@ -303,9 +379,9 @@ if (!class_exists('PPCH_Settings')) {
 
             if (empty($legacyPlugin->modules)) {
                 echo '<div class="message error">' . esc_html__(
-                        'There are no PublishPress modules registered',
-                        'publishpress-checklists'
-                    ) . '</div>';
+                    'There are no PublishPress modules registered',
+                    'publishpress-checklists'
+                ) . '</div>';
             } else {
                 foreach ($legacyPlugin->modules as $mod_name => $mod_data) {
                     $add_menu = isset($mod_data->add_menu) && $mod_data->add_menu === true;
@@ -362,7 +438,7 @@ if (!class_exists('PPCH_Settings')) {
                 </div>
             <?php else: ?>
                 <p class="description"><?php echo esc_html($description); ?></p>
-            <?php endif;
+<?php endif;
         }
 
         /**
@@ -399,12 +475,12 @@ if (!class_exists('PPCH_Settings')) {
                 if (post_type_supports($post_type, $module->post_type_support)) {
                     echo '&nbsp&nbsp;&nbsp;<span class="description">' . sprintf(
                         esc_html__(
-                                'Disabled because add_post_type_support(\'%1$s\', \'%2$s\') is included in a loaded file.',
-                                'publishpress-checklists'
-                            ),
-                            esc_html($post_type),
-                            esc_html($module->post_type_support)
-                        ) . '</span>';
+                            'Disabled because add_post_type_support(\'%1$s\', \'%2$s\') is included in a loaded file.',
+                            'publishpress-checklists'
+                        ),
+                        esc_html($post_type),
+                        esc_html($module->post_type_support)
+                    ) . '</span>';
                 }
                 echo '<br />';
             }
@@ -418,20 +494,22 @@ if (!class_exists('PPCH_Settings')) {
          */
         public function helper_settings_validate_and_save()
         {
-            if (!isset($_POST['action'], $_POST['_wpnonce'], $_POST['option_page'], $_POST['_wp_http_referer'], $_POST['submit']) || !is_admin(
-                )) {
+            if (!isset($_POST['action'], $_POST['_wpnonce'], $_POST['option_page'], $_POST['_wp_http_referer'], $_POST['submit']) || !is_admin()) {
                 return false;
             }
 
-            if ($_POST['action'] != 'update'
-                || $_GET['page'] != 'ppch-settings') {
+            if (
+                $_POST['action'] != 'update'
+                || !isset($_GET['page'])
+                || (isset($_GET['page']) && $_GET['page'] != 'ppch-settings')
+            ) {
                 return false;
             }
 
             if (!current_user_can('manage_options') || !wp_verify_nonce(
                 sanitize_key($_POST['_wpnonce']),
-                    'edit-publishpress-settings'
-                )) {
+                'edit-publishpress-settings'
+            )) {
                 wp_die(esc_html__('Cheatin&#8217; uh?', 'publishpress-checklists'));
             }
 
@@ -446,8 +524,10 @@ if (!class_exists('PPCH_Settings')) {
 
                 // Run through all the modules updating their statuses
                 foreach ($legacyPlugin->modules as $mod_data) {
-                    if ($mod_data->autoload
-                        || $mod_data->slug === $this->module->slug) {
+                    if (
+                        $mod_data->autoload
+                        || $mod_data->slug === $this->module->slug
+                    ) {
                         continue;
                     }
 
@@ -533,7 +613,7 @@ if (!class_exists('PPCH_Settings')) {
          */
         protected function is_associative_array($array)
         {
-            if(!is_array($array)){
+            if (!is_array($array)) {
                 return false;
             }
 
@@ -542,7 +622,7 @@ if (!class_exists('PPCH_Settings')) {
             }
             return array_keys($array) !== range(0, count($array) - 1);
         }
-        
+
 
         public function validate_module_settings($new_options)
         {
@@ -554,9 +634,35 @@ if (!class_exists('PPCH_Settings')) {
                 $new_options['show_warning_icon_submit'] = Base_requirement::VALUE_NO;
             }
 
-            if (!isset ($new_options['disable_quick_edit_publish'])) {
+            if (!isset($new_options['who_can_ignore_option'])) {
+                $new_options['who_can_ignore_option'] = Base_requirement::VALUE_NO;
+            }
+
+            if (!isset($new_options['disable_quick_edit_publish'])) {
                 $new_options['disable_quick_edit_publish'] = Base_requirement::VALUE_NO;
             }
+
+            if (!isset($new_options['disable_quick_edit_completely'])) {
+                $new_options['disable_quick_edit_completely'] = Base_requirement::VALUE_NO;
+            }
+
+            if (!isset($new_options['disable_publish_button'])) {
+                $new_options['disable_publish_button'] = Base_requirement::VALUE_NO;
+            }
+
+            if (!isset($new_options['enable_rename_label_editor_panel'])) {
+                $new_options['enable_rename_label_editor_panel'] = Base_requirement::VALUE_YES;
+            }
+
+            $new_options['enable_rename_label_editor_panel'] =
+                Base_requirement::VALUE_YES === $new_options['enable_rename_label_editor_panel']
+                ? Base_requirement::VALUE_YES
+                : Base_requirement::VALUE_NO;
+
+            if (!isset($new_options['delete_data_on_uninstall'])) {
+                $new_options['delete_data_on_uninstall'] = 'off';
+            }
+            $new_options['delete_data_on_uninstall'] = $new_options['delete_data_on_uninstall'] === 'on' ? 'on' : 'off';
 
             return $new_options;
         }
@@ -581,8 +687,8 @@ if (!class_exists('PPCH_Settings')) {
             }
             if ($message && isset($requested_module->messages[$message])) {
                 $display_text .= '<div class="is-dismissible notice notice-info"><p>' . esc_html(
-                        $requested_module->messages[$message]
-                    ) . '</p></div>';
+                    $requested_module->messages[$message]
+                ) . '</p></div>';
             }
 
             // If there's been an error, let's display it
@@ -597,8 +703,8 @@ if (!class_exists('PPCH_Settings')) {
             }
             if ($error && isset($requested_module->messages[$error])) {
                 $display_text .= '<div class="is-dismissible notice notice-error"><p>' . esc_html(
-                        $requested_module->messages[$error]
-                    ) . '</p></div>';
+                    $requested_module->messages[$error]
+                ) . '</p></div>';
             }
 
             $this->printDefaultHeader($requested_module);
@@ -658,22 +764,23 @@ if (!class_exists('PPCH_Settings')) {
         {
             /**
              *
-             * Post types
+             * General
              */
+
 
             add_settings_section(
                 $this->module->options_group_name . '_general',
-                __('General:', 'publishpress-checklists'),
-                '__return_false',
+                __return_false(),
+                [$this, 'settings_section_general'],
                 $this->module->options_group_name
             );
 
             do_action('publishpress_checklists_register_settings_before');
 
             add_settings_field(
-                'post_types',
-                __('Add to these post types:', 'publishpress-checklists'),
-                [$this, 'settings_post_types_option'],
+                'show_who_can_ignore',
+                __('Enable User Roles Filter:', 'publishpress-checklists'),
+                [$this, 'settings_who_can_ignore_option'],
                 $this->module->options_group_name,
                 $this->module->options_group_name . '_general'
             );
@@ -687,11 +794,203 @@ if (!class_exists('PPCH_Settings')) {
             );
 
             add_settings_field(
+                'delete_data_on_uninstall',
+                __('Delete data on uninstall:', 'publishpress-checklists'),
+                [$this, 'settings_delete_data_on_uninstall_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_tools'
+            );
+
+            if (!Util::isChecklistsProActive()) {
+                add_settings_field(
+                    'status_filter_settings',
+                    __('Enable Status Filter:', 'publishpress-checklists'),
+                    [$this, 'settings_status_filter_option'],
+                    $this->module->options_group_name,
+                    $this->module->options_group_name . '_general'
+                );
+            }
+
+            if (!Util::isChecklistsProActive()) {
+                add_settings_field(
+                    'duplicate_checklists_settings',
+                    __('Enable Duplicate Checklists:', 'publishpress-checklists'),
+                    [$this, 'settings_duplicate_checklist_option'],
+                    $this->module->options_group_name,
+                    $this->module->options_group_name . '_general'
+                );
+            }
+
+            if (!Util::isChecklistsProActive()) {
+                add_settings_field(
+                    'show_checklists_column',
+                    __('Show Checklists column in post lists:', 'publishpress-checklists'),
+                    [$this, 'settings_show_checklists_option'],
+                    $this->module->options_group_name,
+                    $this->module->options_group_name . '_general'
+                );
+            }
+
+            if (!Util::isChecklistsProActive()) {
+                add_settings_field(
+                    'taxonomy_filter_settings',
+                    __('Enable Taxonomy Filter:', 'publishpress-checklists'),
+                    [$this, 'settings_taxonomy_filter_option'],
+                    $this->module->options_group_name,
+                    $this->module->options_group_name . '_general'
+                );
+            }
+
+            /**
+             * Publishing Options
+             */
+            add_settings_section(
+                $this->module->options_group_name . '_publishing_options',
+                __return_false(),
+                [$this, 'settings_section_publishing_options'],
+                $this->module->options_group_name
+            );
+
+            add_settings_field(
                 'disable_quick_edit_publish',
                 __('Disable the "Status" option when using "Quick Edit":', 'publishpress-checklists'),
                 [$this, 'settings_disable_quick_edit_publish_option'],
                 $this->module->options_group_name,
-                $this->module->options_group_name . '_general'
+                $this->module->options_group_name . '_publishing_options'
+            );
+
+            add_settings_field(
+                'disable_quick_edit_completely',
+                __('Disable "Quick Edit" completely:', 'publishpress-checklists'),
+                [$this, 'settings_disable_quick_edit_completely_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_publishing_options'
+            );
+
+            add_settings_field(
+                'disable_publish_button',
+                __('Disable "Publish" button:', 'publishpress-checklists'),
+                [$this, 'settings_disable_publish_button_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_publishing_options'
+            );
+
+            /**
+             * Appearance
+             */
+            add_settings_section(
+                $this->module->options_group_name . '_appearance',
+                __return_false(),
+                [$this, 'settings_section_appearance'],
+                $this->module->options_group_name
+            );
+
+            add_settings_field(
+                'complete_icon',
+                __('Complete Icon:', 'publishpress-checklists'),
+                [$this, 'settings_complete_icon_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_appearance'
+            );
+
+            add_settings_field(
+                'incomplete_icon',
+                __('Incomplete Icon:', 'publishpress-checklists'),
+                [$this, 'settings_incomplete_icon_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_appearance'
+            );
+
+            add_settings_field(
+                'required_complete_color',
+                __('Required Complete Color:', 'publishpress-checklists'),
+                [$this, 'settings_required_complete_color_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_appearance'
+            );
+
+            add_settings_field(
+                'required_incomplete_color',
+                __('Required Incomplete Color:', 'publishpress-checklists'),
+                [$this, 'settings_required_incomplete_color_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_appearance'
+            );
+
+            add_settings_field(
+                'recommended_complete_color',
+                __('Recommended Complete Color:', 'publishpress-checklists'),
+                [$this, 'settings_recommended_complete_color_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_appearance'
+            );
+
+            add_settings_field(
+                'recommended_incomplete_color',
+                __('Recommended Incomplete Color:', 'publishpress-checklists'),
+                [$this, 'settings_recommended_incomplete_color_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_appearance'
+            );
+
+            add_settings_field(
+                'enable_rename_label_editor_panel',
+                __('Enable rename label in editor panel:', 'publishpress-checklists'),
+                [$this, 'settings_enable_rename_label_editor_panel_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_appearance'
+            );
+
+            /**
+             * Integration
+             */
+            add_settings_section(
+                $this->module->options_group_name . '_integration',
+                __return_false(),
+                [$this, 'settings_section_integration'],
+                $this->module->options_group_name
+            );
+
+            add_settings_field(
+                'openai_api_key',
+                __('OpenAI API Key:', 'publishpress-checklists'),
+                [$this, 'settings_openai_api_key_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_integration'
+            );
+
+            add_settings_section(
+                $this->module->options_group_name . '_tools',
+                __return_false(),
+                [$this, 'settings_section_tools'],
+                $this->module->options_group_name
+            );
+
+            add_settings_field(
+                'reset_custom_labels',
+                __('Reset Renamed Checklist:', 'publishpress-checklists'),
+                [$this, 'settings_reset_custom_labels_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_tools'
+            );
+
+            /**
+             * Post Types
+             */
+
+            add_settings_section(
+                $this->module->options_group_name . '_post_types',
+                __return_false(),
+                [$this, 'settings_section_post_types'],
+                $this->module->options_group_name
+            );
+
+            add_settings_field(
+                'post_types',
+                __('Post types:', 'publishpress-checklists'),
+                [$this, 'settings_post_types_option'],
+                $this->module->options_group_name,
+                $this->module->options_group_name . '_post_types'
             );
 
             do_action('publishpress_checklists_register_settings_after');
@@ -713,6 +1012,92 @@ if (!class_exists('PPCH_Settings')) {
          *
          * @param array
          */
+        public function settings_status_filter_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_status_filter_settings';
+            $value = 'no';
+
+            echo '<label for="' . esc_attr($id) . '" class="disabled-pro-option">';
+            echo '<input type="checkbox" value="yes" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[status_filter_settings]" '
+                . checked($value, 'yes', false) . ' disabled="disabled" />';
+            echo '&nbsp;&nbsp;&nbsp;' . esc_html__(
+                'This allows tasks to be disabled for specific statuses such as "Draft" or "Published.',
+                'publishpress-checklists'
+            );
+            echo '</label>';
+            echo ' <a href="https://publishpress.com/links/checklists-menu" target="_blank" class="pro-badge">PRO</a>';
+        }
+
+        /**
+         * Displays the promo field for duplicate checklists in the free version
+         *
+         * @param array $args
+         */
+        public function settings_duplicate_checklist_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_duplicate_checklist_settings';
+            $value = 'no';
+
+            echo '<label for="' . esc_attr($id) . '" class="disabled-pro-option">';
+            echo '<input type="checkbox" value="yes" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[duplicate_checklist_settings]" '
+                . checked($value, 'yes', false) . ' disabled="disabled" />';
+            echo '&nbsp;&nbsp;&nbsp;' . esc_html__(
+                'This allows users to duplicate existing checklist tasks.',
+                'publishpress-checklists'
+            );
+            echo '</label>';
+            echo ' <a href="https://publishpress.com/links/checklists-menu" target="_blank" class="pro-badge">PRO</a>';
+        }
+
+        /**
+         * Displays the checkbox to enable or disable the Checklists column in post lists
+         * close to the submit button
+         *
+         * @param array
+         */
+        public function settings_show_checklists_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_show_checklists_settings';
+            $value = 'no';
+
+            echo '<label for="' . esc_attr($id) . '" class="disabled-pro-option">';
+            echo '<input type="checkbox" value="yes" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[show_checklists_settings]" '
+                . checked($value, 'yes', false) . ' disabled="disabled" />';
+            echo '&nbsp;&nbsp;&nbsp;' . esc_html__(
+                'Add a Checklists column to the Posts screen showing how many requirements are complete.',
+                'publishpress-checklists'
+            );
+            echo '</label>';
+            echo ' <a href="https://publishpress.com/links/checklists-menu" target="_blank" class="pro-badge">PRO</a>';
+        }
+
+        /**
+         * Displays the promo field for taxonomy filter in the free version
+         *
+         * @param array $args
+         */
+        public function settings_taxonomy_filter_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_taxonomy_filter_settings';
+            $value = 'no';
+
+            echo '<label for="' . esc_attr($id) . '" class="disabled-pro-option">';
+            echo '<input type="checkbox" value="yes" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[taxonomy_filter_settings]" '
+                . checked($value, 'yes', false) . ' disabled="disabled" />';
+            echo '&nbsp;&nbsp;&nbsp;' . esc_html__(
+                'This allows tasks to be disabled for posts with specific taxonomy terms. Go to the "Post Types" tab to choose the terms.',
+                'publishpress-checklists'
+            );
+            echo '</label>';
+            echo ' <a href="https://publishpress.com/links/checklists-menu" target="_blank" class="pro-badge">PRO</a>';
+        }
+
+        /**
+         * Displays the field to choose between display or not the warning icon
+         * close to the submit button
+         *
+         * @param array
+         */
         public function settings_show_warning_icon_submit_option($args = [])
         {
             $id    = $this->module->options_group_name . '_show_warning_icon_submit';
@@ -722,9 +1107,50 @@ if (!class_exists('PPCH_Settings')) {
             echo '<input type="checkbox" value="yes" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[show_warning_icon_submit]" '
                 . checked($value, 'yes', false) . ' />';
             echo '&nbsp;&nbsp;&nbsp;' . esc_html__(
-                    'This will display a warning icon in the "Publish" box',
-                    'publishpress-checklists'
-                );
+                'This will display a warning icon in the "Checklists" box if requirements are incomplete.',
+                'publishpress-checklists'
+            );
+            echo '</label>';
+        }
+
+        /**
+         * Displays the checkbox to enable deleting plugin data on uninstall
+         *
+         * @param array $args
+         */
+        public function settings_delete_data_on_uninstall_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_delete_data_on_uninstall';
+            $value = isset($this->module->options->delete_data_on_uninstall) ? $this->module->options->delete_data_on_uninstall : 'off';
+
+            echo '<label for="' . esc_attr($id) . '">';
+            echo '<input type="checkbox" value="on" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[delete_data_on_uninstall]" '
+                . checked($value, 'on', false) . ' />';
+            echo '&nbsp;&nbsp;&nbsp;' . esc_html__(
+                'When enabled, all PublishPress Checklists data will be deleted if the plugin is uninstalled.',
+                'publishpress-checklists'
+            );
+            echo '</label>';
+        }
+
+        /**
+         * Display the field to enable or disable who can ignore
+         * 
+         * @param array
+         * 
+         */
+        public function settings_who_can_ignore_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_who_can_ignore_option';
+            $value = isset($this->module->options->who_can_ignore_option) ? $this->module->options->who_can_ignore_option : 'no';
+
+            echo '<label for="' . esc_attr($id) . '">';
+            echo '<input type="checkbox" value="yes" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[who_can_ignore_option]" '
+                . checked($value, 'yes', false) . ' />';
+            echo '&nbsp;&nbsp;&nbsp;' . esc_html__(
+                'This will show "Exclude User Roles" options.',
+                'publishpress-checklists'
+            );
             echo '</label>';
         }
 
@@ -737,15 +1163,76 @@ if (!class_exists('PPCH_Settings')) {
         public function settings_disable_quick_edit_publish_option($args = [])
         {
             $id    = $this->module->options_group_name . '_disable_quick_edit_publish';
-            $value = isset($this->module->options->disable_quick_edit_publish) ? $this->module->options->disable_quick_edit_publish : 'yes';
+            $value = isset($this->module->options->disable_quick_edit_publish) ? $this->module->options->disable_quick_edit_publish : 'no';
 
             echo '<label for="' . esc_attr($id) . '">';
             echo '<input type="checkbox" value="yes" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[disable_quick_edit_publish]" '
                 . checked($value, 'yes', false) . ' />';
             echo '&nbsp;&nbsp;&nbsp;' . esc_html__(
-                    'If the "Status" option is enabled, it can be used to avoid using the Checklists requirements."',
-                    'publishpress-checklists'
-                );
+                'Disabling the "Status" option is recommended because it can be used to avoid using the Checklists requirements.',
+                'publishpress-checklists'
+            );
+            echo '</label>';
+        }
+
+        /**
+         * Displays the checkbox to enable or disable quick edit
+         * 
+         *
+         * @param array
+         */
+        public function settings_disable_quick_edit_completely_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_disable_quick_edit_completely';
+            $value = isset($this->module->options->disable_quick_edit_completely) ? $this->module->options->disable_quick_edit_completely : 'no';
+
+            echo '<label for="' . esc_attr($id) . '">';
+            echo '<input type="checkbox" value="yes" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[disable_quick_edit_completely]" '
+                . checked($value, 'yes', false) . ' />';
+            echo '&nbsp;&nbsp;&nbsp;' . esc_html__(
+                'This will disable "Quick Edit" for all users except those with the "manage_options" capability.',
+                'publishpress-checklists'
+            );
+            echo '</label>';
+        }
+
+        /**
+         * Displays the checkbox to enable or disable quick edit
+         * 
+         *
+         * @param array
+         */
+        public function settings_disable_publish_button_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_disable_publish_button';
+            $value = isset($this->module->options->disable_publish_button) ? $this->module->options->disable_publish_button : 'no';
+
+            echo '<label for="' . esc_attr($id) . '">';
+            echo '<input type="checkbox" value="yes" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[disable_publish_button]" '
+                . checked($value, 'yes', false) . ' />';
+            echo '&nbsp;&nbsp;&nbsp;' . esc_html__(
+                'This will disable the "Publish" button when checklist requirements are not met.',
+                'publishpress-checklists'
+            );
+            echo '</label>';
+        }
+
+        /**
+         * Displays the openai api key settings
+         *
+         * @param array
+         */
+        public function settings_openai_api_key_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_openai_api_key';
+            $value = isset($this->module->options->openai_api_key) ? $this->module->options->openai_api_key : '';
+
+            echo '<label for="' . esc_attr($id) . '">';
+            echo '<input type="text" value="' . esc_attr($value) . '" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[openai_api_key]" />';
+            echo '<br />' . esc_html__(
+                'Enter your API Key to use OpenAI prompts in checklist tasks.',
+                'publishpress-checklists'
+            );
             echo '</label>';
         }
 
@@ -773,12 +1260,259 @@ if (!class_exists('PPCH_Settings')) {
                 $this->module->post_type_support
             );
 
-            if (!isset ($new_options['show_warning_icon_submit'])) {
+            if (!isset($new_options['show_warning_icon_submit'])) {
                 $new_options['show_warning_icon_submit'] = Base_requirement::VALUE_NO;
             }
             $new_options['show_warning_icon_submit'] = Base_requirement::VALUE_YES === $new_options['show_warning_icon_submit'] ? Base_requirement::VALUE_YES : Base_requirement::VALUE_NO;
 
+            if (!isset($new_options['who_can_ignore_option'])) {
+                $new_options['who_can_ignore_option'] = Base_requirement::VALUE_YES;
+            }
+            $new_options['who_can_ignore_option'] = Base_requirement::VALUE_YES === $new_options['who_can_ignore_option'] ? Base_requirement::VALUE_YES : Base_requirement::VALUE_NO;
+
+            if (isset($new_options['complete_icon'])) {
+                $new_options['complete_icon'] = sanitize_text_field(trim($new_options['complete_icon']));
+            }
+            if (empty($new_options['complete_icon'])) {
+                $new_options['complete_icon'] = 'dashicons-yes';
+            }
+
+            if (isset($new_options['incomplete_icon'])) {
+                $new_options['incomplete_icon'] = sanitize_text_field(trim($new_options['incomplete_icon']));
+            }
+            if (empty($new_options['incomplete_icon'])) {
+                $new_options['incomplete_icon'] = 'dashicons-no';
+            }
+
             return $new_options;
+        }
+
+        /**
+         * @param array $tabs
+         *
+         * @return array
+         */
+        public function settings_tab($tabs)
+        {
+            $tabs = array_merge(
+                $tabs,
+                [
+                    '#ppch-tab-post-types'  => esc_html__('Post Types', 'publishpress-checklists'),
+                    '#ppch-tab-general'     => esc_html__('General', 'publishpress-checklists'),
+                    '#ppch-tab-publishing-options' => esc_html__('Publishing Options', 'publishpress-checklists'),
+                    '#ppch-tab-appearance'  => esc_html__('Appearance', 'publishpress-checklists'),
+                    '#ppch-tab-integration'       => esc_html__('Integration', 'publishpress-checklists'),
+                    '#ppch-tab-tools'       => esc_html__('Tools', 'publishpress-checklists'),
+                ]
+            );
+
+            return $tabs;
+        }
+
+        public function settings_section_general()
+        {
+            echo '<input type="hidden" id="ppch-tab-general" />';
+        }
+
+        public function settings_section_post_types()
+        {
+            echo '<input type="hidden" id="ppch-tab-post-types" />';
+        }
+
+        public function settings_section_publishing_options()
+        {
+            echo '<input type="hidden" id="ppch-tab-publishing-options" />';
+        }
+
+        public function settings_section_integration()
+        {
+            echo '<input type="hidden" id="ppch-tab-integration" />';
+        }
+
+        public function settings_section_tools()
+        {
+            echo '<input type="hidden" id="ppch-tab-tools" />';
+        }
+
+        public function settings_section_appearance()
+        {
+            echo '<input type="hidden" id="ppch-tab-appearance" />';
+        }
+
+        /**
+         * Settings field for Complete Icon
+         */
+        public function settings_complete_icon_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_complete_icon';
+            $value = isset($this->module->options->complete_icon) ? $this->module->options->complete_icon : 'dashicons-yes';
+
+            echo '<label for="' . esc_attr($id) . '">';
+            echo '<input type="text" value="' . esc_attr($value) . '" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[complete_icon]" placeholder="dashicons-yes" />';
+            echo '<br /><span class="description">' . esc_html__('Enter a Dashicons class name (e.g., dashicons-yes, dashicons-saved). ', 'publishpress-checklists');
+            echo '<a href="https://developer.wordpress.org/resource/dashicons/" target="_blank">' . esc_html__('View Dashicons', 'publishpress-checklists') . '</a></span>';
+            echo '</label>';
+        }
+
+        /**
+         * Settings field for Incomplete Icon
+         */
+        public function settings_incomplete_icon_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_incomplete_icon';
+            $value = isset($this->module->options->incomplete_icon) ? $this->module->options->incomplete_icon : 'dashicons-no';
+
+            echo '<label for="' . esc_attr($id) . '">';
+            echo '<input type="text" value="' . esc_attr($value) . '" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[incomplete_icon]" placeholder="dashicons-no" />';
+            echo '<br /><span class="description">' . esc_html__('Enter a Dashicons class name (e.g., dashicons-no, dashicons-dismiss). ', 'publishpress-checklists');
+            echo '<a href="https://developer.wordpress.org/resource/dashicons/" target="_blank">' . esc_html__('View Dashicons', 'publishpress-checklists') . '</a></span>';
+            echo '</label>';
+        }
+
+        /**
+         * Settings field for Required Complete Color
+         */
+        public function settings_required_complete_color_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_required_complete_color';
+            $value = isset($this->module->options->required_complete_color) ? $this->module->options->required_complete_color : '#66bb6a';
+
+            echo '<label for="' . esc_attr($id) . '">';
+            echo '<input type="text" value="' . esc_attr($value) . '" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[required_complete_color]" class="pp-checklists-color-picker" data-default-color="#66bb6a" />';
+            echo '</label>';
+        }
+
+        /**
+         * Settings field for Required Incomplete Color
+         */
+        public function settings_required_incomplete_color_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_required_incomplete_color';
+            $value = isset($this->module->options->required_incomplete_color) ? $this->module->options->required_incomplete_color : '#ef5350';
+
+            echo '<label for="' . esc_attr($id) . '">';
+            echo '<input type="text" value="' . esc_attr($value) . '" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[required_incomplete_color]" class="pp-checklists-color-picker" data-default-color="#ef5350" />';
+            echo '</label>';
+        }
+
+        /**
+         * Settings field for Recommended Complete Color
+         */
+        public function settings_recommended_complete_color_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_recommended_complete_color';
+            $value = isset($this->module->options->recommended_complete_color) ? $this->module->options->recommended_complete_color : '#66bb6a';
+
+            echo '<label for="' . esc_attr($id) . '">';
+            echo '<input type="text" value="' . esc_attr($value) . '" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[recommended_complete_color]" class="pp-checklists-color-picker" data-default-color="#66bb6a" />';
+            echo '</label>';
+        }
+
+        /**
+         * Settings field for Recommended Incomplete Color
+         */
+        public function settings_recommended_incomplete_color_option($args = [])
+        {
+            $id    = $this->module->options_group_name . '_recommended_incomplete_color';
+            $value = isset($this->module->options->recommended_incomplete_color) ? $this->module->options->recommended_incomplete_color : '#ef5350';
+
+            echo '<label for="' . esc_attr($id) . '">';
+            echo '<input type="text" value="' . esc_attr($value) . '" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[recommended_incomplete_color]" class="pp-checklists-color-picker" data-default-color="#ef5350" />';
+            echo '</label>';
+        }
+
+        /**
+         * Settings field for enabling rename label in editor panel.
+         */
+        public function settings_enable_rename_label_editor_panel_option($args = [])
+        {
+            $id = $this->module->options_group_name . '_enable_rename_label_editor_panel';
+            $value = isset($this->module->options->enable_rename_label_editor_panel)
+                ? $this->module->options->enable_rename_label_editor_panel
+                : Base_requirement::VALUE_YES;
+
+            echo '<label for="' . esc_attr($id) . '">';
+            echo '<input type="checkbox" value="yes" id="' . esc_attr($id) . '" name="' . esc_attr($this->module->options_group_name) . '[enable_rename_label_editor_panel]" '
+                . checked($value, Base_requirement::VALUE_YES, false) . ' />';
+            echo '&nbsp;&nbsp;&nbsp;' . esc_html__(
+                'Enable custom rename labels in the checklist editor panel.',
+                'publishpress-checklists'
+            );
+            echo '</label>';
+        }
+
+        /**
+         * Settings field for Reset Custom Labels button
+         */
+        public function settings_reset_custom_labels_option($args = [])
+        {
+            echo '<button type="button" id="ppch-reset-custom-labels" class="button button-secondary">';
+            echo esc_html__('Reset All Renamed Labels', 'publishpress-checklists');
+            echo '</button>';
+            echo '<p class="description">' . esc_html__('This will reset all renamed checklist labels for WP Admin and Editing screen back to their default labels.', 'publishpress-checklists') . '</p>';
+        }
+
+        /**
+         * AJAX handler for resetting custom labels
+         */
+        public function ajax_reset_custom_labels()
+        {
+            // Verify nonce
+            if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field($_POST['nonce']), 'ppch_reset_custom_labels')) {
+                wp_send_json_error(['message' => __('Security check failed.', 'publishpress-checklists')]);
+            }
+
+            // Check user capability
+            if (!current_user_can('manage_options')) {
+                wp_send_json_error(['message' => __('You do not have permission to perform this action.', 'publishpress-checklists')]);
+            }
+
+            // Get the checklists options
+            $options = get_option('publishpress_checklists_checklists_options');
+
+            if (!is_object($options)) {
+                $options = new \stdClass();
+            }
+
+            // Convert to array for easier manipulation
+            $options_array = (array) $options;
+
+            // Remove all renamed label options (keys ending with _custom_label or _editor_label)
+            $updated = false;
+            foreach ($options_array as $key => $value) {
+                if (preg_match('/(_custom_label|_editor_label)$/', $key)) {
+                    unset($options_array[$key]);
+                    $updated = true;
+                }
+            }
+
+            if ($updated) {
+                // Convert back to object and save
+                $options = (object) $options_array;
+                update_option('publishpress_checklists_checklists_options', $options);
+            }
+
+            // Set transient to show admin notice after redirect
+            set_transient('ppch_reset_labels_notice', 'success', 30);
+
+            wp_send_json_success();
+        }
+
+        /**
+         * Display admin notice after resetting custom labels
+         */
+        public function display_reset_labels_notice()
+        {
+            $notice = get_transient('ppch_reset_labels_notice');
+
+            if ($notice === 'success') {
+                delete_transient('ppch_reset_labels_notice');
+                ?>
+                <div class="notice notice-success is-dismissible">
+                    <p><?php esc_html_e('All renamed labels have been reset successfully.', 'publishpress-checklists'); ?></p>
+                </div>
+                <?php
+            }
         }
     }
 }

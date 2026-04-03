@@ -5,6 +5,7 @@ import ConditionName from './condition-name';
 import ConditionSub from './condition-sub';
 import ConditionSubId from './condition-sub-id';
 import ConditionConflicts from './condition-conflicts';
+import ConditionButtonPortal from './condition-button-portal';
 
 export default function ConditionsRows( props ) {
 	const {
@@ -22,11 +23,11 @@ export default function ConditionsRows( props ) {
 			<div className="e-site-editor-conditions__row">
 				<div
 					className={ `e-site-editor-conditions__row-controls ${ condition.conflictErrors.length && 'e-site-editor-conditions__row-controls--error' }` }>
-					<ConditionType { ...condition } updateConditions={ update }/>
+					<ConditionType { ...condition } updateConditions={ update } />
 					<div className="e-site-editor-conditions__row-controls-inner">
-						<ConditionName { ...condition } updateConditions={ update }/>
-						<ConditionSub { ...condition } updateConditions={ update }/>
-						<ConditionSubId { ...condition } updateConditions={ update }/>
+						<ConditionName { ...condition } updateConditions={ update } />
+						<ConditionSub { ...condition } updateConditions={ update } />
+						<ConditionSubId { ...condition } updateConditions={ update } />
 					</div>
 				</div>
 				<Button
@@ -37,9 +38,23 @@ export default function ConditionsRows( props ) {
 					onClick={ () => remove( condition.id ) }
 				/>
 			</div>
-			<ConditionConflicts conflicts={ condition.conflictErrors }/>
+			<ConditionConflicts conflicts={ condition.conflictErrors } />
 		</div>,
 	);
+
+	const SaveButton = () => {
+		return (
+			<Button
+				variant="contained"
+				color="primary"
+				size="lg"
+				hideText={ isSaving }
+				icon={ isSaving ? 'eicon-loading eicon-animation-spin' : '' }
+				text={ __( 'Save & Close', 'elementor-pro' ) }
+				onClick={ () => save().then( props.onAfterSave ) }
+			/>
+		);
+	};
 
 	const isSaving = action.current === ConditionsProvider.actions.SAVE && action.loading;
 
@@ -70,15 +85,12 @@ export default function ConditionsRows( props ) {
 				/>
 			</div>
 			<div className="e-site-editor-conditions__footer">
-				<Button
-					variant="contained"
-					color="primary"
-					size="lg"
-					hideText={ isSaving }
-					icon={ isSaving ? 'eicon-loading eicon-animation-spin' : '' }
-					text={ __( 'Save & Close', 'elementor-pro' ) }
-					onClick={ () => save().then( props.onAfterSave ) }
-				/>
+				{ props?.loadPortal
+					? <ConditionButtonPortal>
+						<SaveButton />
+					</ConditionButtonPortal>
+					: <SaveButton />
+				}
 			</div>
 		</>
 	);
@@ -86,4 +98,5 @@ export default function ConditionsRows( props ) {
 
 ConditionsRows.propTypes = {
 	onAfterSave: PropTypes.func,
+	loadPortal: PropTypes.bool,
 };

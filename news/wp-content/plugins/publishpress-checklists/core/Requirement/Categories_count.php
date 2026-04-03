@@ -25,6 +25,13 @@ class Categories_count extends Base_counter
      */
     public $name = 'categories_count';
 
+     /**
+     * The name of the group, used for the tabs
+     * 
+     * @var string
+     */
+    public $group = 'categories';
+
     /**
      * @var int
      */
@@ -57,10 +64,11 @@ class Categories_count extends Base_counter
      */
     public function get_current_status($post, $option_value)
     {
-        $categories = wp_get_post_categories($post->ID);
+        $post_id = isset($post->ID) ? $post->ID : 0;
+        $categories = wp_get_post_categories($post_id);
 
         $count = count($categories);
 
-        return ($count >= $option_value[0]) && ($count <= $option_value[1]);
+        return ($count >= $option_value[0]) && ($option_value[1] == 0 || $count <= $option_value[1]);
     }
 }

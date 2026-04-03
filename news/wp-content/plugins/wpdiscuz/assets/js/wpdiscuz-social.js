@@ -21,12 +21,14 @@ if (((!parseInt(wpdiscuzAjaxObj.fbUseOAuth2) && parseInt(wpdiscuzAjaxObj.enableF
         });
     };
 }
+
 function wpcShareCommentFB(url, quote) {
     FB.ui({
         method: 'share',
         href: url,
         quote: quote,
-    }, function (response) {});
+    }, function (response) {
+    });
 }
 
 //============================== GOOGLE API INIT  ========================== //
@@ -39,7 +41,7 @@ jQuery(document).ready(function ($) {
             scrollTop: $('#comments').offset().top - 32
         }, 1000);
     }
-    $(document).on('click', '.wpd-comment-share .fa-facebook-f', function () {
+    $('body').on('click', '.wpd-comment-share .fa-facebook-f', function () {
         if (wpdiscuzAjaxObj.enableFbShare != 1) {
             return;
         }
@@ -54,13 +56,13 @@ jQuery(document).ready(function ($) {
     });
 
     var socialLoginProvider = '';
-    $(document).on('click', '#wpdcom .wpd-social-login .wpdiscuz-login-button', function () {
+    $('body').on('click', '#wpdcom .wpd-social-login .wpdiscuz-login-button', function () {
         var socialLoginContainer = $(this).parents('.wpd-social-login');
         socialLoginProvider = wpdInitProvider($(this));
         wpdSocialLoginIsConfirmAgreement(socialLoginProvider, socialLoginContainer);
     });
 
-    $(document).on('click', '#wpdcom .wpd-agreement-buttons-right .wpd-agreement-button', function () {
+    $('body').on('click', '#wpdcom .wpd-agreement-buttons-right .wpd-agreement-button', function () {
         var socialLoginContainer = $(this).parents('.wpd-form-wrap, .wpd-form').find('.wpd-social-login-agreement').slideUp(700);
         if ($(this).hasClass('wpd-agreement-button-agree')) {
             if (wpdiscuzAjaxObj.isCookiesEnabled) {
@@ -171,17 +173,11 @@ jQuery(document).ready(function ($) {
         if ($obj.hasClass('wpdsn-vk')) {
             provider = 'vk';
         }
-        if ($obj.hasClass('wpdsn-ok')) {
-            provider = 'ok';
-        }
         if ($obj.hasClass('wpdsn-linked')) {
             provider = 'linkedin';
         }
         if ($obj.hasClass('wpdsn-yandex')) {
             provider = 'yandex';
-        }
-        if ($obj.hasClass('wpdsn-mailru')) {
-            provider = 'mailru';
         }
         if ($obj.hasClass('wpdsn-weixin')) {
             provider = 'wechat';
@@ -195,6 +191,9 @@ jQuery(document).ready(function ($) {
         if ($obj.hasClass('wpdsn-baidu')) {
             provider = 'baidu';
         }
+        if ($obj.hasClass('wpdsn-telegram')) {
+            provider = 'telegram';
+        }
         return provider;
     }
 
@@ -204,5 +203,52 @@ jQuery(document).ready(function ($) {
         } else {
             container.find('.wpdiscuz-social-login-spinner').hide();
         }
+    }
+
+//============================== TELEGRAM  ========================== //
+    function haveTgAuthResult() {
+        var locationHash = '', re = /[#\?\&]tgAuthResult=([A-Za-z0-9\-_=]*)$/, match;
+        try {
+            locationHash = location.hash.toString();
+            if (match = locationHash.match(re)) {
+                location.hash = locationHash.replace(re, '');
+                var data = match[1] || '';
+                data = data.replace(/-/g, '+').replace(/_/g, '/');
+                var pad = data.length % 4;
+                if (pad > 1) {
+                    data += new Array(5 - pad).join('=');
+                }
+                return JSON.parse(window.atob(data));
+            }
+        } catch (e) {
+            console.log(e);
+        }
+        return false;
+    }
+
+    var telegramUser = haveTgAuthResult();
+    if (telegramUser) {
+
+        $('#wpdiscuz-loading-bar').show();
+        $.ajax({
+            type: 'POST',
+            url: wpdiscuzAjaxObj.url,
+            data: {
+                action: 'wpd_login_callback',
+                provider: 'telegram',
+                user: telegramUser,
+            }
+        }).done(function (response) {
+            console.log(response);
+            if (response.success) {
+                location.reload();
+            } else {
+                wpdiscuzAjaxObj.setCommentMessage(response.data, 'error');
+                $('#wpdiscuz-loading-bar').fadeOut(250);
+            }
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+            $('#wpdiscuz-loading-bar').fadeOut(250);
+        });
     }
 });

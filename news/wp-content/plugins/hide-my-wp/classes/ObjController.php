@@ -7,76 +7,83 @@
  * @since 4.0.0
  */
 
-defined('ABSPATH') || die('Cheatin\' uh?');
+defined('ABSPATH') || die('Cheating uh?');
 
+/**
+ * Controller for handling object instances and configurations.
+ */
 class HMWP_Classes_ObjController
 {
 
     /**
-     * 
+     * Array of instance objects for quick call
      *
-     * @var array of instances 
+     * @var array of instances
      */
     public static $instances;
 
     /**
-     * 
+     * Configuration settings for the application
      *
-     * @var array from core config 
+     * @var array
      */
     public static $config;
 
     /**
-     * Create class instance
+     * Retrieves an instance of the specified class with optional constructor arguments.
      *
-     * @param $className
-     * @param array $args
+     * @param  string  $className  Name of the class to retrieve.
+     * @param  array  $args  Optional constructor arguments to pass when instantiating the class.
      *
-     * @return mixed
-     * @throws Exception
+     * @return object|false Instance of the specified class if successful, otherwise false.
      */
-    public static function getClass( $className, $args = array() )
+    public static function getClass($className, $args = array())
     {
+		try {
+			// Check if the class can be found by its path
+			if ( $class = self::getClassByPath( $className ) ) {
 
-        if ($class = self::getClassByPath($className) ) {
+				// Check if the class instance already exists
+				if ( ! isset( self::$instances[ $className ] ) ) {
+					// Check if the class is already defined
+					if ( ! class_exists( $className ) ) {
+						// Include the class file
+						self::includeClass( $class['dir'], $class['name'] );
 
-            if (! isset(self::$instances[ $className ]) ) {
-                /* check if class is already defined */
-                if (! class_exists($className) || $className == get_class() ) {
-                        //include the class file
-                        self::includeClass($class['dir'], $class['name']);
+						// Check if it's an abstract class
+						$check    = new ReflectionClass( $className );
+						$abstract = $check->isAbstract();
+						if ( ! $abstract ) {
+							// Instantiate the class and store it in the instances array
+							self::$instances[ $className ] = new $className();
+							if ( ! empty( $args ) ) {
+								call_user_func_array( array( self::$instances[ $className ], '__construct' ), $args );
+							}
 
-                        //check if abstract
-                        $check    = new ReflectionClass($className);
-                        $abstract = $check->isAbstract();
-                    if (! $abstract ) {
-                        self::$instances[ $className ] = new $className();
-                        if (! empty($args) ) {
-                            call_user_func_array(array( self::$instances[ $className ], '__construct' ), $args);
-                        }
+							return self::$instances[ $className ];
+						} else {
+							// Mark abstract classes as true in instances array
+							self::$instances[ $className ] = true;
+						}
 
-                        return self::$instances[ $className ];
-                    } else {
-                        self::$instances[ $className ] = true;
-                    }
+					}
+				} else {
+					// Return the existing instance
+					return self::$instances[ $className ];
+				}
 
-                }
-            } else {
-                return self::$instances[ $className ];
-            }
+			} else {
 
-        }else{
+				// Stop all hooks on error
+				defined( 'HMWP_DISABLE' ) || define( 'HMWP_DISABLE', true );
 
-            //Stop all hooks on error
-            defined('HMWP_DISABLE') || define('HMWP_DISABLE', true);
+				// Show the file not found error
+				HMWP_Classes_Error::showError( 'Class Not Found: ' . $className, 'danger' );
 
-            //get the class dir and name
-            $class = self::getClassPath($className);
-
-            //Show the file not found error
-            HMWP_Classes_Error::showError('File not found: ' . $class['dir'] . $class['name'] . '.php', 'danger');
-
-        }
+			}
+		} catch (Exception $e) {
+			HMWP_Classes_Error::showError( 'Class Not Found: ' . $className, 'danger' );
+		}
 
         return false;
     }
@@ -84,25 +91,26 @@ class HMWP_Classes_ObjController
     /**
      * Clear the class instance
      *
-     * @param string $className
-     * @param array  $args
+     * @param  string  $className  - The name of the class to instantiate
+     * @param  array  $args  - Arguments to pass to the class constructor
      *
-     * @return mixed
+     * @return mixed - The class instance or false on failure
      * @throws Exception
      */
-    public static function newInstance( $className, $args = array() )
+    public static function newInstance($className, $args = array())
     {
 
-        if (self::getClassByPath($className) ) {
-            /* check if class is already defined */
-            if (class_exists($className) ) {
-                //check if abstract
-                self::$instances[ $className ] = new $className();
-                if (! empty($args) ) {
-                    call_user_func_array(array( self::$instances[ $className ], '__construct' ), $args);
+        // Check if the class can be found by its path
+        if (self::getClassByPath($className)) {
+            // Check if the class is already defined
+            if (class_exists($className)) {
+                // Initialize the new class
+                self::$instances[$className] = new $className();
+                if ( ! empty($args)) {
+                    call_user_func_array(array(self::$instances[$className], '__construct'), $args);
                 }
 
-                return self::$instances[ $className ];
+                return self::$instances[$className];
             } else {
                 return self::getClass($className, $args);
             }
@@ -114,19 +122,20 @@ class HMWP_Classes_ObjController
     /**
      * Include Class if exists
      *
-     * @param $classDir
-     * @param $className
+     * @param  string  $classDir  - Directory of the class file
+     * @param  string  $className  - Name of the class file
      *
      * @throws Exception
      */
-    private static function includeClass( $classDir, $className )
+    private static function includeClass($classDir, $className)
     {
 
-        //Initialize WordPress Filesystem
+        // Initialize WordPress Filesystem
         $wp_filesystem = self::initFilesystem();
 
-        $path = $classDir . $className . '.php';
-        if ($wp_filesystem->exists($path) ) {
+        $path = $classDir.$className.'.php';
+        // Include the class file if it exists
+        if ($wp_filesystem->exists($path)) {
             include_once $path;
         }
 
@@ -135,15 +144,15 @@ class HMWP_Classes_ObjController
     /**
      * Check if the class is correctly set
      *
-     * @param string $className
+     * @param  string  $className  - The name of the class to check
      *
-     * @return boolean
+     * @return boolean - True if the class path is valid, False otherwise
      */
-    private static function checkClassPath( $className )
+    private static function checkClassPath($className)
     {
         $path = preg_split('/[_]+/', $className);
-        if (is_array($path) && count($path) > 1 ) {
-            if (in_array(_HMWP_NAMESPACE_, $path) ) {
+        if (is_array($path) && count($path) > 1) {
+            if (in_array(_HMWP_NAMESPACE_, $path)) {
                 return true;
             }
         }
@@ -154,23 +163,24 @@ class HMWP_Classes_ObjController
     /**
      * Get the path of the class and name of the class
      *
-     * @param  string $className
-     * @return array|false
+     * @param  string  $className  - The name of the class
+     *
+     * @return array|false - Array with 'dir' and 'name', or false on failure
      */
-    public static function getClassPath( $className )
+    public static function getClassPath($className)
     {
         $dir = '';
 
-        if (self::checkClassPath($className) ) {
+        // Check if the class path is valid
+        if (self::checkClassPath($className)) {
 
             $path = preg_split('/[_]+/', $className);
-            for ( $i = 1; $i < sizeof($path) - 1; $i ++ ) {
-                $dir .= strtolower($path[ $i ]) . '/';
+            for ($i = 1; $i < sizeof($path) - 1; $i++) {
+                $dir .= strtolower($path[$i]).'/';
             }
 
             return array(
-            'dir'  => _HMWP_ROOT_DIR_ . '/' . $dir,
-            'name' => $path[ sizeof($path) - 1 ]
+                'dir' => _HMWP_ROOT_DIR_.'/'.$dir, 'name' => $path[sizeof($path) - 1]
             );
 
         }
@@ -182,19 +192,21 @@ class HMWP_Classes_ObjController
     /**
      * Get the valid class by path
      *
-     * @param  $className
-     * @return array|bool|false
+     * @param  string  $className  - The name of the class
+     *
+     * @return array|bool|false - Array with class directory and name, or false on failure
      */
-    public static function getClassByPath( $className )
+    public static function getClassByPath($className)
     {
 
-        //Initialize WordPress Filesystem
+        // Initialize WordPress Filesystem
         $wp_filesystem = self::initFilesystem();
 
-        //get the class dir and name
+        // Get the class dir and name
         $class = self::getClassPath($className);
 
-        if ($wp_filesystem->exists($class['dir'] . $class['name'] . '.php') || file_exists($class['dir'] . $class['name'] . '.php') ) {
+        // Return the class if the file exists
+        if ($wp_filesystem->exists($class['dir'].$class['name'].'.php') || file_exists($class['dir'].$class['name'].'.php')) {
             return $class;
         }
 
@@ -212,20 +224,23 @@ class HMWP_Classes_ObjController
         // The WordPress filesystem.
         global $wp_filesystem;
 
-        if (! function_exists('WP_Filesystem') ) {
-            include_once ABSPATH . 'wp-admin/includes/file.php';
+        if ( ! function_exists('WP_Filesystem')) {
+            include_once ABSPATH.'wp-admin/includes/file.php';
         }
 
+        // Call WordPress filesystem function
         WP_Filesystem();
 
-        if (!$wp_filesystem->connect()) {
-            add_filter( 'filesystem_method', function ($method) {
-                    return 'direct'; 
-                }, 1
-            );
+        // If the filesystem is not connected to the files,
+        // Initiate filesystem with direct connection to the server files
+        if ( ! $wp_filesystem->connect()) {
+            add_filter('filesystem_method', function ($method) {
+                return 'direct';
+            }, 1);
             WP_Filesystem();
         }
 
+        // return the filesystem object
         return $wp_filesystem;
     }
 

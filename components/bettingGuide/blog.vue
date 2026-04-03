@@ -13,7 +13,7 @@ const { data: posts } = await useFetch(() => `/AWS/bettingGuidesPosts?categoryId
             <div class="row gy-4 posts-list">
                 <BettingGuidePost v-for="post in posts" :imgUrl="post?._embedded['wp:featuredmedia'][0].source_url"
                     :title="post.title.rendered" category="Betting guides" :published="post.date" :slug="post.slug"
-                    :key="post.id" />
+                    :key="post?.id" />
             </div>
             <!-- <BettingGuidePagination /> -->
         </div>

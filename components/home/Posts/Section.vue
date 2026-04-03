@@ -22,7 +22,7 @@ const { pending, data: sportPosts } = await useLazyFetch(() => '/AWS/sportPosts?
                     Loading ...
                 </div>
 
-                <HomePostsCard v-else v-for="post in sportPosts" :post="post" :key="post.id" />
+                <HomePostsCard v-else v-for="post in sportPosts" :post="post" :key="post?.id" />
                 <!-- <HomePostsCard  v-for="post in sportPosts" :post="post" /> -->
 
                 <div class="text-center read-more-btn">

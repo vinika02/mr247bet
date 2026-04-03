@@ -14,6 +14,7 @@ use stdClass;
 /**
  * Legacy plugin class, porting the PublishPress dependencies.
  */
+#[\AllowDynamicProperties]
 class LegacyPlugin
 {
     /**
@@ -202,7 +203,6 @@ class LegacyPlugin
             'default_options'      => [],
             'options'              => false,
             'configure_page_cb'    => false,
-            'configure_link_text'  => __('Configure', 'publishpress-checklists'),
             // These messages are applied to modules and can be overridden if custom messages are needed
             'messages'             => [
                 'form-error'          => __(
@@ -490,7 +490,7 @@ class LegacyPlugin
             }
 
             // Check if we have other menu items, except settings and add-ons. They will be added to the end.
-            if (count($submenu_pp) > 2) {
+            if (count($submenu_pp) > 1) {
                 // Add the additional items
                 foreach ($submenu_pp as $index => $item) {
                     if (!in_array($index, $relevantMenus)) {

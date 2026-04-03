@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package PublishPress
  * @author  PublishPress
@@ -34,11 +35,16 @@ use PublishPress\Checklists\Core\Legacy\Util;
 use PublishPress\Checklists\Core\Plugin;
 use PublishPress\Checklists\Core\Requirement\Base_requirement;
 use PublishPress\Checklists\Core\Requirement\Custom_item;
+use PublishPress\Checklists\Core\Requirement\Openai_item;
+use PublishPress\Checklists\Core\Utils\FieldsTabs;
+use PublishPress\Checklists\Core\Utils\ElementorUtils;
+use PublishPress\Checklists\Core\Requirement\Pro_Requirement;
 
 if (!class_exists('PPCH_Checklists')) {
     /**
      * class PPCH_Checklists
      */
+    #[\AllowDynamicProperties]
     class PPCH_Checklists extends Module
     {
 
@@ -77,6 +83,11 @@ if (!class_exists('PPCH_Checklists')) {
         protected $post_types = [];
 
         /**
+         * List of tab for settings page
+         */
+        protected $field_tabs = [];
+
+        /**
          * Instace for the module
          *
          * @var stdClass
@@ -98,16 +109,14 @@ if (!class_exists('PPCH_Checklists')) {
                     'publishpress_checklists_plugin_title',
                     esc_html__('Checklists', 'publishpress-checklists')
                 ),
-                'short_description' => esc_html__(
-                    'Define tasks that must be complete before content is published.',
-                    'publishpress-checklists'
-                ),
+                'short_description' => '',
                 'module_url'        => $this->module_url,
                 'icon_class'        => 'dashicons dashicons-feedback',
                 'slug'              => 'checklists',
                 'default_options'   => [
                     'enabled'      => 'on',
                     'custom_items' => [],
+                    'openai_items' => [],
                 ],
                 'autoload'          => true,
             ];
@@ -119,7 +128,7 @@ if (!class_exists('PPCH_Checklists')) {
             );
 
             $this->module = $legacyPlugin->register_module($this->module_name, $args);
-
+            add_action('admin_init', [$this, 'retrieveFieldTabs']);
         }
 
         public function migrateLegacyOptions()
@@ -142,6 +151,7 @@ if (!class_exists('PPCH_Checklists')) {
                     $settingsOptions->enabled                  = 'on';
                     $settingsOptions->loaded_once              = 1;
                     $settingsOptions->post_types               = isset($legacyOptions->post_types) ? $legacyOptions->post_types : ['post' => 'on'];
+
                     $settingsOptions->show_warning_icon_submit = isset($legacyOptions->show_warning_icon_submit) ? $legacyOptions->show_warning_icon_submit : Base_requirement::VALUE_YES;
 
                     unset($legacyOptions->post_types, $legacyOptions->show_warning_icon_submit);
@@ -157,10 +167,10 @@ if (!class_exists('PPCH_Checklists')) {
             if (!(bool)get_option(self::FLAG_OPTIONS_MIGRATED_2_6_0) && function_exists('get_role')) {
                 //add newly introduced checklist role for roles with manage_options 
                 $all_roles = $wp_roles->roles;
-                if(is_array($all_roles) && !empty($all_roles)) {
+                if (is_array($all_roles) && !empty($all_roles)) {
                     foreach ($all_roles as $role => $details) {
                         $role = get_role($role);
-                        if ($role->has_cap('manage_options')) {
+                        if ($role->has_cap('manage_options') || $role->name === 'administrator') {
                             $role->add_cap('manage_checklists');
                         }
                     }
@@ -290,6 +300,19 @@ if (!class_exists('PPCH_Checklists')) {
                     }
                 }
             }
+
+            if (isset($this->module->options->openai_items) && !empty($this->module->options->openai_items)) {
+                foreach ($this->module->options->openai_items as $id) {
+                    $id = trim((string)$id);
+
+                    // Check if there is a title set for this post type. If not, we do not instantiate
+                    $var_name = $id . '_title';
+                    if (isset($this->module->options->{$var_name}[$post_type])) {
+                        $openai_item                      = new Openai_item($id, $this->module, $post_type);
+                        $this->requirements[$post_type][] = $openai_item;
+                    }
+                }
+            }
         }
 
         /**
@@ -337,13 +360,21 @@ if (!class_exists('PPCH_Checklists')) {
             $taxonomies = $this->getPostTypeTaxonomies($post_type);
 
             $taxonomies_map = [
-                'category' => '\\PublishPress\\Checklists\\Core\\Requirement\\Categories_count',
-                'post_tag' => '\\PublishPress\\Checklists\\Core\\Requirement\\Tags_count',
+                'category' => [
+                    '\\PublishPress\\Checklists\\Core\\Requirement\\Categories_count',
+                    '\\PublishPress\\Checklists\\Core\\Requirement\\Required_categories',
+                    '\\PublishPress\\Checklists\\Core\\Requirement\\Prohibited_categories',
+                ],
+                'post_tag' => [
+                    '\\PublishPress\\Checklists\\Core\\Requirement\\Tags_count',
+                    '\\PublishPress\\Checklists\\Core\\Requirement\\Required_tags',
+                    '\\PublishPress\\Checklists\\Core\\Requirement\\Prohibited_tags',
+                ],
             ];
 
             foreach ($taxonomies as $taxonomy) {
                 if (array_key_exists($taxonomy, $taxonomies_map)) {
-                    $classes[] = $taxonomies_map[$taxonomy];
+                    $classes = array_merge($classes, $taxonomies_map[$taxonomy]);
                 } else {
                     $classes[] = maybe_serialize(
                         [
@@ -369,15 +400,42 @@ if (!class_exists('PPCH_Checklists')) {
                     '\\PublishPress\\Checklists\\Core\\Requirement\\Internal_links',
                     '\\PublishPress\\Checklists\\Core\\Requirement\\External_links',
                     '\\PublishPress\\Checklists\\Core\\Requirement\\Image_alt',
+                    '\\PublishPress\\Checklists\\Core\\Requirement\\Image_alt_count',
                     '\\PublishPress\\Checklists\\Core\\Requirement\\Validate_links',
                 ],
                 'thumbnail' => [
                     '\\PublishPress\\Checklists\\Core\\Requirement\\Featured_image',
+                    '\\PublishPress\\Checklists\\Core\\Requirement\\Featured_image_alt',
+                    '\\PublishPress\\Checklists\\Core\\Requirement\\Featured_image_caption',
                 ],
                 'excerpt'   => [
                     '\\PublishPress\\Checklists\\Core\\Requirement\\Filled_excerpt',
                 ],
             ];
+
+            // Config-driven Pro rules
+            if (!Util::isChecklistsProActive()) {
+                $pro_requirements_file = __DIR__ . '/pro-requirements.php';
+                if ( file_exists( $pro_requirements_file ) ) {
+                    $pro_requirements = include $pro_requirements_file;
+                    foreach ( $pro_requirements as $req ) {
+                        if (
+                        ! empty( $req['post_types'] )
+                        && ! in_array( $post_type, (array) $req['post_types'], true )
+                        ) {
+                            continue;
+                        }
+                        
+                        $support = Pro_Requirement::get_support_for_config( $req );
+                        if ( post_type_supports( $post_type, $support ) ) {
+                            $supports_map[ $support ][] = [
+                                'class'  => Pro_Requirement::class,
+                                'params' => $req,
+                            ];
+                        }
+                    }
+                }
+            }
 
             foreach ($supports_map as $supports => $requirements) {
                 foreach ($requirements as $requirement) {
@@ -420,6 +478,7 @@ if (!class_exists('PPCH_Checklists')) {
             add_filter('mce_external_plugins', [$this, 'add_mce_plugin']);
 
             add_action('admin_enqueue_scripts', [$this, 'add_admin_scripts']);
+            add_action('admin_enqueue_scripts', [$this, 'enqueueAdminScripts']);
 
             do_action('publishpress_checklists_load_addons');
 
@@ -430,6 +489,9 @@ if (!class_exists('PPCH_Checklists')) {
             add_filter('publishpress_checklists_rules_list', [$this, 'filterRulesList']);
 
             add_filter('publishpress_checklists_requirement_list', [$this, 'filterRequirementsRule'], 1000);
+
+            // Redirect on plugin activation
+            add_action('admin_init', [$this, 'redirect_on_activate'], 2000);
         }
 
         /**
@@ -437,18 +499,14 @@ if (!class_exists('PPCH_Checklists')) {
          *
          * @since 0.7
          */
-        public function install()
-        {
-        }
+        public function install() {}
 
         /**
          * Upgrade our data in case we need to
          *
          * @since 0.7
          */
-        public function upgrade($previous_version)
-        {
-        }
+        public function upgrade($previous_version) {}
 
         /**
          * Generate a link to one of the editorial metadata actions
@@ -505,6 +563,38 @@ if (!class_exists('PPCH_Checklists')) {
                         'all'
                     );
 
+                    // Add inline CSS for custom colors
+                    $legacyPlugin = Factory::getLegacyPlugin();
+                    $settings_options = isset($legacyPlugin->settings->module->options) ? $legacyPlugin->settings->module->options : null;
+                    
+                    $required_complete_color = isset($settings_options->required_complete_color) ? $settings_options->required_complete_color : '#66bb6a';
+                    $required_incomplete_color = isset($settings_options->required_incomplete_color) ? $settings_options->required_incomplete_color : '#ef5350';
+                    $recommended_complete_color = isset($settings_options->recommended_complete_color) ? $settings_options->recommended_complete_color : '#66bb6a';
+                    $recommended_incomplete_color = isset($settings_options->recommended_incomplete_color) ? $settings_options->recommended_incomplete_color : '#ef5350';
+
+                    $custom_css = "
+                        /* Required (block) items - Complete */
+                        .pp-checklists-req.pp-checklists-block.status-yes *:not(.pp-checklists-check-item):not(.requirement-button-task-wrap):not(.request-response):not(.request-response *) {
+                            color: {$required_complete_color} !important;
+                        }
+                        
+                        /* Required (block) items - Incomplete */
+                        .pp-checklists-req.pp-checklists-block.status-no *:not(.pp-checklists-check-item):not(.requirement-button-task-wrap):not(.request-response):not(.request-response *) {
+                            color: {$required_incomplete_color} !important;
+                        }
+                        
+                        /* Recommended (warning) items - Complete */
+                        .pp-checklists-req.pp-checklists-warning.status-yes *:not(.pp-checklists-check-item):not(.requirement-button-task-wrap):not(.request-response):not(.request-response *) {
+                            color: {$recommended_complete_color} !important;
+                        }
+                        
+                        /* Recommended (warning) items - Incomplete */
+                        .pp-checklists-req.pp-checklists-warning.status-no *:not(.pp-checklists-check-item):not(.requirement-button-task-wrap):not(.request-response):not(.request-response *) {
+                            color: {$recommended_incomplete_color} !important;
+                        }
+                    ";
+                    wp_add_inline_style('pp-checklists-requirements', $custom_css);
+
                     wp_register_style(
                         'pp-remodal',
                         $this->module_url . 'assets/css/remodal.css',
@@ -531,7 +621,7 @@ if (!class_exists('PPCH_Checklists')) {
                     wp_enqueue_style('pp-remodal-default-theme');
                     wp_enqueue_script('pp-remodal');
                 }
-            } elseif (!is_null($screen) && $screen->base === 'toplevel_page_ppch-checklists') {
+            } elseif (isset($_GET['page']) && $_GET['page'] === 'ppch-checklists') {
                 // Admin pages
                 wp_enqueue_style(
                     'pp-checklists-global-checklists',
@@ -564,6 +654,11 @@ if (!class_exists('PPCH_Checklists')) {
                     Plugin::RULE_WARNING,
                     Plugin::RULE_BLOCK,
                 );
+                $legacyPlugin = Factory::getLegacyPlugin();
+                $settings_options = isset($legacyPlugin->settings->module->options) ? $legacyPlugin->settings->module->options : null;
+                $editor_panel_rename_enabled = isset($settings_options->enable_rename_label_editor_panel)
+                    ? $settings_options->enable_rename_label_editor_panel
+                    : Base_requirement::VALUE_NO;
 
                 wp_localize_script(
                     'pp-checklists-global-checklists',
@@ -573,23 +668,97 @@ if (!class_exists('PPCH_Checklists')) {
                         'roles'             => $roles,
                         'first_post_type'   => current($postTypes),
                         'required_rules'    => $required_rules,
+                        'editor_panel_rename_enabled' => Base_requirement::VALUE_YES === $editor_panel_rename_enabled,
+                        'ajaxurl'           => admin_url('admin-ajax.php'),
+                        'nonce'             => wp_create_nonce('pp-checklists-rules'),
                         'submit_error'      => esc_html__(
-                            'Please make sure to complete the settings for',
+                            'options cannot be empty.',
                             'publishpress-checklists'
                         ),
                         'custom_item_error' => esc_html__(
                             'Please make sure to add a name for all the custom tasks.',
                             'publishpress-checklists'
                         ),
+                        'rename_modal_title' => esc_html__(
+                            'Rename task label',
+                            'publishpress-checklists'
+                        ),
+                        'rename_modal_admin_label' => esc_html__(
+                            'Label for WP Admin / backend',
+                            'publishpress-checklists'
+                        ),
+                        'rename_modal_admin_placeholder' => esc_html__(
+                            'Leave empty to use the default WP Admin label',
+                            'publishpress-checklists'
+                        ),
+                        'rename_modal_editor_label' => esc_html__(
+                            'Label for Editing screen / frontend',
+                            'publishpress-checklists'
+                        ),
+                        'rename_modal_editor_placeholder' => esc_html__(
+                            'Leave empty to use the default editing screen label',
+                            'publishpress-checklists'
+                        ),
+                        'rename_modal_preview_label' => esc_html__(
+                            'Preview in editing screen:',
+                            'publishpress-checklists'
+                        ),
+                        'rename_modal_preview_default' => esc_html__(
+                            'Default checklist label will be used.',
+                            'publishpress-checklists'
+                        ),
+                        'rename_modal_save' => esc_html__(
+                            'Save',
+                            'publishpress-checklists'
+                        ),
+                        'rename_modal_cancel' => esc_html__(
+                            'Cancel',
+                            'publishpress-checklists'
+                        ),
                         'editable_by'       => esc_html__(
                             'Which roles can mark this task as complete?',
                             'publishpress-checklists'
                         ),
+                        'noResults'         => esc_html__('No results found', 'publishpress-checklists'),
+                        'searching'         => esc_html__('Searching…', 'publishpress-checklists'),
                         'remove'            => esc_html__('Remove', 'publishpress-checklists'),
-                        'enter_name'        => esc_html__('Enter name of custom task', 'publishpres-checklists'),
+                        'custom_enter_name' => esc_html__('Enter name of custom task', 'publishpress-checklists'),
+                        'openai_enter_name' => esc_html__('Enter OpenAI task prompt', 'publishpress-checklists'),
+                        'suggestion_title' => esc_html__('Suggested Prompts', 'publishpress-checklists'),
+                        'openai_option_description' => esc_html__('What\'s the expected OpenAI response to mark the requirement as pass?', 'publishpress-checklists'),
+                        'openai_suggestions' => [
+                            'clear_content' => [
+                                'label' => esc_html__('Clear Content', 'publishpress-checklists'),
+                                'prompt' => esc_html__('Is this content clear and easy to read?', 'publishpress-checklists'),
+                            ],
+                            'friendly_tone' => [
+                                'label' => esc_html__('Friendly Tone Content', 'publishpress-checklists'),
+                                'prompt' => esc_html__('Is this content tone friendly?', 'publishpress-checklists'),
+                            ],
+                            'professional_tone' => [
+                                'label' => esc_html__('Professional Tone Content', 'publishpress-checklists'),
+                                'prompt' => esc_html__('Is this content tone professional?', 'publishpress-checklists'),
+                            ],
+                            'persuasive_tone' => [
+                                'label' => esc_html__('Persuasive Tone Content', 'publishpress-checklists'),
+                                'prompt' => esc_html__('Is this content tone persuasive?', 'publishpress-checklists'),
+                            ],
+                            'empathetic_tone' => [
+                                'label' => esc_html__('Empathetic Tone Content', 'publishpress-checklists'),
+                                'prompt' => esc_html__('Is this content tone empathetic?', 'publishpress-checklists'),
+                            ],
+                            'adventurous_tone' => [
+                                'label' => esc_html__('Adventurous Tone Content', 'publishpress-checklists'),
+                                'prompt' => esc_html__('Is this content tone adventurous?', 'publishpress-checklists'),
+                            ],
+                            'promotional_tone' => [
+                                'label' => esc_html__('Promotional Tone Content', 'publishpress-checklists'),
+                                'prompt' => esc_html__('Is this content tone promotional?', 'publishpress-checklists'),
+                            ]
+                        ],
                     ]
                 );
-            } elseif (!is_null($screen) && $screen->base === 'checklists_page_ppch-settings') {
+            } elseif (isset($_GET['page']) && $_GET['page'] === 'ppch-settings') {
                 // Admin pages
                 wp_enqueue_style(
                     'pp-checklists-global-checklists',
@@ -597,6 +766,44 @@ if (!class_exists('PPCH_Checklists')) {
                     [],
                     PPCH_VERSION,
                     'all'
+                );
+            }
+        }
+
+        /**
+         * Enqueue scripts and stylesheets for the admin pages.
+         */
+        public function enqueueAdminScripts()
+        {
+            if (isset($_GET['page']) && $_GET['page'] === 'ppch-checklists') {
+                wp_enqueue_script(
+                    'publishpress-select2-js',
+                    plugins_url('/assets/lib/select2-v4.0.13/js/select2.full.min.js', PPCH_FILE),
+                    [],
+                    PPCH_VERSION
+                );
+
+                wp_enqueue_script(
+                    'publishpress-checklists-admin-js',
+                    plugins_url('/modules/permissions/assets/js/admin.js', PPCH_FILE),
+                    ['jquery', 'publishpress-select2-js'],
+                    PPCH_VERSION
+                );
+
+                wp_enqueue_style(
+                    'publishpress-select2-css',
+                    plugins_url('/assets/lib/select2-v4.0.13/css/select2.min.css', PPCH_FILE),
+                    false,
+                    PPCH_VERSION,
+                    'screen'
+                );
+
+                wp_enqueue_style(
+                    'publishpress-checklists-admin-css',
+                    plugins_url('/modules/permissions/assets/css/admin.css', PPCH_FILE),
+                    false,
+                    PPCH_VERSION,
+                    'screen'
                 );
             }
         }
@@ -612,19 +819,24 @@ if (!class_exists('PPCH_Checklists')) {
          */
         public function handle_post_meta_boxes()
         {
-            /**
-             *
-             * TODO:
-             * - Check if there is any active requirement before display the box
-             */
-
-
             $title = esc_html__('Checklist', 'publishpress-checklists');
-
             $supported_post_types = $this->getSelectedPostTypes();
 
+            // Hide checklist meta box from acf plugin
+            $excludeKey = 'acf-field-group';
+            if (array_key_exists($excludeKey, $supported_post_types)) {
+                unset($supported_post_types[$excludeKey]);
+            }
+
             foreach ($supported_post_types as $post_type => $label) {
-                add_meta_box(self::METADATA_TAXONOMY, $title, [$this, 'display_meta_box'], $post_type, 'side', 'high');
+                // Create a dummy post object for requirement checks
+                $dummy_post = (object) [ 'post_type' => $post_type ];
+                $requirements = [];
+                $requirements = apply_filters('publishpress_checklists_requirement_list', $requirements, $dummy_post);
+
+                if (!empty($requirements)) {
+                    add_meta_box(self::METADATA_TAXONOMY, $title, [$this, 'display_meta_box'], $post_type, 'side', 'high');
+                }
             }
         }
 
@@ -637,6 +849,8 @@ if (!class_exists('PPCH_Checklists')) {
             foreach ($postTypeSlugs as $slug) {
                 $postType = get_post_type_object($slug);
                 if (is_object($postType)) {
+                    // Need to overide the value to prevent user confusion
+                    if ($slug === 'acf-field-group') $postType->label = 'ACF';
                     $postTypes[$slug] = $postType->label;
                 }
             }
@@ -660,6 +874,10 @@ if (!class_exists('PPCH_Checklists')) {
 
             $legacyPlugin = Factory::getLegacyPlugin();
 
+            $options = get_option('publishpress_checklists_settings_options');
+
+            $checklistsLink = add_query_arg(['page' => 'ppch-checklists'], get_admin_url(null, 'admin.php'));
+
             // Add the scripts
             if (!empty($requirements)) {
                 wp_enqueue_script(
@@ -670,13 +888,23 @@ if (!class_exists('PPCH_Checklists')) {
                     true
                 );
 
+                // Get custom icon settings
+                $settings_options = $legacyPlugin->settings->module->options;
+                $complete_icon = (!empty($settings_options->complete_icon) && trim($settings_options->complete_icon) !== '') ? trim($settings_options->complete_icon) : 'dashicons-yes';
+                $incomplete_icon = (!empty($settings_options->incomplete_icon) && trim($settings_options->incomplete_icon) !== '') ? trim($settings_options->incomplete_icon) : 'dashicons-no';
+
                 wp_localize_script(
                     'pp-checklists-requirements',
                     'ppChecklists',
                     [
                         'requirements'                    => $new_requirements_array,
+                        'configure_link'                  => $checklistsLink,
+                        'nonce'                           => wp_create_nonce('pp-checklists-requirements'),
+                        'empty_checklist_message'         => esc_html__(
+                            'You don\'t have to complete any Checklist tasks.',
+                            'publishpress-checklists'
+                        ),
                         'label_checklist'                 => esc_html__('Checklist', 'publishpress-checklists'),
-                        'label_configure'                 => esc_html__('Configure', 'publishpress-checklists'),
                         'msg_missed_optional_publishing'  => esc_html__(
                             'Are you sure you want to publish anyway?',
                             'publishpress-checklists'
@@ -701,11 +929,17 @@ if (!class_exists('PPCH_Checklists')) {
                             'Not required, but important: ',
                             'publishpress-checklists'
                         ),
-                        'show_warning_icon_submit'        => Base_requirement::VALUE_YES === $legacyPlugin->settings->module->options->show_warning_icon_submit,
-                        'title_warning_icon'              => esc_html__('One or more items in the checklist are not completed'),
-                        'is_gutenberg_active'             => $this->is_gutenberg_active(),
-                        'user_can_manage_options'         => current_user_can( 'manage_options' ),
-                        'configure_url'                   => esc_url( $this->get_admin_link() ),
+                        'show_warning_icon_submit' => Base_requirement::VALUE_YES === $legacyPlugin->settings->module->options->show_warning_icon_submit,
+                        'disable_publish_button'   => Base_requirement::VALUE_YES === $legacyPlugin->settings->module->options->disable_publish_button,
+                        'title_warning_icon'       => esc_html__('One or more items in the checklist are not completed', 'publishpress-checklists'),
+                        'is_gutenberg_active'      => $this->is_gutenberg_active(),
+                        'user_can_manage_options'  => current_user_can('manage_options'),
+                        'configure_url'            => esc_url($this->get_admin_link()),
+                        'status_filter_enabled'    => isset($options->status_filter_enabled) ? $options->status_filter_enabled : 'off',
+                        'customIcons'              => [
+                            'complete'   => $complete_icon,
+                            'incomplete' => $incomplete_icon,
+                        ],
                     ]
                 );
 
@@ -714,8 +948,6 @@ if (!class_exists('PPCH_Checklists')) {
 
             // Render the box
             $templateLoader = Factory::getTemplateLoader();
-
-            $checklistsLink = add_query_arg(['page' => 'ppch-checklists'], get_admin_url(null, 'admin.php'));
 
             $templateLoader->load(
                 'checklists',
@@ -731,6 +963,7 @@ if (!class_exists('PPCH_Checklists')) {
                             'publishpress-checklists'
                         ),
                         'required'                => esc_html__('Required', 'publishpress-checklists'),
+                        'check'                   => esc_html__('Check Now', 'publishpress-checklists'),
                         'ok'                      => esc_html__('Ok', 'publishpress-checklists'),
                         'no'                      => esc_html__('No', 'publishpress-checklists'),
                         'yes'                     => esc_html__('Yes', 'publishpress-checklists'),
@@ -796,15 +1029,18 @@ if (!class_exists('PPCH_Checklists')) {
         {
             // Authentication checks: make sure data came from our meta box and that the current user is allowed to edit the post
             // TODO: switch to using check_admin_referrer? See core (e.g. edit.php) for usage
-            if (!isset($_POST[self::METADATA_TAXONOMY . "_nonce"])
-                || !wp_verify_nonce(sanitize_key($_POST[self::METADATA_TAXONOMY . "_nonce"]), __FILE__)) {
+            if (
+                !isset($_POST[self::METADATA_TAXONOMY . "_nonce"])
+                || !wp_verify_nonce(sanitize_key($_POST[self::METADATA_TAXONOMY . "_nonce"]), __FILE__)
+            ) {
                 return $id;
             }
 
             if ((defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
                 || !array_key_exists($post->post_type, $this->getSelectedPostTypes())
                 || $post->post_type == 'post' && !current_user_can('edit_post', $id)
-                || $post->post_type == 'page' && !current_user_can('edit_page', $id)) {
+                || $post->post_type == 'page' && !current_user_can('edit_page', $id)
+            ) {
                 return $id;
             }
 
@@ -890,7 +1126,9 @@ if (!class_exists('PPCH_Checklists')) {
                 'global-checklists',
                 [
                     'requirements' => $new_requirements_array,
+                    'tabs'         => $this->field_tabs,
                     'post_types'   => $post_types,
+                    'success'      => isset($_GET['success']) && $_GET['success'] === '1',
                     'lang'         => [
                         'description'     => esc_html__('Task', 'publishpress-checklists'),
                         'action'          => esc_html__('Disabled, Recommended or Required', 'publishpress-checklists'),
@@ -952,6 +1190,7 @@ if (!class_exists('PPCH_Checklists')) {
 
                 if ($screen->base === 'post' && array_key_exists($screen->post_type, $supported_post_types)) {
                     // Required thing to build Gutenberg Blocks
+
                     wp_enqueue_script(
                         'pp-checklists-requirements-gutenberg',
                         plugins_url('/modules/checklists/assets/js/gutenberg-warning.min.js', PPCH_FILE),
@@ -965,6 +1204,47 @@ if (!class_exists('PPCH_Checklists')) {
                         ],
                         PPCH_VERSION,
                         true
+                    );
+                    wp_enqueue_script(
+                        'pp-checklists-panel-gutenberg',
+                        plugins_url('/modules/checklists/assets/js/gutenberg-panel.min.js', PPCH_FILE),
+                        [
+                            'wp-i18n',
+                            'wp-element',
+                            'wp-hooks',
+                            'wp-edit-post',
+                            'wp-polyfill',
+                            'react',
+                            'react-dom',
+                        ],
+                        PPCH_VERSION,
+                        true
+                    );
+                    $legacyPlugin = Factory::getLegacyPlugin();
+                    $settings_options = isset($legacyPlugin->settings->module->options) ? $legacyPlugin->settings->module->options : null;
+                    $complete_icon = (!empty($settings_options->complete_icon) && trim($settings_options->complete_icon) !== '') ? trim($settings_options->complete_icon) : 'dashicons-yes';
+                    $incomplete_icon = (!empty($settings_options->incomplete_icon) && trim($settings_options->incomplete_icon) !== '') ? trim($settings_options->incomplete_icon) : 'dashicons-no';
+                    
+                    wp_localize_script(
+                        'pp-checklists-panel-gutenberg',
+                        'i18n',
+                        array(
+                            'completeRequirementMessage' => __("Please complete the required(*) checklists task.", "publishpress-checklists"),
+                            'checklistLabel' => __("Checklists", "publishpress-checklists"),
+                            'noTaskLabel' => __("You don't have to complete any Checklist tasks.", "publishpress-checklists"),
+                            'required' => __("required", "publishpress-checklists"),
+                            'elementorNotice' => __("Checklists tasks are not available in Elementor editors", "publishpress-checklists"),
+                            'isElementorEnabled' => ElementorUtils::isElementorEnabled() ? "1" : "0",
+                            'supportedPostTypes' => array_keys($supported_post_types),
+                            'customIcons' => array(
+                                'complete' => $complete_icon,
+                                'incomplete' => $incomplete_icon,
+                            ),
+                            'customColors' => array(
+                                'complete' => isset($settings_options->complete_color) ? $settings_options->complete_color : '#66bb6a',
+                                'incomplete' => isset($settings_options->incomplete_color) ? $settings_options->incomplete_color : '#ef5350',
+                            ),
+                        )
                     );
                 }
             }
@@ -1024,7 +1304,25 @@ if (!class_exists('PPCH_Checklists')) {
             update_option('publishpress_checklists_checklists_options', $options);
 
             // Reload the module's options after saving.
-            wp_redirect($_SERVER['HTTP_REFERER']);
+            if (isset($_SERVER['HTTP_REFERER'])) {
+                $redirect_url = $_SERVER['HTTP_REFERER'];
+            } else {
+                $redirect_url = admin_url('admin.php?page=' . self::MENU_SLUG);
+            }
+            
+            // Preserve tab state in redirect URL
+            if (isset($_POST['ppch_active_post_type']) && !empty($_POST['ppch_active_post_type'])) {
+                $redirect_url = add_query_arg('post_type', sanitize_text_field($_POST['ppch_active_post_type']), $redirect_url);
+            }
+            
+            if (isset($_POST['ppch_active_inner_tab']) && !empty($_POST['ppch_active_inner_tab'])) {
+                $redirect_url = add_query_arg('inner_tab', sanitize_text_field($_POST['ppch_active_inner_tab']), $redirect_url);
+            }
+            
+            // Add success parameter to show success notice
+            $redirect_url = add_query_arg('success', '1', $redirect_url);
+            
+            wp_redirect($redirect_url);
             exit();
         }
 
@@ -1041,6 +1339,17 @@ if (!class_exists('PPCH_Checklists')) {
                         foreach ($new_options[$id . '_title'] as $post_type => $title) {
                             $custom_item = new Custom_item($id, $this->module, $post_type);
                             $custom_item->init();
+                        }
+                    }
+                }
+            }
+
+            if (isset($new_options['openai_items']) && !empty($new_options['openai_items'])) {
+                foreach ($new_options['openai_items'] as $id) {
+                    if (isset($new_options[$id . '_title'])) {
+                        foreach ($new_options[$id . '_title'] as $post_type => $title) {
+                            $openai_item = new Openai_item($id, $this->module, $post_type);
+                            $openai_item->init();
                         }
                     }
                 }
@@ -1062,10 +1371,10 @@ if (!class_exists('PPCH_Checklists')) {
 
                 //option value is an array of keys => $value pair
                 $sanitized_value = [];
-                foreach($option_value as $option_value_key => $option_value_value){
+                foreach ($option_value as $option_value_key => $option_value_value) {
                     $sanitized_value[sanitize_key($option_value_key)] = is_array($option_value_value) ? array_map('sanitize_text_field', $option_value_value) : sanitize_text_field($option_value_value);
                 }
-                
+
                 //unset original option sanitize_key can potentially change key value if they are manipulated ?
                 unset($new_options[$option_key]);
 
@@ -1075,7 +1384,7 @@ if (!class_exists('PPCH_Checklists')) {
 
             return $new_options;
         }
-        
+
         /**
          * Rearrange the requirements array by custom order
          *
@@ -1112,6 +1421,40 @@ if (!class_exists('PPCH_Checklists')) {
 
             return $new_requirements_array;
         }
-        
+
+
+        /**
+         * Redirect user on plugin activation
+         *
+         * @return void
+         */
+        public function redirect_on_activate()
+        {
+            if (get_option('ppch_activated')) {
+                delete_option('ppch_activated');
+                wp_redirect(admin_url("admin.php?page=ppch-checklists"));
+                exit;
+            }
+        }
+
+        /**
+         * Retrieves the field tabs and assigns them to the class property.
+         */
+        public function retrieveFieldTabs()
+        {
+            // Get the singleton instance
+            $fieldsTabs = FieldsTabs::getInstance();
+            $postTypes = $this->get_post_types();
+            $allFieldsTabs =  $fieldsTabs->getFieldsTabs();
+            $filteredFieldsTabs = array_filter($allFieldsTabs, function ($_, $key) {
+                return !in_array($key, ['advanced-custom-fields']);
+            }, ARRAY_FILTER_USE_BOTH);
+            $result = [];
+            foreach ($postTypes as $key => $postType) {
+                $result[$key] = $filteredFieldsTabs;
+            }
+
+            $this->field_tabs = apply_filters('publishpress_checklists_filter_field_tabs', $result, $allFieldsTabs);
+        }
     }
 }

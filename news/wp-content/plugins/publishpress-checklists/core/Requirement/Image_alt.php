@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     PublishPress\Checklists
  * @author      PublishPress <help@publishpress.com>
@@ -22,9 +23,16 @@ class Image_alt extends Base_simple
     public $name = 'image_alt';
 
     /**
+     * The name of the group, used for the tabs
+     * 
+     * @var string
+     */
+    public $group = 'images';
+
+    /**
      * @var int
      */
-    public $position = 90;
+    public $position = 130;
 
     /**
      * Initialize the language strings for the instance
@@ -33,8 +41,8 @@ class Image_alt extends Base_simple
      */
     public function init_language()
     {
-        $this->lang['label']          = __('Alt text for all images', 'publishpress-checklists');
-        $this->lang['label_settings'] = __('Alt text for all images', 'publishpress-checklists');
+        $this->lang['label']          = __('All images have Alt text', 'publishpress-checklists');
+        $this->lang['label_settings'] = __('All images have Alt text', 'publishpress-checklists');
     }
 
     /**
@@ -72,7 +80,8 @@ class Image_alt extends Base_simple
      */
     public function get_current_status($post, $option_value)
     {
-        $count = count($this->missing_alt_images($post->post_content));
+        $post_content = isset($post->post_content) ? $post->post_content : '';
+        $count = count($this->missing_alt_images($post_content));
 
         return $count == 0;
     }

@@ -21,10 +21,17 @@ class External_links extends Base_counter
      */
     public $name = 'external_links';
 
+     /**
+     * The name of the group, used for the tabs
+     * 
+     * @var string
+     */
+    public $group = 'links';
+
     /**
      * @var int
      */
-    public $position = 70;
+    public $position = 110;
 
     /**
      * Initialize the language strings for the instance
@@ -53,9 +60,26 @@ class External_links extends Base_counter
      */
     public function get_current_status($post, $option_value)
     {
-        $count = count($this->extract_external_links($post->post_content));
+        $post_content = isset($post->post_content) ? $post->post_content : '';
+        $count = count($this->extract_external_links($post_content));
 
-        return ($count >= $option_value[0]) && ($count <= $option_value[1]);
+        $min_value = $option_value[0];
+        $max_value = $option_value[1];
+
+        $status = ($count >= $min_value); // Check if minimum requirement is met.
+
+        // Apply maximum requirement check.
+        // If max_value is 0, count must be exactly 0.
+        // If max_value > 0, count must be less than or equal to max_value.
+        if (isset($max_value)) { // max_value should always be set by Base_counter
+            if ($max_value == 0) {
+                $status = $status && ($count == 0);
+            } else { // max_value > 0
+                $status = $status && ($count <= $max_value);
+            }
+        }
+
+        return $status;
     }
 
     /**

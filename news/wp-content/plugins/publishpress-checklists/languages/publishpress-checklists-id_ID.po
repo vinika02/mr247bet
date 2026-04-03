@@ -1,0 +1,1135 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PublishPress Checklists\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress-"
+"checklists\n"
+"POT-Creation-Date: 2026-01-27T14:26:22+00:00\n"
+"PO-Revision-Date: 2026-01-30 15:14+0000\n"
+"Last-Translator: Riza Maulana Ardiyanto <riza@publishpress.com>\n"
+"Language-Team: Indonesian <https://weblate.publishpress.com/projects/"
+"publishpress-checklists/publishpress-checklists/id/>\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.14.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: publishpress-checklists.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+"X-Poedit-SearchPathExcluded-2: node_modules\n"
+
+#. Plugin Name of the plugin
+#. Plugin Name of the plugin
+msgid "PublishPress Checklists"
+msgstr "PublishPress Checklists"
+
+#. Plugin URI of the plugin
+msgid "https://publishpress.com/"
+msgstr "https://publishpress.com/"
+
+#. Description of the plugin
+msgid ""
+"With PublishPress Checklists, you can choose publishing requirements for "
+"your content."
+msgstr ""
+"Dengan PublishPress Checklists, Anda dapat memilih persyaratan penerbitan "
+"untuk konten Anda."
+
+#. Author of the plugin
+msgid "PublishPress"
+msgstr "PublishPress"
+
+#. Author URI of the plugin
+msgid "https://publishpress.com"
+msgstr "https://publishpress.com"
+
+msgid "Disabled"
+msgstr "Dinonaktifkan"
+
+msgid "Recommended"
+msgstr "Rekomendasi"
+
+msgid "Required"
+msgstr "Diperlukan"
+
+msgid "Please correct your form errors below and try again."
+msgstr "Silakan perbaiki kesalahan formulir Anda di bawah ini dan coba lagi."
+
+msgid "Cheatin&#8217; uh?"
+msgstr "Curang&#8217; ya?"
+
+msgid "You do not have necessary permissions to complete this action."
+msgstr ""
+"Anda tidak memiliki izin yang diperlukan untuk menyelesaikan tindakan ini."
+
+msgid "Post does not exist"
+msgstr "Pos tidak ada"
+
+msgid "Checklists"
+msgstr "Checklists"
+
+#, php-format
+msgid "If you like %s please leave us a %s rating. Thank you!"
+msgstr "Jika Anda suka %s, silakan berikan kami penilaian %s. Terima kasih!"
+
+msgid "Need PublishPress Checklists Support?"
+msgstr "Butuh Dukungan PublishPress Checklists?"
+
+msgid "If you need help or have a new feature request, let us know."
+msgstr ""
+"Jika Anda memerlukan bantuan atau memiliki permintaan fitur baru, beri tahu "
+"kami."
+
+msgid "Request Support"
+msgstr "Minta Dukungan"
+
+msgid "Detailed documentation is also available on the plugin website."
+msgstr "Dokumentasi rinci juga tersedia di situs web plugin."
+
+msgid "View Knowledge Base"
+msgstr "Lihat Basis Pengetahuan"
+
+msgid "Settings"
+msgstr "Pengaturan"
+
+msgid "Upgrade to Pro"
+msgstr "Tingkatkan ke Pro"
+
+#, php-format
+msgid "Approved by %s"
+msgstr "Disetujui oleh %s"
+
+msgid "Approved by a user in this role"
+msgstr "Disetujui oleh pengguna dalam peran ini"
+
+msgid "Min"
+msgstr "Min"
+
+msgid "Max"
+msgstr "Maks"
+
+msgid "Edit label"
+msgstr "Edit label"
+
+msgid "Number of categories"
+msgstr "Jumlah kategori"
+
+#, php-format
+msgid "Minimum of %s category"
+msgstr "Minimum %s kategori"
+
+#, php-format
+msgid "Minimum of %s categories"
+msgstr "Minimum %s kategori"
+
+#, php-format
+msgid "Maximum of %s category"
+msgstr "Maksimum %s kategori"
+
+#, php-format
+msgid "Maximum of %s categories"
+msgstr "Maksimum %s kategori"
+
+#, php-format
+msgid "%s category"
+msgstr "%s kategori"
+
+#, php-format
+msgid "%s categories"
+msgstr "%s kategori"
+
+#, php-format
+msgid "Between %s and %s categories"
+msgstr "Antara %s dan %s kategori"
+
+msgid "Custom"
+msgstr "Kustom"
+
+msgid "Which roles can mark this task as complete?"
+msgstr "Peran mana yang dapat menandai tugas ini sebagai selesai?"
+
+msgid "Enter name of custom task"
+msgstr "Masukkan nama tugas kustom"
+
+msgid "Remove"
+msgstr "Hapus"
+
+msgid "Number of external links in content"
+msgstr "Jumlah tautan eksternal dalam konten"
+
+#, php-format
+msgid "Minimum of %d external link in content"
+msgstr "Minimum %d tautan eksternal dalam konten"
+
+#, php-format
+msgid "Minimum of %d external links in content"
+msgstr "Minimum %d tautan eksternal dalam konten"
+
+#, php-format
+msgid "Maximum of %d external link in content"
+msgstr "Maksimum %d tautan eksternal dalam konten"
+
+#, php-format
+msgid "Maximum of %d external links in content"
+msgstr "Maksimum %d tautan eksternal dalam konten"
+
+#, php-format
+msgid "%d external link in content"
+msgstr "%d tautan eksternal dalam konten"
+
+#, php-format
+msgid "%d external links in content"
+msgstr "%d tautan eksternal dalam konten"
+
+#, php-format
+msgid "Between %d and %d external links in content"
+msgstr "Antara %d dan %d tautan eksternal dalam konten"
+
+msgid "Featured image is added"
+msgstr "Gambar unggulan telah ditambahkan"
+
+msgid "Featured image has Alt text"
+msgstr "Gambar unggulan memiliki teks Alt"
+
+msgid "Featured image has caption"
+msgstr "Gambar unggulan memiliki keterangan"
+
+msgid "Numbers of characters in excerpt"
+msgstr "Jumlah karakter dalam kutipan"
+
+#, php-format
+msgid "Minimum of %d character in excerpt"
+msgstr "Minimum %d karakter dalam kutipan"
+
+#, php-format
+msgid "Minimum of %d characters in excerpt"
+msgstr "Minimum %d karakter dalam kutipan"
+
+#, php-format
+msgid "Maximum of %d character in excerpt"
+msgstr "Maksimum %d karakter di kutipan"
+
+#, php-format
+msgid "Maximum of %d characters in excerpt"
+msgstr "Maksimum %d karakter dalam kutipan"
+
+#, php-format
+msgid "%d character in excerpt"
+msgstr "%d karakter dalam kutipan"
+
+#, php-format
+msgid "%d characters in excerpt"
+msgstr "%d karakter dalam kutipan"
+
+#, php-format
+msgid "Between %d and %d characters in excerpt"
+msgstr "Antara %d dan %d karakter dalam kutipan"
+
+msgid "All images have Alt text"
+msgstr "Semua gambar memiliki teks Alt"
+
+msgid "Number of characters in Alt text"
+msgstr "Jumlah karakter di teks Alt"
+
+#, php-format
+msgid "Minimum of %d character in Alt text"
+msgstr "Minimum %d karakter dalam teks Alt"
+
+#, php-format
+msgid "Minimum of %d characters in Alt text"
+msgstr "Minimum %d karakter dalam teks Alt"
+
+#, php-format
+msgid "Maximum of %d character in Alt text"
+msgstr "Maksimum %d karakter di teks Alt"
+
+#, php-format
+msgid "Maximum of %d characters in Alt text"
+msgstr "Maksimum %d karakter di teks Alt"
+
+#, php-format
+msgid "%d character in Alt text"
+msgstr "%d karakter dalam teks Alt"
+
+#, php-format
+msgid "%d characters in Alt text"
+msgstr "%d karakter dalam teks Alt"
+
+#, php-format
+msgid "Between %d and %d characters in Alt text"
+msgstr "Antara %d dan %d karakter dalam teks Alt"
+
+msgid "Number of internal links in content"
+msgstr "Jumlah tautan internal dalam konten"
+
+#, php-format
+msgid "Minimum of %d internal link in content"
+msgstr "Minimum %d tautan internal dalam konten"
+
+#, php-format
+msgid "Minimum of %d internal links in content"
+msgstr "Minimum %d tautan internal dalam konten"
+
+#, php-format
+msgid "Maximum of %d internal link in content"
+msgstr "Maksimum %d tautan internal dalam konten"
+
+#, php-format
+msgid "Maximum of %d internal links in content"
+msgstr "Maksimum %d tautan internal dalam konten"
+
+#, php-format
+msgid "%d internal link in content"
+msgstr "%d tautan internal dalam konten"
+
+#, php-format
+msgid "%d internal links in content"
+msgstr "%d tautan internal dalam konten"
+
+#, php-format
+msgid "Between %d and %d internal links in content"
+msgstr "Antara %d dan %d tautan internal dalam konten"
+
+msgid "Openai"
+msgstr "Openai"
+
+msgid "Enter OpenAI task prompt"
+msgstr "Masukkan prompt tugas OpenAI"
+
+msgid "An error occured."
+msgstr "Terjadi kesalahan."
+
+msgid "Validation error. Kindly reload this page and try again."
+msgstr "Kesalahan validasi. Silakan muat ulang halaman ini dan coba lagi."
+
+msgid "Post content is empty."
+msgstr "Konten pos kosong."
+
+msgid ""
+"OpenAI tasks require an API Key. Please add your API Key in the Settings "
+"area."
+msgstr ""
+"Tugas OpenAI memerlukan Kunci API. Silakan tambahkan Kunci API Anda di area "
+"Pengaturan."
+
+#, php-format
+msgid "API Error: %1s."
+msgstr "Kesalahan API: %1s."
+
+msgid "See the full response."
+msgstr "Lihat respons lengkap."
+
+msgid "Invalid response"
+msgstr "Respon tidak valid"
+
+#, php-format
+msgid "Prohibited categories: %s"
+msgstr "Kategori Terlarang: %s"
+
+msgid "Prohibited categories"
+msgstr "Kategori Terlarang"
+
+#, php-format
+msgid "Prohibited tags: %s"
+msgstr "Tag yang dilarang: %s"
+
+msgid "Prohibited tags"
+msgstr "Tag yang dilarang"
+
+#, php-format
+msgid "Required categories: %s"
+msgstr "Kategori yang Diperlukan: %s"
+
+msgid "Required categories"
+msgstr "Kategori yang Diperlukan"
+
+#, php-format
+msgid "Required tags: %s"
+msgstr "Tag yang Diperlukan: %s"
+
+msgid "Required tags"
+msgstr "Tag yang Diperlukan"
+
+msgid "Number of tags"
+msgstr "Jumlah tag"
+
+#, php-format
+msgid "Minimum of %d tag"
+msgstr "Minimum %d tag"
+
+#, php-format
+msgid "Minimum of %d tags"
+msgstr "Minimum %d tag"
+
+#, php-format
+msgid "Maximum of %d tag"
+msgstr "Maksimum %d tag"
+
+#, php-format
+msgid "Maximum of %d tags"
+msgstr "Maksimum %d tag"
+
+#, php-format
+msgid "%d tag"
+msgstr "%d tag"
+
+#, php-format
+msgid "%d tags"
+msgstr "%d tag"
+
+#, php-format
+msgid "Between %d and %d tags"
+msgstr "Antara %d dan %d tag"
+
+msgid "Number of "
+msgstr "Jumlah "
+
+#, php-format
+msgid "Minimum of %d "
+msgstr "Minimum %d "
+
+#, php-format
+msgid "Maximum of %d "
+msgstr "Maksimum %d "
+
+#, php-format
+msgid "%d "
+msgstr "%d "
+
+#, php-format
+msgid "Between %d and %d "
+msgstr "Antara %d dan %d "
+
+msgid "Number of characters in title"
+msgstr "Jumlah karakter di judul"
+
+#, php-format
+msgid "Minimum of %d character in title"
+msgstr "Minimum %d karakter dalam judul"
+
+#, php-format
+msgid "Minimum of %d characters in title"
+msgstr "Minimum %d karakter dalam judul"
+
+#, php-format
+msgid "Maximum of %d character in title"
+msgstr "Maksimum %d karakter di judul"
+
+#, php-format
+msgid "Maximum of %d characters in title"
+msgstr "Maksimum %d karakter dalam judul"
+
+#, php-format
+msgid "%d character in title"
+msgstr "%d karakter dalam judul"
+
+#, php-format
+msgid "%d characters in title"
+msgstr "%d karakter dalam judul"
+
+#, php-format
+msgid "Between %d and %d characters in title"
+msgstr "Antara %d dan %d karakter dalam judul"
+
+msgid "All links use a valid format"
+msgstr "Semua tautan menggunakan format yang valid"
+
+msgid "Number of words in content"
+msgstr "Jumlah kata dalam konten"
+
+#, php-format
+msgid "Minimum of %d word in content"
+msgstr "Minimum %d kata dalam konten"
+
+#, php-format
+msgid "Minimum of %d words in content"
+msgstr "Minimum %d kata dalam konten"
+
+#, php-format
+msgid "Maximum of %d word in content"
+msgstr "Maksimum %d kata dalam konten"
+
+#, php-format
+msgid "Maximum of %d words in content"
+msgstr "Maksimum %d kata dalam konten"
+
+#, php-format
+msgid "%d word in content"
+msgstr "%d kata dalam konten"
+
+#, php-format
+msgid "%d words in content"
+msgstr "%d kata dalam konten"
+
+#, php-format
+msgid "Between %d and %d words in content"
+msgstr "Antara %d dan %d kata dalam konten"
+
+msgid "Title"
+msgstr "Judul"
+
+msgid "Content"
+msgstr "Konten"
+
+msgid "Publish Date / Time"
+msgstr "Tanggal / Waktu Publikasi"
+
+msgid "Approval"
+msgstr "Persetujuan"
+
+msgid "Images"
+msgstr "Gambar"
+
+msgid "Audio / Video"
+msgstr "Audio / Video"
+
+msgid "Featured Image"
+msgstr "Gambar Unggulan"
+
+msgid "Links"
+msgstr "Tautan"
+
+msgid "Permalink"
+msgstr "Tautan Permanen"
+
+msgid "Categories"
+msgstr "Kategori"
+
+msgid "Tags"
+msgstr "Tag"
+
+msgid "Taxonomies"
+msgstr "Taksonomi"
+
+msgid "Accessibility"
+msgstr "Aksesibilitas"
+
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+msgid "Rank Math SEO"
+msgstr "Rank Math SEO"
+
+msgid "All in One SEO"
+msgstr "All in One SEO"
+
+msgid "Yoast SEO"
+msgstr "Yoast SEO"
+
+msgid "ACF"
+msgstr "ACF"
+
+msgid "options cannot be empty."
+msgstr "opsi tidak boleh kosong."
+
+msgid "Please make sure to add a name for all the custom tasks."
+msgstr "Silakan pastikan untuk menambahkan nama untuk semua tugas kustom."
+
+msgid "No results found"
+msgstr "Tidak ada hasil yang ditemukan"
+
+msgid "Searching…"
+msgstr "Mencari…"
+
+msgid "Suggested Prompts"
+msgstr "Prompt yang Disarankan"
+
+msgid "What's the expected OpenAI response to mark the requirement as pass?"
+msgstr ""
+"Apa tanggapan OpenAI yang diharapkan untuk menandai persyaratan sebagai "
+"lulus?"
+
+msgid "Clear Content"
+msgstr "Hapus Konten"
+
+msgid "Is this content clear and easy to read?"
+msgstr "Apakah konten ini jelas dan mudah dibaca?"
+
+msgid "Friendly Tone Content"
+msgstr "Konten dengan Nada Ramah"
+
+msgid "Is this content tone friendly?"
+msgstr "Apakah nada konten ini ramah?"
+
+msgid "Professional Tone Content"
+msgstr "Konten Nada Profesional"
+
+msgid "Is this content tone professional?"
+msgstr "Apakah nada konten ini profesional?"
+
+msgid "Persuasive Tone Content"
+msgstr "Konten Nada Persuasif"
+
+msgid "Is this content tone persuasive?"
+msgstr "Apakah nada konten ini persuasif?"
+
+msgid "Empathetic Tone Content"
+msgstr "Konten dengan Nada Empatik"
+
+msgid "Is this content tone empathetic?"
+msgstr "Apakah nada konten ini empatik?"
+
+msgid "Adventurous Tone Content"
+msgstr "Konten Nada Petualangan"
+
+msgid "Is this content tone adventurous?"
+msgstr "Apakah nada konten ini petualangan?"
+
+msgid "Promotional Tone Content"
+msgstr "Konten Nada Promosi"
+
+msgid "Is this content tone promotional?"
+msgstr "Apakah nada konten ini promosi?"
+
+msgid "Checklist"
+msgstr "Daftar Periksa"
+
+msgid "You don't have to complete any Checklist tasks."
+msgstr "Anda tidak perlu menyelesaikan tugas Checklist apa pun."
+
+msgid "Are you sure you want to publish anyway?"
+msgstr "Apakah Anda yakin ingin menerbitkan juga?"
+
+msgid "Are you sure you want to update the published post anyway?"
+msgstr "Apakah Anda yakin ingin memperbarui pos yang dipublikasikan?"
+
+msgid "Please complete the following tasks before publishing:"
+msgstr "Silakan selesaikan tugas berikut sebelum menerbitkan:"
+
+msgid "Please complete the following tasks before updating the published post:"
+msgstr ""
+"Silakan selesaikan tugas berikut sebelum memperbarui pos yang diterbitkan:"
+
+msgid "Not required, but important: "
+msgstr "Tidak wajib, tetapi penting: "
+
+msgid "One or more items in the checklist are not completed"
+msgstr "Satu atau lebih item dalam daftar periksa belum selesai"
+
+#, php-format
+msgid "You don't have to complete any %sChecklist tasks%s."
+msgstr "Anda tidak perlu menyelesaikan tugas %sChecklist%s apa pun."
+
+msgid "Check Now"
+msgstr "Periksa Sekarang"
+
+msgid "Ok"
+msgstr "Ok"
+
+msgid "No"
+msgstr "Tidak"
+
+msgid "Yes"
+msgstr "Ya"
+
+msgid "Task"
+msgstr "Tugas"
+
+msgid "Disabled, Recommended or Required"
+msgstr "Dinonaktifkan, Direkomendasikan, atau Diperlukan"
+
+msgid "Options"
+msgstr "Opsi"
+
+msgid "Add custom task"
+msgstr "Tambahkan tugas kustom"
+
+msgid "Please complete the required(*) checklists task."
+msgstr "Silakan selesaikan tugas daftar periksa yang diperlukan(*)"
+
+msgid "required"
+msgstr "diperlukan"
+
+msgid "Checklists tasks are not available in Elementor editors"
+msgstr "Tugas dari Checklists tidak tersedia di editor Elementor"
+
+msgid "All in One SEO Headline Score"
+msgstr "Skor Judul SEO All in One"
+
+msgid "All in One SEO Score"
+msgstr "Skor SEO All in One"
+
+msgid "Featured image height"
+msgstr "Tinggi gambar unggulan"
+
+msgid "Featured image width"
+msgstr "Lebar gambar unggulan"
+
+msgid "Heading in hierarchy"
+msgstr "Judul dalam hierarki"
+
+msgid "Number of images in content"
+msgstr "Jumlah gambar dalam konten"
+
+msgid "Number of characters in image captions"
+msgstr "Jumlah karakter dalam keterangan gambar"
+
+msgid "Number of audio in content"
+msgstr "Jumlah audio dalam konten"
+
+msgid "Number of video in content"
+msgstr "Jumlah video dalam konten"
+
+msgid "Approved by role"
+msgstr "Disetujui oleh peran"
+
+msgid "Approved by user"
+msgstr "Disetujui oleh pengguna"
+
+msgid "Avoid heading tags in content"
+msgstr "Hindari tag judul dalam konten"
+
+msgid "Published at exact time"
+msgstr "Diterbitkan pada waktu yang tepat"
+
+msgid "Publish time should be in the future"
+msgstr "Waktu publikasi harus di masa depan"
+
+msgid "Rank Math SEO Score"
+msgstr "Skor SEO Rank Math"
+
+msgid "Only one H1 tag in content"
+msgstr "Hanya satu tag H1 dalam konten"
+
+msgid "Tables have a header row"
+msgstr "Tabel memiliki baris header"
+
+msgid "Check the \"Allow backorders?\" box"
+msgstr "Centang kotak \"Izinkan backorder?\""
+
+msgid "Select some products for \"Cross-sells\""
+msgstr "Pilih beberapa produk untuk \"Cross-sells\""
+
+msgid "Discount for the \"Sale price\""
+msgstr "Diskon untuk \"Harga jual\""
+
+msgid "Check the \"Downloadable\" box"
+msgstr "Centang kotak \"Dapat diunduh\""
+
+msgid "Product image"
+msgstr "Gambar produk"
+
+msgid "Check the \"Manage stock?\" box"
+msgstr "Centang kotak \"Kelola stok?\""
+
+msgid "Enter a \"Regular price\""
+msgstr "Masukkan \"Harga reguler\""
+
+msgid "Enter a \"Sale price\""
+msgstr "Masukkan \"Harga jual\""
+
+msgid "Schedule the \"Sale price\""
+msgstr "Jadwalkan \"Harga jual\""
+
+msgid "Enter a \"SKU\""
+msgstr "Masukkan \"SKU\""
+
+msgid "Check the \"Sold individually\" box"
+msgstr "Centang kotak \"Terjual secara individu\""
+
+msgid "Select some products for \"Upsells\""
+msgstr "Pilih beberapa produk untuk \"Upsells\""
+
+msgid "Check the \"Virtual\" box"
+msgstr "Centang kotak \"Virtual\""
+
+#, php-format
+msgid "Number of Characters in %s field"
+msgstr "Jumlah karakter di bidang %s"
+
+#, php-format
+msgid "%s is filled"
+msgstr "%s telah diisi"
+
+msgid "About PublishPress Checklists"
+msgstr "Tentang PublishPress Checklists"
+
+msgid "About"
+msgstr "Tentang"
+
+msgid "PublishPress Checklists Documentation"
+msgstr "Dokumentasi PublishPress Checklists"
+
+msgid "Documentation"
+msgstr "Dokumentasi"
+
+msgid "Contact the PublishPress team"
+msgstr "Hubungi tim PublishPress"
+
+msgid "Contact"
+msgstr "Kontak"
+
+msgid "Settings saved successfully!"
+msgstr "Pengaturan berhasil disimpan!"
+
+msgid "Save Changes"
+msgstr "Simpan Perubahan"
+
+msgid "Pro feature"
+msgstr "Fitur Pro"
+
+#, php-format
+msgid "No %s requirements for this post type."
+msgstr "Tidak ada persyaratan %s untuk tipe pos ini."
+
+msgid "New Item"
+msgstr "Item Baru"
+
+msgid "Description"
+msgstr "Deskripsi"
+
+msgid ""
+"Custom tasks do not complete automatically. Users must check the box to show "
+"they have completed the task."
+msgstr ""
+"Tugas kustom tidak selesai secara otomatis. Pengguna harus mencentang kotak "
+"untuk menunjukkan bahwa mereka telah menyelesaikan tugas."
+
+msgid "Add OpenAI Prompt task"
+msgstr "Tambahkan tugas Prompt OpenAI"
+
+msgid "The prompt should be in form of a question."
+msgstr "Prompt harus dalam bentuk pertanyaan."
+
+msgid "This feature requires an OpenAI API Key."
+msgstr "Fitur ini memerlukan Kunci API OpenAI."
+
+msgid "Latin characters in permalink"
+msgstr "Karakter Latin di permalink"
+
+msgid "Permalinks"
+msgstr "Tautan Permanen"
+
+msgid "Define tasks related to permalinks"
+msgstr "Tentukan tugas yang terkait dengan permalink"
+
+msgid "Permissions"
+msgstr "Izin"
+
+msgid "Exclude User Roles"
+msgstr "Kecualikan Peran Pengguna"
+
+msgid "Reviews"
+msgstr "Ulasan"
+
+msgid "Checklists Settings"
+msgstr "Pengaturan Checklists"
+
+msgid ""
+"Are you sure you want to reset all renamed checklist items to their default "
+"labels? This action cannot be undone."
+msgstr ""
+"Apakah Anda yakin ingin mengatur ulang semua item checklist yang dinamai "
+"ulang ke label default mereka? Tindakan ini tidak dapat dibatalkan."
+
+msgid "Features"
+msgstr "Fitur"
+
+msgid "Feel free to select only the features you need."
+msgstr "Silakan pilih hanya fitur yang Anda butuhkan."
+
+msgid "Enabled features"
+msgstr "Fitur yang Diaktifkan"
+
+msgid "There are no PublishPress modules registered"
+msgstr "Tidak ada modul PublishPress yang terdaftar"
+
+#, php-format
+msgid ""
+"Disabled because add_post_type_support('%1$s', '%2$s') is included in a "
+"loaded file."
+msgstr ""
+"Dinonaktifkan karena add_post_type_support('%1$s', '%2$s') termasuk dalam "
+"file yang dimuat."
+
+msgid "Enable Who Can Ignore:"
+msgstr "Aktifkan Siapa yang Dapat Mengabaikan:"
+
+msgid "Show warning icon:"
+msgstr "Tampilkan ikon peringatan:"
+
+msgid "Delete data on uninstall:"
+msgstr "Hapus data saat uninstall:"
+
+msgid "Enable Status Filter:"
+msgstr "Aktifkan Filter Status:"
+
+msgid "Enable Duplicate Checklists:"
+msgstr "Aktifkan Pemeriksaan Duplikat Checklist:"
+
+msgid "Show Checklists column in post lists:"
+msgstr "Tampilkan kolom Daftar Periksa di daftar pos:"
+
+msgid "Enable Taxonomy Filter:"
+msgstr "Aktifkan Filter Taksonomi:"
+
+msgid "Disable the \"Status\" option when using \"Quick Edit\":"
+msgstr "Nonaktifkan opsi \"Status\" saat menggunakan \"Edit Cepat\":"
+
+msgid "Disable \"Quick Edit\" completely:"
+msgstr "Nonaktifkan \"Edit Cepat\" sepenuhnya:"
+
+msgid "Disable \"Publish\" button:"
+msgstr "Nonaktifkan tombol \"Terbitkan\":"
+
+msgid "Complete Icon:"
+msgstr "Ikon Lengkap:"
+
+msgid "Incomplete Icon:"
+msgstr "Ikon Tidak Lengkap:"
+
+msgid "Required Complete Color:"
+msgstr "Warna Lengkap yang Diperlukan:"
+
+msgid "Required Incomplete Color:"
+msgstr "Warna Tidak Lengkap yang Diperlukan:"
+
+msgid "Recommended Complete Color:"
+msgstr "Warna Lengkap yang Direkomendasikan:"
+
+msgid "Recommended Incomplete Color:"
+msgstr "Warna Tidak Lengkap yang Direkomendasikan:"
+
+msgid "OpenAI API Key:"
+msgstr "Kunci API OpenAI:"
+
+msgid "Reset Renamed Checklist:"
+msgstr "Atur Ulang Daftar Periksa yang Dinamai:"
+
+msgid "Post types:"
+msgstr "Jenis pos:"
+
+msgid ""
+"This allows tasks to be disabled for specific statuses such as \"Draft\" or "
+"\"Published."
+msgstr ""
+"Ini memungkinkan tugas dinonaktifkan untuk status tertentu seperti \"Draf\" "
+"atau \"Dipublikasikan.\""
+
+msgid "This allows users to duplicate existing checklist tasks."
+msgstr ""
+"Ini memungkinkan pengguna untuk menggandakan tugas daftar periksa yang ada."
+
+msgid ""
+"Add a Checklists column to the Posts screen showing how many requirements "
+"are complete."
+msgstr ""
+"Tambahkan kolom Checklists ke layar Pos yang menunjukkan berapa banyak "
+"persyaratan yang telah lengkap."
+
+msgid ""
+"This allows tasks to be disabled for posts with specific taxonomy terms. Go "
+"to the \"Post Types\" tab to choose the terms."
+msgstr ""
+"Ini memungkinkan tugas untuk dinonaktifkan untuk pos dengan istilah "
+"taksonomi tertentu. Pergi ke tab \"Jenis Pos\" untuk memilih istilah "
+"tersebut."
+
+msgid ""
+"This will display a warning icon in the \"Checklists\" box if requirements "
+"are incomplete."
+msgstr ""
+"Ini akan menampilkan ikon peringatan di kotak \"Daftar Periksa\" jika "
+"persyaratan tidak lengkap."
+
+msgid ""
+"When enabled, all PublishPress Checklists data will be deleted if the plugin "
+"is uninstalled."
+msgstr ""
+"Ketika diaktifkan, semua data PublishPress Checklists akan dihapus jika "
+"plugin diuninstall."
+
+msgid "This will show \"Who can ignore\" options."
+msgstr "Ini akan menampilkan opsi \"Siapa yang dapat mengabaikan\"."
+
+msgid ""
+"Disabling the \"Status\" option is recommended because it can be used to "
+"avoid using the Checklists requirements."
+msgstr ""
+"Menonaktifkan opsi \"Status\" disarankan karena dapat digunakan untuk "
+"menghindari penggunaan persyaratan Checklist."
+
+msgid ""
+"This will disable \"Quick Edit\" for all users except those with the "
+"\"manage_options\" capability."
+msgstr ""
+"Ini akan menonaktifkan \"Sunting Cepat\" untuk semua pengguna kecuali mereka "
+"yang memiliki kemampuan \"manage_options\"."
+
+msgid ""
+"This will disable the \"Publish\" button when checklist requirements are not "
+"met."
+msgstr ""
+"Ini akan menonaktifkan tombol \"Publikasikan\" ketika persyaratan daftar "
+"periksa tidak terpenuhi."
+
+msgid "Enter your API Key to use OpenAI prompts in checklist tasks."
+msgstr ""
+"Masukkan Kunci API Anda untuk menggunakan prompt OpenAI dalam tugas "
+"checklist."
+
+msgid "Post Types"
+msgstr "Tipe Pos"
+
+msgid "General"
+msgstr "Umum"
+
+msgid "Publishing Options"
+msgstr "Opsi Publikasi"
+
+msgid "Appearance"
+msgstr "Tampilan"
+
+msgid "Integration"
+msgstr "Integrasi"
+
+msgid "Tools"
+msgstr "Alat"
+
+msgid "Enter a Dashicons class name (e.g., dashicons-yes, dashicons-saved). "
+msgstr ""
+"Masukkan nama kelas Dashicons (misalnya, dashicons-yes, dashicons-saved). "
+
+msgid "View Dashicons"
+msgstr "Lihat Dashicons"
+
+msgid "Enter a Dashicons class name (e.g., dashicons-no, dashicons-dismiss). "
+msgstr ""
+"Masukkan nama kelas Dashicons (misalnya, dashicons-no, dashicons-dismiss). "
+
+msgid "Reset All Custom Labels"
+msgstr "Atur Ulang Semua Label Kustom"
+
+msgid ""
+"This will reset all renamed checklist items back to their default labels."
+msgstr ""
+"Ini akan mengatur ulang semua item daftar periksa yang dinamai kembali ke "
+"label default mereka."
+
+msgid "Security check failed."
+msgstr "Pemeriksaan keamanan gagal."
+
+msgid "You do not have permission to perform this action."
+msgstr "Anda tidak memiliki izin untuk melakukan tindakan ini."
+
+msgid "All custom labels have been reset successfully."
+msgstr "Semua label kustom telah diatur ulang dengan sukses."
+
+msgid "Number of characters in Yoast SEO focus keyword"
+msgstr "Jumlah karakter di kata kunci fokus Yoast SEO"
+
+#, php-format
+msgid "Minimum of %d character in Yoast SEO focus keyword"
+msgstr "Minimum %d karakter dalam kata kunci fokus Yoast SEO"
+
+#, php-format
+msgid "Minimum of %d characters in Yoast SEO focus keyword"
+msgstr "Minimum %d karakter dalam kata kunci fokus Yoast SEO"
+
+#, php-format
+msgid "Maximum of %d character in Yoast SEO focus keyword"
+msgstr "Maksimum %d karakter di kata kunci fokus Yoast SEO"
+
+#, php-format
+msgid "Maximum of %d characters in Yoast SEO focus keyword"
+msgstr "Maksimum %d karakter dalam kata kunci fokus Yoast SEO"
+
+#, php-format
+msgid "%d character in Yoast SEO focus keyword"
+msgstr "%d karakter dalam kata kunci fokus Yoast SEO"
+
+#, php-format
+msgid "%d characters in Yoast SEO focus keyword"
+msgstr "%d karakter dalam kata kunci fokus Yoast SEO"
+
+#, php-format
+msgid "Between %d and %d characters in Yoast SEO focus keyword"
+msgstr "Antara %d dan %d karakter dalam kata kunci fokus Yoast SEO"
+
+msgid "Number of characters in Yoast SEO meta description"
+msgstr "Jumlah karakter di deskripsi meta Yoast SEO"
+
+#, php-format
+msgid "Minimum of %d character in Yoast SEO meta description"
+msgstr "Minimum %d karakter dalam deskripsi meta Yoast SEO"
+
+#, php-format
+msgid "Minimum of %d characters in Yoast SEO meta description"
+msgstr "Minimum %d karakter dalam deskripsi meta Yoast SEO"
+
+#, php-format
+msgid "Maximum of %d character in Yoast SEO meta description"
+msgstr "Maksimum %d karakter di deskripsi meta Yoast SEO"
+
+#, php-format
+msgid "Maximum of %d characters in Yoast SEO meta description"
+msgstr "Maksimum %d karakter dalam deskripsi meta Yoast SEO"
+
+#, php-format
+msgid "%d character in Yoast SEO meta description"
+msgstr "%d karakter dalam deskripsi meta Yoast SEO"
+
+#, php-format
+msgid "%d characters in Yoast SEO meta description"
+msgstr "%d karakter dalam deskripsi meta Yoast SEO"
+
+#, php-format
+msgid "Between %d and %d characters in Yoast SEO meta description"
+msgstr "Antara %d dan %d karakter dalam deskripsi meta Yoast SEO"
+
+msgid "Minimum Yoast SEO readability score"
+msgstr "Minimum skor keterbacaan Yoast SEO"
+
+#. translators: %s expands to the readability score
+#, php-format
+msgid "Yoast Readability: %s"
+msgstr "Keterbacaan Yoast: %s"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Good"
+msgstr "Baik"
+
+msgid "Minimum Yoast SEO analysis score"
+msgstr "Minimum skor analisis Yoast SEO"
+
+#. translators: %s expands to the seo score
+#, php-format
+msgid "Yoast SEO: %s"
+msgstr "SEO Yoast: %s"
+
+msgid "Define tasks related to Yoast SEO"
+msgstr "Tentukan tugas yang terkait dengan Yoast SEO"
+
+msgid "This plugin can be deleted."
+msgstr "Plugin ini dapat dihapus."
+
+#, php-format
+msgid ""
+"You're using PublishPress Checklists Free. The Pro version has more features "
+"and support. %sUpgrade to Pro%s"
+msgstr ""
+"Anda menggunakan PublishPress Checklists Gratis. Versi Pro memiliki lebih "
+"banyak fitur dan dukungan. %sTingkatkan ke Pro%s"
+
+#~ msgid "Who can ignore the task?"
+#~ msgstr "Siapa yang dapat mengabaikan tugas ini?"
+
+#~ msgid "Add to these post types:"
+#~ msgstr "Tambahkan ke jenis pos ini:"
+
+#~ msgid "This allows users to duplicate existing checklist task."
+#~ msgstr ""
+#~ "Ini memungkinkan pengguna untuk menggandakan tugas daftar periksa yang "
+#~ "ada."
+
+#~ msgid "Validation error. Kindly reload this page and try agai.n"
+#~ msgstr "Kesalahan validasi. Silakan muat ulang halaman ini dan coba lagi."

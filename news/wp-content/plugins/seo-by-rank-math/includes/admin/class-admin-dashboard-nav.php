@@ -12,7 +12,7 @@ namespace RankMath\Admin;
 
 use RankMath\Helper;
 use RankMath\Helpers\Security;
-use MyThemeShop\Helpers\Param;
+use RankMath\Helpers\Param;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 class Admin_Dashboard_Nav {
 
 	/**
-	 * Display dashabord tabs.
+	 * Display dashboard tabs.
 	 */
 	public function display() {
 		$nav_links = $this->get_nav_links();
@@ -83,7 +83,7 @@ class Admin_Dashboard_Nav {
 	}
 
 	/**
-	 * Get dashbaord navigation links
+	 * Get dashboard navigation links
 	 *
 	 * @return array
 	 */

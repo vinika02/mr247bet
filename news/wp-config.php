@@ -80,7 +80,10 @@ $table_prefix = 'wpkh_';
  * @link https://wordpress.org/support/article/debugging-in-wordpress/
  */
 define( 'WP_DEBUG', false );
-
+define( 'WP_DEBUG', false );
+define( 'WP_DEBUG_LOG', false );
+define( 'WP_DEBUG_DISPLAY', false );
+define('FS_METHOD', 'direct');
 /* Add any custom values between this line and the "stop editing" line. */
 define( 'WP_CACHE', true ); // Added by WP Rocket
 

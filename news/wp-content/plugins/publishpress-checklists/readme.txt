@@ -1,21 +1,21 @@
-=== PublishPress Checklists: Pre-Publishing Approval Task Checklist for WordPress Content ===
+=== PublishPress Checklists: Pre-Publishing Approval Checklist - Validate Post Requirements ===
 
-Contributors: publishpress, kevinB, stevejburge, andergmartins, ojopaul
+Contributors: publishpress, kevinB, stevejburge, andergmartins, ojopaul, olatechpro, rizaardiyanto
 Author: PublishPress
 Author URI: https://publishpress.com
 Tags: approval, checklist, maximum, minimum, requirement
-Requires at least: 4.7
-Requires PHP: 5.6
-Tested up to: 5.8.2
-Stable tag: 2.7.2
+Requires at least: 5.5
+Requires PHP: 7.2.5
+Tested up to: 6.9
+Stable tag: 2.27.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-You can define tasks that must be complete before content is published. Do you get a red X or a green checkmark?
+Define checklist tasks to complete before publishing posts. Make sure your content meets your requirements.
 
 == Description ==
 
-[PublishPress Checklists](https://publishpress.com/authors/) is the best plugin to make sure your content is ready to go live. With PublishPress Checklists, you can choose pre-publishing requirements for your content. Using PublishPress Checklists, you define tasks that must be completed before content is published.
+[PublishPress Checklists](https://publishpress.com/checklists/) is the best plugin to make sure your content is ready to go live. Using PublishPress Checklists, you define tasks that must be completed before content is published.
 
 Let's show you a few possible options for your posts:
 
@@ -24,35 +24,72 @@ Let's show you a few possible options for your posts:
 * Check for any broken links.
 * Force authors to use a specific number of Tags or Categories.
 * Require posts to be approved by a user in a specific role.
+* Use OpenAI to scan your content and make sure it uses good grammar or the correct tone.
 
-Next to every post and page, writers see a checklist box, showing the tasks they need to complete. Tasks can either be recommended or required. As authors complete each task, the red X automatically turns to a green checkmark.
+Next to every post and page, writers see a checklist box, showing the tasks they need to complete. Tasks can either be recommended or required. As authors complete each task, the red X automatically turns to a green checkmark.  
+
+PublishPress Checklists integrates with [WooCommerce](https://publishpress.com/knowledge-base/woocommerce-product-tasks/), [Yoast SEO](https://publishpress.com/knowledge-base/yoast-seo-tasks/), [All in One SEO](https://publishpress.com/knowledge-base/all-in-one-seo-tasks/), [Rank Math SEO](https://publishpress.com/knowledge-base/rank-math-seo-tasks/),and [Advanced Custom Fields](https://publishpress.com/knowledge-base/advance-custom-fields-tasks/). You can set requirements based on those plugins.
+
+
+PublishPress Checklists also [integrates with OpenAI](https://publishpress.com/knowledge-base/openai/). You can use OpenAI technology to scan your posts and check for the right tone, good spelling, or correct grammar.
+
+## PublishPress Checklists Pro ##
 
 > <strong>Checklists Pro</strong><br />
 > This plugin is the free version of the Checklists Pro plugin that comes with all the features you need to set standards for your WordPress content. <a href="https://publishpress.com/checklists"  title="Checklists Pro">Click here to purchase the best premium WordPress checklists plugin now!</a>
-
-## You Can Set These Checklist Requirements
 
 Each task on your pre-publish checklist can be configured to meet your site’s needs. You can also set maximum and minimum values.
 
 [Read the Getting Started guide for PublishPress Checklists](https://publishpress.com/knowledge-base/checklists-started/).
 
-Here are the default tasks you can use on your checklists:
+## Content Tasks ##
 
-* **Title**: Maximum or minimum number of characters
-* **Body text**: Maximum or minimum number of words
-* **Categories**: Maximum or minimum number of categories
-* **Tags**: Maximum or minimum number of tags
-* **Taxonomy terms**: Maximum or minimum number of terms
-* **Excerpt**: Maximum or minimum number of characters
-* **Internal links**: Maximum or minimum number of internal links
-* **External links**: Maximum or minimum number of external links
-* **Featured image**: Require a featured image
-* **Featured image size (Pro version)**: Require a maximum and minimum height and width for featured images
-* **ALT text**: Require ALT text for all images
-* **Broken links**: Check that all links use a valid format
-* **Permalink**: Control the characters in the URL
-* **User approval**: Require that posts are approved by users in a specific role
-* **Yoast SEO**: Require that posts get Yoast SEO approval
+* [Title](https://publishpress.com/knowledge-base/number-of-characters-in-title/): Maximum or minimum number of characters.
+* [Body text](https://publishpress.com/knowledge-base/number-of-words-in-content/): Maximum or minimum number of words in the post content.
+* [Excerpt](https://publishpress.com/knowledge-base/number-of-characters-in-excerpt/): Maximum or minimum number of characters in the excerpt.
+* [Avoid specific heading tags](https://publishpress.com/knowledge-base/avoid-heading-tags-in-content-pro/) (Pro version): You can enter choices for the headings to prohibit. The options are H1, H2, H3, H4, H5, and H6.
+
+## Publish Date/ Time Tasks ##
+
+* [Publish time should be at a specific time](https://publishpress.com/knowledge-base/publish-time-specific/) (Pro version): Make sure that your WordPress posts are created with a specific Publish time.
+* [Publish time should be in the future](https://publishpress.com/knowledge-base/publish-time-future/) (Pro version): Specify that your WordPress posts are created with a Publish date that is in the future.
+
+## Approval Tasks ##
+
+* [User role approval](https://publishpress.com/knowledge-base/approved-by-a-user-in-this-role/): Require that posts are approved by users in a specific role.
+* [User approval](https://publishpress.com/knowledge-base/approved-specific-user/) (Pro version): Require that posts are approved by a specific user.
+
+## Image Tasks ##
+
+* [All images have ALT text](https://publishpress.com/knowledge-base/alt-text-for-all-images/): Require ALT text for all images.
+* [Number of images in content](https://publishpress.com/knowledge-base/number-of-images-in-content/) (Pro version): Require a maximum and minimum number of images in the post.
+
+## Featured Image Tasks ##
+
+* [Featured image](https://publishpress.com/knowledge-base/featured-image/): Require a featured image.
+* [Featured image has ALT text](https://publishpress.com/knowledge-base/featured-image-has-alt-text/): Require ALT text for the featured image.
+* [Featured image has a Caption](https://publishpress.com/knowledge-base/featured-image-has-caption/): Require a caption for the featured image.
+* [Featured image size](https://publishpress.com/knowledge-base/featured-image-height-width/) (Pro version): Require a maximum and minimum height and width for featured images.
+
+## Link Tasks ##
+
+* [Internal links](https://publishpress.com/knowledge-base/number-of-internal-links-in-content/): Maximum or minimum number of internal links.
+* [External links](https://publishpress.com/knowledge-base/number-of-external-links-in-content/): Maximum or minimum number of external links.
+* [Broken links](https://publishpress.com/knowledge-base/all-links-use-a-valid-format/): Check that all links use a valid format.
+* [Permalink](https://publishpress.com/knowledge-base/characters-in-permalink/): Control the characters in the URL.
+
+## Taxonomy Tasks ##
+
+* [Taxonomy terms](https://publishpress.com/knowledge-base/number-of-tags-or-taxonomy-terms/): Maximum or minimum number of categories or tags.
+* [Required taxonomy terms](https://publishpress.com/knowledge-base/required-tags-or-categories/): Force users to add specific terms.
+* [Prohibited taxonomy terms](https://publishpress.com/knowledge-base/prohibited-tags-or-categories/): Force users to not add specific terms.
+
+## Accessibility Tasks ##
+
+* [Only one H1 tag in content](https://publishpress.com/knowledge-base/only-one-h1-tag-in-content/) (Pro version): Specify that there is only a single H1 tag in your content.
+* [Header tags are used in logical order](https://publishpress.com/knowledge-base/header-tags-logical-order/) (Pro version): Ensure that posts on your WordPress site have headings in the correct order. For example: the heading order in your posts should be H1, H2, and then H3
+* [Tables have a header row](https://publishpress.com/knowledge-base/tables-have-a-header-row/) (Pro version): Specify that all tables added to your WordPress posts have header rows.
+
 
 You can configure each requirement, depending on whether you want to require writers to complete the tasks. Here are the three options:
 
@@ -61,6 +98,20 @@ You can configure each requirement, depending on whether you want to require wri
 * Required
 
 If you choose the “Required” option, it will be impossible to publish without completing the task.
+
+## OpenAI Checklist Requirements
+
+PublishPress Checklists integrates with OpenAI. You can use prompts to analyze your content. If OpenAI decides that your content doesn't meet the requirements, it will show the task as incomplete.
+
+You can create checklist requirements like these:</p>
+
+* "Is the content clear and easy to read?"
+* "Is this content tone professional?"
+* "Does this article use correct grammar?"
+
+OpenAI will scan your content and given a detailed verdict. This is an excellent way to catch errors and improve your content before publishing.
+
+[Click here to see how to create OpenAI requirements](https://publishpress.com/knowledge-base/custom-requirements-checklist/).
 
 ## You Can Create New Checklist Requirements
 
@@ -95,30 +146,53 @@ The Pro version of PublishPress Checklists has support for WooCommerce. There ar
 
 [Click here to read more about WooCommerce checklists](https://publishpress.com/knowledge-base/use-woocommerce-checklist-add-publishpress/).
 
-## Join PublishPress and get the Pro plugins
+## Pro Version: Checklists for Advanced Custom Fields
+
+The Pro version of PublishPress Checklists has support for the Advanced Custom Fields plugin. For example, you can require that text fields have a certain number of characters or that image fields are filled in.
+
+[Click here to read more about ACF checklists](https://publishpress.com/knowledge-base/advance-custom-fields-tasks/).
+
+## Pro Version: Checklists for Yoast SEO
+
+With the PublishPress Checklists plugin, you can require that site's content meets minimum standards with the Yoast SEO plugin. If the content doesn't meet those standards, you can choose to show a warning, or prevent the post from being published. The Checklists plugin integrates with the SEO and Readability features in Yoast SEO.
+
+[Click here to read more about Yoast SEO checklists](https://publishpress.com/knowledge-base/yoast-seo-tasks/).
+
+## Pro Version: Checklists for Rank Math SEO
+
+With the Pro version of the PublishPress Checklists plugin, you can require that site's content meets minimum standards with the Rank Math SEO plugin. If the content doesn't meet those standards, you can choose to show a warning, or prevent the post from being published. The Checklists plugin integrates with the “SEO Score” feature in Rank Math SEO.
+
+[Click here to read more about Rank Math SEO checklists](https://publishpress.com/knowledge-base/rank-math-seo-tasks/).
+
+## Pro Version: Checklists for All in One SEO
+
+With the Pro version of the PublishPress Checklists plugin, you can require that site's content meets minimum standards with the All in One SEO plugin. If the content doesn't meet those standards, you can choose to show a warning, or prevent the post from being published. The Checklists plugin integrates with the “SEO Score” and “SEO Headline Score” features in All in One SEO.
+
+[Click here to read more about All in One SEO checklists](https://publishpress.com/knowledge-base/all-in-one-seo-tasks/).
+
+
+## Join PublishPress and get the Pro plugins ##
 
 The Pro versions of the PublishPress plugins are well worth your investment. The Pro versions have extra features and faster support. [Click here to join PublishPress](https://publishpress.com/pricing/).
 
-Join PublishPress and you'll get access to these Pro plugins:
+Join PublishPress and you'll get access to these ten Pro plugins:
 
 * [PublishPress Authors Pro](https://publishpress.com/authors) allows you to add multiple authors and guest authors to WordPress posts.
 * [PublishPress Blocks Pro](https://publishpress.com/blocks) has everything you need to build professional websites with the WordPress block editor.
 * [PublishPress Capabilities Pro](https://publishpress.com/capabilities) is the plugin to manage your WordPress user roles, permissions, and capabilities.
 * [PublishPress Checklists Pro](https://publishpress.com/checklists) enables you to define tasks that must be completed before content is published.
-* [PublishPress Permissions Pro](https://publishpress.com/permissions)  is the plugin for advanced WordPress permissions.
-* [PublishPress Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
+* [PublishPress Future Pro](https://publishpress.com/future) is the plugin for scheduling changes to your posts.
+* [PublishPress Permissions Pro](https://publishpress.com/permissions)  is the plugin for restricted content and advanced WordPress permissions.
+* [PublishPress Planner Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
 * [PublishPress Revisions Pro](https://publishpress.com/revisions) allows you to update your published pages with teamwork and precision.
-* [PublishPress Series Pro](https://publishpress.com/series) enables you to group content together into a series
+* [PublishPress Series Pro](https://publishpress.com/series) enables you to group content together into a series.
+* [PublishPress Statuses Pro](https://publishpress.com/series) enables you to create additional publishing steps for your posts.
 
 Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more... then you should try PublishPress.
 
-=  Bug Reports =
+## Bug Reports ##
 
 Bug reports for PublishPress Checklists are welcomed in our [repository on GitHub](https://github.com/publishpress/publishpress-checklists). Please note that GitHub is not a support forum, and that issues that aren’t properly qualified as bugs will be closed.
-
-= Follow the PublishPress team =
-
-Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitter](https://www.twitter.com/publishpresscom) and [YouTube](https://www.youtube.com/publishpress)
 
 == Screenshots ==
 
@@ -275,298 +349,17 @@ With the PublishPress Checklists plugin, you can require that site's content mee
 
 [Read about requiring approval by Yoast SEO](https://publishpress.com/knowledge-base/yoast-seo-tasks/)
 
+== Screenshots ==
+
+1. Create your own checklists. Next to every post and page, writers see a checklist box, showing the tasks they need to complete. As writers complete each item, the red text automatically turns to green when it is complete.
+2. Configure your requirements. Each item on the checklist can be configured to meet your site’s needs. You can decide whether items are recommended, required or ignored. You can also set maximum and minimum values.
+3. Feedback before publishing. If the writers don’t complete all the requirements, PublishPress Checklists will show them a message explaining what they need to do
+4. OpenAI support. PublishPress Checklists supports AI to suggest new tasks and analyze your content.
+5. WooCommerce Products Checklist. This feature in Checklists Pro allows you to create requirements for WooCommerce products. You can set over 20 requirements that must be met before a product is published.
+6. Custom checklist rules. In addition to the default rules, PublishPress Checklists allows you to create your own rules. Click “Add custom item” to create as many rules as you want.
+
+
 
 == Changelog ==
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-= [2.7.2] - 27 Apr 2022 =
-
-* Fixed: Fix Yoast SEO word count breaks in Pending Review, #345;
-* Fixed: Run the WordPress VIP scans on Checklists, #354;
-
-= [2.7.1] - 20 Apr 2022 =
-
-* Fixed: Fix incorrect text in settings, #344;
-* Fixed: Allow links with # as valid URL check, #352;
-* Fixed: Hide task not supported for post type, #199;
-* Fixed: Fix bad footer image URL on Windows for the Pro plugin, #342;
-* Fixed: Only load the checklists and resources in relevant pages, #129;
-* Fixed: Fix method call is provided 2 parameters, but the method signature uses 1 parameters error, #179;
-* Updated: Spanish and Italian translations, #348;
-
-= [2.7.0] - 16 Feb 2022 =
-
-* Added: Added capability "manage_checklists" to access Checklists screen, #173;
-* Removed: Remove the icon from the admin heading;
-* Fixed: Fix tabs layout in the settings page, #317;
-* Fixed: Updated the Reviews library, fixing compatibility with our other plugins;
-* Fixed: Add capability check before saving global checklists options (we already had a nonce check in place), #325;
-* Fixed: Improved output escaping in the admin interface, #326;
-* Fixed: Improved input sanitization, #324;
-* Fixed: Fixed duplicated admin menu on PHP 8, #316;
-
-= [2.6.0] = SKIPPED
-
-Skipped version, for syncing the version number with the Pro plugin.
-
-= [2.5.3] - 2021-11-15 =
-
-* Fixed: Can't update published posts if requirements changed;
-* Added: WordPress Reviews version 1.1.12;
-
-= [2.5.2] - 2021-11-11 =
-
-* Fixed: Missing logo image for ask-for-review banner;
-* Added: Ask-for-review banner in other admin pages;
-
-= [2.5.1] - 2021-11-11 =
-
-* Fixed: Skip the comply of requirements when "Include pre-publish checklist" is disabled;
-* Fixed: Preferences Panel box is broken;
-* Fixed: Changed ID of span where full slug is picked up from with Classic Editor;
-* Fixed: Border width for buttons;
-* Added: Ask for plugin review support;
-
-= [2.5.0] - 2021-04-22 =
-
-* Added: Added drag-and-drop support for sorting the checklists requirements, #172;
-* Fixed: Fixed default position of items in the checklist;
-* Changed: Added support for displaying unit text in the checklist requirements settings page;
-
-= [2.4.4] - 2021-03-31 =
-
-* Fixed: Fixed link validation for "tel:" and "mailto:" links, #246
-* Fixed: Fixed WPBakery compatibility, #237;
-
-= [2.4.3] - 2021-03-30 =
-
-* Fixed: Fixed support to PHP 5.6, #240;
-* Fixed: Fixed some class names to match the filename, #241;
-* Fixed: Fixed some strings that were not being translated;
-* Fixed: Fixed detection of the Block Editor when the Classic Editor plugin is installed and the user can select which editor to use, #239;
-* Fixed: Fixed a CSS conflict with the class "warning" and some themes, #243;
-* Fixed: Fixed pre-publishing panel and warning when required items are unchecked, #252;
-* Added: Added Italian translation. Huge thanks to Simone Bianchelli and Angelo Giammarresi for sharing the translation files;
-
-= [2.4.2] - 2020-10-22 =
-
-* Fixed: Remove unexistent dependencies for met-box.js, #231;
-
-= [2.4.1] - 2020-10-08 =
-
-* Fixed: Fix JS error Uncaught TypeError: Cannot read property 'doAction' of undefined, #224;
-* Fixed: Fix broken menu item if the user doesn't have permissions to see the menu, #226;
-
-= [2.4.0] - 2020-09-22 =
-
-* Added: Added a new task for validating links in the content, #200;
-* Added: Added a new task for checking the number of external links, #201;
-* Added: Added form validation for required fields in the checklists page, #175;
-* Added: Added a new task for requiring approval for specific roles, #104;
-* Added: Added new field for custom tasks to select which role can check/uncheck the box, #104;
-* Changed: Changed the order of tasks in the settings page, #223;
-* Removed: The option "Recommended: show only in the sidebar" were removed and current settings fallback to "Recommended: show in the sidebar and before publishing", which was renamed to just: "Recommended", #195.
-
-= [2.3.2] - 2020-08-20 =
-
-* Fixed: Fixed warnings related to missed dependencies for scripts when the post type is not selected to use checklists, #208;
-
-= [2.3.1] - 2020-08-14 =
-
-* Fixed: Fixed compatibility with WP 5.5;
-* Fixed: Fixed Gutenberg and Classic Editor detection, #203, #202;
-* Fixed: Fixed invalid selector in jQuery, #197;
-* Fixed: Fixed the publishing button that was stuck sometimes making impossible to publish a post, #191;
-
-= [2.3.0] - 2020-08-06 =
-
-* Added: Added new task for checking if all the images in the post has an "alt" attribute, #164;
-* Fixed: Fixed the verification for custom taxonomies in the post editor page, #114;
-* Fixed: Fixed style for unchecked custom tasks, #184;
-* Fixed: Updated language files;
-* Changed: Hide Yoast SEO tasks if Yoast's plugin is not activated, #164;
-* Changed: Updated translation strings;
-* Changed: Changed the algorithm of the Yoast SEO readability and SEO analysis verification, considering the selected score as the minimum score, #169;
-* Changed: Change the label of the "Add custom item" button to "Add custom task", #181;
-
-= [2.2.0] - 2020-07-21 =
-
-* Added: Add support to Yoast SEO readability and SEO analysis pass task in the checklists - #86;
-* Added: Add new task for checking the limit of chars in the excerpt test - #150;
-* Added: Add new task for checking the number of internal links in the text - #52;
-* Fixed: Remove not used transient for checking data migration;
-* Fixed: JS error message related to missed PP_Checklists object;
-* Fixed: Enqueue scripts only when required - #106;
-* Fixed: Fixed translation support adding French and British English translations;
-* Changed: Updated the PHP min requirement from 5.4 to 5.6;
-* Changed: Updated the WordPress tested up to version to 5.4;
-* Changed: Updated the label and text for some tasks;
-
-= [2.1.0] - 2020-05-07 =
-
-* Added: Add permalink validation rule for the checklists - #115;
-* Added: Add option to select user roles to skip specific requirements - #131;
-* Added: Add a menu link to upgrade to the Pro plan;
-* Changed: Improve UI for custom items in the checklist, removing the "X" icon - #126;
-* Removed: Remove the option to hide the Publish Button due to conflicts with Gutenberg;
-* Fixed: Fixed the tabs for post types in the Checklists admin page. If you have too many post types the second line of tabs was overlaying the first line - #132;
-* Fixed: Fixed the checklist warning popup when you are updating a published post and has unchecked required tasks in the checklist, for the classic editor - #124;
-* Fixed: Fixed the list of available post types for the checklists to display any post type that has the show_ui = true. Non public post types are now recognized - #127;
-* Fixed: Fixed the list of post types in the Checklists page hiding the tabs of post types that are not selected in the settings - #136;
-* Fixed: Fixed the error displayed on Windows servers when the constant DIRECTORY_SEPARATOR is not defined;
-* Fixed: Fixed empty checklists on fresh installs due to no post type being selected. Posts is selected by default now - #140;
-* Fixed: Fix warning icon on Gutenberg moving it from the side to over the publish button - #138;
-
-= [2.0.2] - 2020-03-16 =
-
-* Fixed: Fix Checklist for custom hierarquical taxonomies when using Gutenberg;
-* Fixed: Small improvements to the UI;
-* Fixed: Fix compatibility with Rank Math fixing error in Gutenberg;
-* Added: Added hooks to extend the interface for the Pro version;
-
-= [2.0.1] - 2020-02-07 =
-
-* Fixed: Fixed the prefix of post types in the post_type_support variable;
-* Fixed: Adjusted the plugin URL for assets when working as vendor dependency;
-* Fixed: Fix the suffix of the settings section from _post_types, to _general;
-* Fixed: Fixed an undefined index error when the index "type" is not defined;
-* Fixed: Fixed a JS error when you type in the editor and the word count requirement is set;
-* Fixed: Fixed the verification for custom taxonomies on Gutenberg;
-* Added: Added filters to allow using the plugin as base for the Pro plugin;
-
-= [2.0.0] - 2019-12-03 =
-* Fixed: Fixed the word counter for the Text tab in the Classic Editor;
-* Changed: Renamed from "PublishPress Content Checklist" to "PublishPress Checklists";
-* Changed: Refactored to be a standalone plugin, not requiring PublishPress anymore;
-* Changed: Plugin name and text domain changed from "publishpress-content-checklist" to "publishpress-checklists";
-* Changed: Namespace changed from "PublishPress\Addon\Content_checklist" to "PublishPress\Checklists\". The requirements' namespace changed from "PublishPress\Addon\Content_checklist\Requirement" to "PublishPress\Checklists\Core\Requirement";
-* Changed: JavaScript object changed from "PP_Content_Checklist" to "PP_Checklists";
-* Changed: New admin menu added with the checklists options and settings page;
-* Changed: The checklists options section was removed from the settings page to an specific menu item;
-
-= [1.4.7] - 2019-07-21 =
-* Fixed: A JS error was preventing to block the post save action when displaying a popup with missed requirements on Classic Editor;
-
-= [1.4.6] - 2019-06-20 =
-* Fixed: Avoid JS white screen on Gutenberg "New Post" access by Author with Multiple Authors plugin active and "Remove author from new posts" setting enabled;
-* Changed: Change minimum required version of PublishPress to 1.20.0;
-
-= [1.4.5] - 2019-02-22 =
-* Fixed: Fixed the pre-publishing check to avoid blocking save when not publishing;
-
-= [1.4.4] - 2019-02-12 =
-* Fixed: Fixed JS error that was preventing the Preview button to work properly in the classic editor;
-
-= [1.4.3] - 2019-02-11 =
-* Fixed: Fixed translation to PT-BR (thanks to Dionizio Bach);
-* Fixed: Fixed bug when word-count script was not loaded;
-* Fixed: Fixed JS error if an editor is not found;
-* Changed: Changed the label for checklist options in the settings panel;
-
-= [1.4.2] - 2019-01-30 =
-* Fixed: Fixed the checklist for the block editor;
-* Changed: Removed license key field from the settings tab;
-
-= [1.4.1] - 2019-01-24 =
-* Changed: Disable post types by default, if Gutenberg is installed;
-
-= [1.4.0] - 2019-01-14 =
-* Fixed: Fixed the TinyMCE plugin to count words to not load in the front-end when TinyMCE is initialized;
-* Fixed: Fixed the assets loading to load tinymce-pp-checklists-requirements.js only in the admin;
-* Fixed: Fixed conflict between custom taxonomies and tags in the checklist while counting items;
-* Added: Added better support for custom post types and custom taxonomies which use WordPress default UI;
-* Changed: Update POT file and fixed translations loading the text domain;
-* Changed: Updated PT-BT language files;
-
-= [1.3.8] - 2018-04-18 =
-* Fixed: Fixed wrong reference to a legacy EDD library's include file;
-* Fixed: Fixed PHP warning about undefined property and constant;
-
-= [1.3.7] - 2018-02-21 =
-* Fixed: Fixed support for custom post types;
-
-= [1.3.6] - 2018-02-07 =
-* Fixed: Fixed error about class EDD_SL_Plugin_Updater being loaded twice;
-
-= [1.3.5] - 2018-02-06 =
-* Fixed: Fixed saving action for custom items on the checklist;
-* Fixed: Fixed license validation and automatic update;
-
-= [1.3.4] - 2018-01-26 =
-* Changed: Changed plugin headers, fixing author and text domain;
-
-= [1.3.3] - 2018-01-26 =
-* Fixed: Fixed JS error when the checklist is empty (no requirements are selected);
-* Fixed: Fixed compatibility with PHP 5.4 (we will soon require min 5.6);
-* Fixed: Fixed custom requirements;
-* Fixed: Fixed the requirement of tags;
-* Fixed: Fixed PHP Fatal error on some PHP on the featured image requirement;
-* Fixed: Fixed category count in the checklist;
-* Added: Added action to load plugins' script files;
-* Changed: Rebranded to PublishPress;
-
-= [1.3.2] - 2017-08-31 =
-* Fixed: Fixed EDD integration and updates;
-* Changed: Removed Freemius integration;
-
-= [1.3.1] - 2017-07-13 =
-* Fixed: Fixed support for custom post types allowing to use custom items as requirements;
-
-= [1.3.0] - 2017-07-12 =
-* Fixed: Fixed the delete button for custom items in the settings. It was remocing wrong items, in an odd pattern;
-* Fixed: Fixed PHP warning in the settings page about undefined index in array;
-* Fixed: Fixed the menu slug in the Freemius integration;
-* Added: Added support for setting specific requirements for each post type, instead of global only;
-* Changed: Changed the required minimum version of PublishPress to 1.6.0;
-* Changed: Improved extensibility for add-ons;
-
-= [1.2.1] - 2017-06-21 =
-* Fixed: Fixed PHP warnings after install and activate
-* Fixed: Fixed PHP warnings about wrong index type
-* Fixed: Fixed the license and update checker
-* Added: Added pt-BR translations
-* Changed: Removed English language files
-* Changed: Updated Tested Up to 4.8
-
-= [1.2.0] - 2017-06-06 =
-* Fixed: Fixes the mask for numeric input fields in the settings tab on Firefox
-* Fixed: Fixes the license key validation
-* Fixed: Fixes the update system
-* Added: Added the option to hide the Publish button if the checklist is not completed
-* Added: Added the option to add custom items for the checklist
-* Added: Added POT file and English PO files
-* Changed: The warning icon in the publish box now appears even for published content
-
-= [1.1.2] - 2017-05-23 =
-* Fixed: Fixes the word count feature
-* Changed: Displays empty value in the max fields when max is less than min
-* Changed: Improves the min and max fields for value equal 0. Displays empty fields.
-
-= [1.1.1] - 2017-05-18 =
-* Fixed: Removed .DS_Store file from the package
-* Fixed: Fixed the "Hello Dolly" message in the Freemius opt-in dialog
-* Fixed: Increased the minimum WordPress version to 4.6
-* Changed: Improved settings merging the checkbox and the action list for each requirement
-* Changed: Changed order for Categories and Tags to stay together in the list
-* Changed: Changed code to use correct language domain
-
-= [1.1.0] - 2017-05-11 =
-* Added: Added "Excerpt has text" as requirement
-* Added: Added option to set "max" value for the number of categories, tags and words - now you can have min, max or an interval for each requirement.
-* Changed: Improved the JavaScript code for better readbility
-
-= [1.0.1] - 2017-05-03 =
-* Fixed: Fixed the name of plugin's main file
-* Fixed: Fixed WordPress-EDD-License-Integration library in the vendor dir
-
-= [1.0.0] - 2017-04-27 =
-* Added: Added requirement for minimum number of words
-* Added: Added requirement for featured image
-* Added: Added requirement for minimum number of tags
-* Added: Added requirement for minimum number of categories
-* Added: Added Freemius integration for feedback and contact form
-* Added: Added option to display a warning icon in the publish box
-* Added: Added checklist to the post form
-* Added: Added option to select specific post types
+The full changelog can be found on [GitHub](https://github.com/publishpress/publishpress-checklists/blob/master/CHANGELOG.md).

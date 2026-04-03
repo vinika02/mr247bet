@@ -58,16 +58,16 @@ class Post implements RequestMethod {
      * @return string Body of the reCAPTCHA response
      */
     public function submit(RequestParameters $params) {
-        $options = array(
+        $options  = array(
             'http' => array(
-                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method' => 'POST',
-                'content' => $params->toQueryString(),
+                'header'      => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method'      => 'POST',
+                'content'     => $params->toQueryString(),
                 // Force the peer to validate (not needed in 5.6.0+, but still works)
                 'verify_peer' => true,
             ),
         );
-        $context = stream_context_create($options);
+        $context  = stream_context_create($options);
         $response = file_get_contents($this->siteVerifyUrl, false, $context);
 
         if ($response !== false) {

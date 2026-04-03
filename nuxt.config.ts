@@ -70,7 +70,7 @@ export default defineNuxtConfig({
   modules: [
     "nuxt-simple-robots",
     "@nuxt/devtools",
-    "@nuxt/image-edge",
+    "@nuxt/image",
     "nuxt-simple-sitemap",
   ],
 });

@@ -1,25 +1,25 @@
-===  Advanced Post Queries ===
+=== Advanced Queries ===
 Contributors: shabti
-Tags: elementor, queries, posts, advanced query, dynamic query, advanced queries, dynamic queries
+Tags: elementor, queries, posts, listings, advanced queries, dynamic queries
 Requires at least: 4.6
-Tested up to: 5.9.1
-Stable tag: Stable
+Tested up to: 6.7.1
+Stable tag: 1.1.4
 Donate link: https://paypal.me/KaplanWebDev
-Requires PHP: 5.2.4
+Requires PHP: 7.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-An Elementor extension that allows you to easily dynamically query your posts and portfolio widget results without custom query IDs.
+An Elementor extension that allows you to easily dynamically query your posts, portfolio, and loop grid widget results without custom query IDs.
 
 == Description ==
 
-Only works with Elementor PRO!
+Only works with Elementor PRO (for now....)
 
 An Elementor PRO extension that allows you to easily dynamically query your posts and portfolio widget results without custom query IDs.
 
-This plugin is built on Elementor's posts and portfolio widgets so Elementor must be installed and activated. You can use this plugin to query your posts based on a dynamic author field or date field. If you have any special requests, just message us on our website or FB page and we will try to add it to the plugin right away. 
+This plugin is built on Elementor's posts, portfolio, and loop grid widgets so Elementor Pro must be installed and activated. You can use this plugin to query your posts based on a dynamic author field or date field. If you have any special requests, just message us on our website or FB page and we will try to add it to the plugin right away. 
 
-This is compatible with ACF and Jetengine too. This works for the Elementor Pro posts and portfolio widgets as well as Elementor Extras post extras widget. (If you want this to be compatible with another widget, we can check if it's possible).
+This is compatible with ACF and Jetengine too. This works for the Elementor Pro posts, portfolio, loop grid, and loop carousel widgets as well as Elementor Extras post extras widget. (If you want this to be compatible with another widget, we can check if it's possible).
 
 So far you can query your posts in the following ways:
 
@@ -49,12 +49,11 @@ So far you can query your posts in the following ways:
 
 
 == Useful Links ==
-Appreciate what we're doing? Please give us a like on our facebook page: 
-[Kaplan Web Development Facebook page](https://www.facebook.com/kaplanwebdev/)
+Appreciate what we're doing? Want to stay updated with new features? Give us a like and follow us on our facebook page: 
+[DynamiApps Facebook page](https://www.facebook.com/dynamiapps/)
 
-Check out our other plugin, which lets you give your clients the ability to update their posts from the frontend: 
-[ACF Frontend for Elementor](https://wordpress.org/plugins/acf-frontend-form-element/)
-[ACF Frontend Pro for Elementor](https://www.frontendform.com/)
+Check out our website:
+[DynamiApps website](https://www.dynamiapps.com/)
 
 Check out Elementor Pro. We highly recommend pro for anyone who is looking to get more out of WordPress and Elementor:
 [Elementor Pro](https://elementor.com/pricing/)
@@ -70,14 +69,34 @@ Check out Elementor Pro. We highly recommend pro for anyone who is looking to ge
 
 
 == Changelog ==
+= 1.1.4 =
+* Release Date - January 05, 2025
+* Bumped Tested WordPress Version 
+* Post Custom Field Contains now supports ACF relationship field
+
+= 1.1.3 =
+* Release Date - March 21, 2024
+* Bumped Tested WordPress version
+* Changed module folder name to "queries"
+
+= 1.1.1 =
+* Release Date - April 17, 2023*
+* Added support for the new loop carousel widget from Elementor
+
+= 1.1.0 =
+* Release Date - November 21, 2022*
+* Added support for the new loop grid widget from Elementor
+
+= 1.0.16 =
+* Release Date - September 15, 2022*
+* Fixed Post is in Current Post Custom Field option not working properly
 
 = 1.0.15 =
-*Release Date - June 24, 2020*
-*Fixed error for in last update
+* Release Date - June 24, 2020*
+* Fixed error for in last update
 
 = 1.0.14 =
-*Release Date - June 22, 2020*
-
+* Release Date - June 22, 2020*
 * Added option to query by posts that share the same terms
 
 = 1.0.12 =

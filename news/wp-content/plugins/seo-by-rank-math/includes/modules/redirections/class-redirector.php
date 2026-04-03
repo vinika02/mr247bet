@@ -13,8 +13,7 @@ namespace RankMath\Redirections;
 use WP_Query;
 use RankMath\Helper;
 use RankMath\Traits\Hooker;
-use MyThemeShop\Helpers\Str;
-use MyThemeShop\Helpers\Param;
+use RankMath\Helpers\Str;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -87,15 +86,11 @@ class Redirector {
 	 * Set the required values.
 	 */
 	private function start() {
-		$this->uri = str_replace( home_url( '/' ), '', Param::server( 'REQUEST_URI' ) );
-		$this->uri = urldecode( $this->uri );
-		$this->uri = trim( Redirection::strip_subdirectory( $this->uri ), '/' );
-
 		// Complete request uri.
-		$this->full_uri = $this->uri;
+		$this->full_uri = Redirection::get_full_uri();
 
 		// Remove query string.
-		$this->uri = explode( '?', $this->uri );
+		$this->uri = explode( '?', $this->full_uri );
 		if ( isset( $this->uri[1] ) ) {
 			$this->query_string = $this->uri[1];
 		}
@@ -138,10 +133,9 @@ class Redirector {
 			return;
 		}
 
-		// Debug if on.
 		$this->do_debugging();
 
-		if ( true === $this->do_filter( 'redirection/add_query_string', true ) && Str::is_non_empty( $this->query_string ) ) {
+		if ( true === $this->do_filter( 'redirection/add_query_string', true, $this->matched ) && Str::is_non_empty( $this->query_string ) ) {
 			$this->redirect_to .= '?' . $this->query_string;
 		}
 
@@ -270,8 +264,7 @@ class Redirector {
 	 * Do the fallback strategy here.
 	 */
 	private function fallback() {
-		$wp_redirect_admin_locations = $this->do_filter( 'redirection/fallback_exclude_locations', [ 'login', 'admin', 'dashboard' ] );
-		if ( ! is_404() || ! $this->uri || in_array( $this->uri, $wp_redirect_admin_locations, true ) ) {
+		if ( ! $this->can_run_fallback() ) {
 			return;
 		}
 
@@ -301,12 +294,7 @@ class Redirector {
 			return;
 		}
 
-		$this->filter( 'user_has_cap', 'filter_user_has_cap' );
-
-		require_once ABSPATH . 'wp-admin/includes/screen.php';
-
-		include_once \dirname( __FILE__ ) . '/views/debugging.php';
-		exit;
+		new Debugger( get_object_vars( $this ) );
 	}
 
 	/**
@@ -319,7 +307,8 @@ class Redirector {
 			$redirection = DB::get_redirection_by_id( $redirection, 'active' );
 		}
 
-		if ( false === $redirection || ! DB::compare_sources( $redirection['sources'], $this->uri ) ) {
+		$custom_match = $this->do_filter( 'redirection/redirection_match', false, $redirection );
+		if ( false === $redirection || ( ! DB::compare_sources( $redirection['sources'], $this->uri ) && ! $custom_match ) ) {
 			return;
 		}
 
@@ -417,5 +406,48 @@ class Redirector {
 	 */
 	private function is_amp_endpoint() {
 		return \function_exists( 'is_amp_endpoint' ) && \function_exists( 'amp_is_canonical' ) && is_amp_endpoint() && ! amp_is_canonical();
+	}
+
+	/**
+	 * Gets the post id for the redirections' fallback.
+	 *
+	 * @return int|void
+	 */
+	private static function get_redirections_fallback_post_id() {
+		$fall_back = Helper::get_settings( 'general.redirections_fallback' );
+
+		if ( in_array( $fall_back, [ 'default', 'homepage' ], true ) ) {
+			return (int) get_option( 'page_on_front' );
+		}
+
+		if ( Helper::get_settings( 'general.redirections_custom_url' ) ) {
+			return url_to_postid( Helper::get_settings( 'general.redirections_custom_url' ) );
+		}
+	}
+
+	/**
+	 * Check if the fall_back redirect can run in the current contexts.
+	 *
+	 * @return bool
+	 */
+	private function can_run_fallback() {
+		if ( ! is_404() ) {
+			return false;
+		}
+
+		if (
+			! $this->uri &&
+			$this->query_string &&
+			(
+				Str::starts_with( 'p=', trim( $this->query_string ) ) ||
+				Str::starts_with( 'page_id=', trim( $this->query_string ) )
+			)
+		) {
+			$this->query_string = '';
+			return true;
+		}
+
+		$wp_redirect_admin_locations = $this->do_filter( 'redirection/fallback_exclude_locations', [ 'login', 'admin', 'dashboard' ] );
+		return $this->uri && ! in_array( $this->uri, $wp_redirect_admin_locations, true );
 	}
 }

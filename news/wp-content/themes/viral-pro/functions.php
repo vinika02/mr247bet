@@ -32,7 +32,10 @@ if (!function_exists('viral_pro_setup')) :
          * If you're building a theme based on Viral Pro, use a find and replace
          * to change 'viral-pro' to the name of your theme in all the template files
          */
-        load_theme_textdomain('viral-pro', get_template_directory() . '/languages');
+     
+        add_action('init', function() {
+            load_theme_textdomain('viral-pro', get_template_directory() . '/languages');
+        });
 
         // Add default posts and comments RSS feed links to head.
         add_theme_support('automatic-feed-links');

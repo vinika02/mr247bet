@@ -3,14 +3,14 @@
  * The MIT License
  * Copyright (c) 2007 Andy Smith
  */
+
 namespace wpdFormAttr\Login\twitter;
 
 /**
  * A class for implementing a Signature Method
  * See section 9 ("Signing Requests") in the spec
  */
-abstract class SignatureMethod
-{
+abstract class SignatureMethod {
     /**
      * Needs to return the name of the Signature Method (ie HMAC-SHA1)
      *
@@ -42,8 +42,7 @@ abstract class SignatureMethod
      *
      * @return bool
      */
-    public function checkSignature(Request $request, Consumer $consumer, Token $token, $signature)
-    {
+    public function checkSignature(Request $request, Consumer $consumer, Token $token, $signature) {
         $built = $this->buildSignature($request, $consumer, $token);
 
         // Check for zero length, although unlikely here

@@ -1,0 +1,1131 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PublishPress Checklists\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress-"
+"checklists\n"
+"POT-Creation-Date: 2026-01-27T14:26:22+00:00\n"
+"PO-Revision-Date: 2026-01-30 15:14+0000\n"
+"Last-Translator: Riza Maulana Ardiyanto <riza@publishpress.com>\n"
+"Language-Team: Finnish <https://weblate.publishpress.com/projects/"
+"publishpress-checklists/publishpress-checklists/fi/>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.14.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: publishpress-checklists.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+"X-Poedit-SearchPathExcluded-2: node_modules\n"
+
+#. Plugin Name of the plugin
+#. Plugin Name of the plugin
+msgid "PublishPress Checklists"
+msgstr "PublishPress Checklists"
+
+#. Plugin URI of the plugin
+msgid "https://publishpress.com/"
+msgstr "https://publishpress.com/"
+
+#. Description of the plugin
+msgid ""
+"With PublishPress Checklists, you can choose publishing requirements for "
+"your content."
+msgstr ""
+"PublishPress Checklistsin avulla voit valita julkaisuvaatimukset "
+"sisällöllesi."
+
+#. Author of the plugin
+msgid "PublishPress"
+msgstr "PublishPress"
+
+#. Author URI of the plugin
+msgid "https://publishpress.com"
+msgstr "https://publishpress.com"
+
+msgid "Disabled"
+msgstr "Poistettu käytöstä"
+
+msgid "Recommended"
+msgstr "Suositeltu"
+
+msgid "Required"
+msgstr "Pakollinen"
+
+msgid "Please correct your form errors below and try again."
+msgstr "Korjaa alla olevat lomakevirheet ja yritä uudelleen."
+
+msgid "Cheatin&#8217; uh?"
+msgstr "Huijaatko&#8217; huh?"
+
+msgid "You do not have necessary permissions to complete this action."
+msgstr "Sinulla ei ole tarvittavia oikeuksia tämän toiminnon suorittamiseen."
+
+msgid "Post does not exist"
+msgstr "Viestiä ei ole olemassa"
+
+msgid "Checklists"
+msgstr "Tarkistuslistat"
+
+#, php-format
+msgid "If you like %s please leave us a %s rating. Thank you!"
+msgstr "Jos pidät %s:stä, jätä meille %s-arvio. Kiitos!"
+
+msgid "Need PublishPress Checklists Support?"
+msgstr "Tarvitsetko PublishPress Checklists -tukea?"
+
+msgid "If you need help or have a new feature request, let us know."
+msgstr "Jos tarvitset apua tai sinulla on uusi ominaisuuspyyntö, kerro meille."
+
+msgid "Request Support"
+msgstr "Pyydä tukea"
+
+msgid "Detailed documentation is also available on the plugin website."
+msgstr ""
+"Yksityiskohtaiset asiakirjat ovat myös saatavilla liitteen verkkosivustolla."
+
+msgid "View Knowledge Base"
+msgstr "Näytä tietopankki"
+
+msgid "Settings"
+msgstr "Asetukset"
+
+msgid "Upgrade to Pro"
+msgstr "Päivitä Pro:ksi"
+
+#, php-format
+msgid "Approved by %s"
+msgstr "Hyväksynyt %s"
+
+msgid "Approved by a user in this role"
+msgstr "Hyväksynyt käyttäjä, jolla on tämä rooli"
+
+msgid "Min"
+msgstr "Min"
+
+msgid "Max"
+msgstr "Maksimi"
+
+msgid "Edit label"
+msgstr "Muokkaa etikettiä"
+
+msgid "Number of categories"
+msgstr "Kategorioiden määrä"
+
+#, php-format
+msgid "Minimum of %s category"
+msgstr "Vähintään %s kategoria"
+
+#, php-format
+msgid "Minimum of %s categories"
+msgstr "Vähintään %s kategoriaa"
+
+#, php-format
+msgid "Maximum of %s category"
+msgstr "Enintään %s kategoria"
+
+#, php-format
+msgid "Maximum of %s categories"
+msgstr "Enintään %s kategoriaa"
+
+#, php-format
+msgid "%s category"
+msgstr "%s kategoria"
+
+#, php-format
+msgid "%s categories"
+msgstr "%s kategoriaa"
+
+#, php-format
+msgid "Between %s and %s categories"
+msgstr "Väli %s ja %s kategoriaa"
+
+msgid "Custom"
+msgstr "Mukautettu"
+
+msgid "Which roles can mark this task as complete?"
+msgstr "Mitkä roolit voivat merkitä tämän tehtävän suoritetuksi?"
+
+msgid "Enter name of custom task"
+msgstr "Syötä mukautetun tehtävän nimi"
+
+msgid "Remove"
+msgstr "Poista"
+
+msgid "Number of external links in content"
+msgstr "Ulkoisten linkkien määrä sisällössä"
+
+#, php-format
+msgid "Minimum of %d external link in content"
+msgstr "Vähintään %d ulkoista linkkiä sisällössä"
+
+#, php-format
+msgid "Minimum of %d external links in content"
+msgstr "Vähintään %d ulkoista linkkiä sisällössä"
+
+#, php-format
+msgid "Maximum of %d external link in content"
+msgstr "Enintään %d ulkoista linkkiä sisällössä"
+
+#, php-format
+msgid "Maximum of %d external links in content"
+msgstr "Enintään %d ulkoista linkkiä sisällössä"
+
+#, php-format
+msgid "%d external link in content"
+msgstr "%d ulkoista linkkiä sisällössä"
+
+#, php-format
+msgid "%d external links in content"
+msgstr "%d ulkoista linkkiä sisällössä"
+
+#, php-format
+msgid "Between %d and %d external links in content"
+msgstr "Väli %d ja %d ulkoista linkkiä sisällössä"
+
+msgid "Featured image is added"
+msgstr "Ominaisuuskuva on lisätty"
+
+msgid "Featured image has Alt text"
+msgstr "Ominaisuuskuvalla on Alt-teksti"
+
+msgid "Featured image has caption"
+msgstr "Esittelykuvalla on kuvateksti"
+
+msgid "Numbers of characters in excerpt"
+msgstr "Merkkejä oteessa"
+
+#, php-format
+msgid "Minimum of %d character in excerpt"
+msgstr "Vähintään %d merkkiä lainauksessa"
+
+#, php-format
+msgid "Minimum of %d characters in excerpt"
+msgstr "Vähintään %d merkkiä tiivistelmässä"
+
+#, php-format
+msgid "Maximum of %d character in excerpt"
+msgstr "Maksimi %d merkkiä tiivistelmässä"
+
+#, php-format
+msgid "Maximum of %d characters in excerpt"
+msgstr "Enintään %d merkkiä lainauksessa"
+
+#, php-format
+msgid "%d character in excerpt"
+msgstr "%d merkkiä tiivistelmässä"
+
+#, php-format
+msgid "%d characters in excerpt"
+msgstr "%d merkkiä tiivistelmässä"
+
+#, php-format
+msgid "Between %d and %d characters in excerpt"
+msgstr "Väli %d ja %d merkkiä tiivistelmässä"
+
+msgid "All images have Alt text"
+msgstr "Kaikilla kuvilla on Alt-teksti"
+
+msgid "Number of characters in Alt text"
+msgstr "Merkkejä Alt-tekstissä"
+
+#, php-format
+msgid "Minimum of %d character in Alt text"
+msgstr "Vähintään %d merkkiä Alt-tekstissä"
+
+#, php-format
+msgid "Minimum of %d characters in Alt text"
+msgstr "Vähintään %d merkkiä Alt-tekstissä"
+
+#, php-format
+msgid "Maximum of %d character in Alt text"
+msgstr "Maksimi %d merkkiä Alt-tekstissä"
+
+#, php-format
+msgid "Maximum of %d characters in Alt text"
+msgstr "Maksimi %d merkkiä Alt-tekstissä"
+
+#, php-format
+msgid "%d character in Alt text"
+msgstr "%d merkkiä Alt-tekstissä"
+
+#, php-format
+msgid "%d characters in Alt text"
+msgstr "%d merkkiä Alt-tekstissä"
+
+#, php-format
+msgid "Between %d and %d characters in Alt text"
+msgstr "Välillä %d ja %d merkkiä Alt-tekstissä"
+
+msgid "Number of internal links in content"
+msgstr "Sisäisten linkkien määrä sisällössä"
+
+#, php-format
+msgid "Minimum of %d internal link in content"
+msgstr "Vähintään %d sisäistä linkkiä sisällössä"
+
+#, php-format
+msgid "Minimum of %d internal links in content"
+msgstr "Vähintään %d sisäistä linkkiä sisällössä"
+
+#, php-format
+msgid "Maximum of %d internal link in content"
+msgstr "Enintään %d sisäistä linkkiä sisällössä"
+
+#, php-format
+msgid "Maximum of %d internal links in content"
+msgstr "Enintään %d sisäistä linkkiä sisällössä"
+
+#, php-format
+msgid "%d internal link in content"
+msgstr "%d sisäistä linkkiä sisällössä"
+
+#, php-format
+msgid "%d internal links in content"
+msgstr "%d sisäistä linkkiä sisällössä"
+
+#, php-format
+msgid "Between %d and %d internal links in content"
+msgstr "Väli %d ja %d sisäistä linkkiä sisällössä"
+
+msgid "Openai"
+msgstr "Openai"
+
+msgid "Enter OpenAI task prompt"
+msgstr "Syötä OpenAI-tehtävän kehotus"
+
+msgid "An error occured."
+msgstr "Tapahtui virhe."
+
+msgid "Validation error. Kindly reload this page and try again."
+msgstr "Virhe vahvistuksessa. Lataa tämä sivu uudelleen ja yritä uudelleen."
+
+msgid "Post content is empty."
+msgstr "Viestin sisältö on tyhjää."
+
+msgid ""
+"OpenAI tasks require an API Key. Please add your API Key in the Settings "
+"area."
+msgstr ""
+"OpenAI-tehtävät vaativat API-avaimen. Lisää API-avaimesi Asetukset-alueelle."
+
+#, php-format
+msgid "API Error: %1s."
+msgstr "API-virhe: %1s."
+
+msgid "See the full response."
+msgstr "Näytä koko vastaus."
+
+msgid "Invalid response"
+msgstr "Virheellinen vastaus"
+
+#, php-format
+msgid "Prohibited categories: %s"
+msgstr "Kielletyt kategoriat: %s"
+
+msgid "Prohibited categories"
+msgstr "Kielletyt kategoriat"
+
+#, php-format
+msgid "Prohibited tags: %s"
+msgstr "Kielletyt tagit: %s"
+
+msgid "Prohibited tags"
+msgstr "Kielletyt tagit"
+
+#, php-format
+msgid "Required categories: %s"
+msgstr "Pakolliset kategoriat: %s"
+
+msgid "Required categories"
+msgstr "Pakolliset kategoriat"
+
+#, php-format
+msgid "Required tags: %s"
+msgstr "Pakolliset tagit: %s"
+
+msgid "Required tags"
+msgstr "Pakolliset tagit"
+
+msgid "Number of tags"
+msgstr "Avainsanojen määrä"
+
+#, php-format
+msgid "Minimum of %d tag"
+msgstr "Vähintään %d tagi"
+
+#, php-format
+msgid "Minimum of %d tags"
+msgstr "Vähintään %d tagia"
+
+#, php-format
+msgid "Maximum of %d tag"
+msgstr "Enintään %d tagi"
+
+#, php-format
+msgid "Maximum of %d tags"
+msgstr "Enintään %d tagia"
+
+#, php-format
+msgid "%d tag"
+msgstr "%d tunnistetta"
+
+#, php-format
+msgid "%d tags"
+msgstr "%d tunnistetta"
+
+#, php-format
+msgid "Between %d and %d tags"
+msgstr "Väli %d ja %d tunnistetta"
+
+msgid "Number of "
+msgstr "Määrä "
+
+#, php-format
+msgid "Minimum of %d "
+msgstr "Vähimmäismäärä %d "
+
+#, php-format
+msgid "Maximum of %d "
+msgstr "Maksimi %d "
+
+#, php-format
+msgid "%d "
+msgstr "%d "
+
+#, php-format
+msgid "Between %d and %d "
+msgstr "Väli %d ja %d "
+
+msgid "Number of characters in title"
+msgstr "Merkkejä otsikossa"
+
+#, php-format
+msgid "Minimum of %d character in title"
+msgstr "Vähintään %d merkkiä otsikossa"
+
+#, php-format
+msgid "Minimum of %d characters in title"
+msgstr "Vähintään %d merkkiä otsikossa"
+
+#, php-format
+msgid "Maximum of %d character in title"
+msgstr "Maksimi %d merkkiä otsikossa"
+
+#, php-format
+msgid "Maximum of %d characters in title"
+msgstr "Enintään %d merkkiä otsikossa"
+
+#, php-format
+msgid "%d character in title"
+msgstr "%d merkkiä otsikossa"
+
+#, php-format
+msgid "%d characters in title"
+msgstr "%d merkkiä otsikossa"
+
+#, php-format
+msgid "Between %d and %d characters in title"
+msgstr "Väli %d ja %d merkkiä otsikossa"
+
+msgid "All links use a valid format"
+msgstr "Kaikki linkit käyttävät voimassa olevaa muotoa"
+
+msgid "Number of words in content"
+msgstr "Sanojen määrä sisällössä"
+
+#, php-format
+msgid "Minimum of %d word in content"
+msgstr "Vähintään %d sanaa sisällössä"
+
+#, php-format
+msgid "Minimum of %d words in content"
+msgstr "Vähintään %d sanaa sisällössä"
+
+#, php-format
+msgid "Maximum of %d word in content"
+msgstr "Enintään %d sanaa sisällössä"
+
+#, php-format
+msgid "Maximum of %d words in content"
+msgstr "Enintään %d sanaa sisällössä"
+
+#, php-format
+msgid "%d word in content"
+msgstr "%d sanaa sisällössä"
+
+#, php-format
+msgid "%d words in content"
+msgstr "%d sanaa sisällössä"
+
+#, php-format
+msgid "Between %d and %d words in content"
+msgstr "Väli %d ja %d sanaa sisällössä"
+
+msgid "Title"
+msgstr "Otsikko"
+
+msgid "Content"
+msgstr "Sisältö"
+
+msgid "Publish Date / Time"
+msgstr "Julkaisupäivämäärä / Aika"
+
+msgid "Approval"
+msgstr "Hyväksyntä"
+
+msgid "Images"
+msgstr "Kuvat"
+
+msgid "Audio / Video"
+msgstr "Ääni / Video"
+
+msgid "Featured Image"
+msgstr "Esittelykuva"
+
+msgid "Links"
+msgstr "Linkit"
+
+msgid "Permalink"
+msgstr "Permanenki"
+
+msgid "Categories"
+msgstr "Kategoriat"
+
+msgid "Tags"
+msgstr "Tunnisteet"
+
+msgid "Taxonomies"
+msgstr "Taksonomiat"
+
+msgid "Accessibility"
+msgstr "Saavutettavuus"
+
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+msgid "Rank Math SEO"
+msgstr "Rank Math SEO"
+
+msgid "All in One SEO"
+msgstr "All in One SEO"
+
+msgid "Yoast SEO"
+msgstr "Yoast SEO"
+
+msgid "ACF"
+msgstr "ACF"
+
+msgid "options cannot be empty."
+msgstr "asetukset eivät voi olla tyhjät."
+
+msgid "Please make sure to add a name for all the custom tasks."
+msgstr "Varmista, että lisäät nimen kaikille mukautetuille tehtäville."
+
+msgid "No results found"
+msgstr "Ei tuloksia löytynyt"
+
+msgid "Searching…"
+msgstr "Etsitään…"
+
+msgid "Suggested Prompts"
+msgstr "Ehdotetut kehykset"
+
+msgid "What's the expected OpenAI response to mark the requirement as pass?"
+msgstr ""
+"Mikä on odotettu OpenAI-vastaus vaatimuksen merkitsemiseksi hyväksytyksi?"
+
+msgid "Clear Content"
+msgstr "Tyhjennä sisältö"
+
+msgid "Is this content clear and easy to read?"
+msgstr "Onko tämä sisältö selkeää ja helppolukuista?"
+
+msgid "Friendly Tone Content"
+msgstr "Ystävällinen sävy sisältö"
+
+msgid "Is this content tone friendly?"
+msgstr "Onko tämän sisällön sävy ystävällinen?"
+
+msgid "Professional Tone Content"
+msgstr "Ammattimainen sävy"
+
+msgid "Is this content tone professional?"
+msgstr "Onko tämän sisällön sävy ammattimainen?"
+
+msgid "Persuasive Tone Content"
+msgstr "Vakuuttava sävy"
+
+msgid "Is this content tone persuasive?"
+msgstr "Onko tämän sisällön sävy vakuuttava?"
+
+msgid "Empathetic Tone Content"
+msgstr "Empaattinen sävy sisältö"
+
+msgid "Is this content tone empathetic?"
+msgstr "Onko tämän sisällön sävy empaattinen?"
+
+msgid "Adventurous Tone Content"
+msgstr "Seikkailullinen sävy"
+
+msgid "Is this content tone adventurous?"
+msgstr "Onko tämän sisällön sävy seikkailunhaluinen?"
+
+msgid "Promotional Tone Content"
+msgstr "Mainostava sävy sisältö"
+
+msgid "Is this content tone promotional?"
+msgstr "Onko tämän sisällön sävy mainostava?"
+
+msgid "Checklist"
+msgstr "Tarkistuslista"
+
+msgid "You don't have to complete any Checklist tasks."
+msgstr "Sinun ei tarvitse suorittaa mitään Checklist-tehtäviä."
+
+msgid "Are you sure you want to publish anyway?"
+msgstr "Oletko varma, että haluat julkaista silti?"
+
+msgid "Are you sure you want to update the published post anyway?"
+msgstr "Oletko varma, että haluat silti päivittää julkaistun postauksen?"
+
+msgid "Please complete the following tasks before publishing:"
+msgstr "Ole hyvä ja suorita seuraavat tehtävät ennen julkaisua:"
+
+msgid "Please complete the following tasks before updating the published post:"
+msgstr ""
+"Ole hyvä ja suorita seuraavat tehtävät ennen julkaistun viestin "
+"päivittämistä:"
+
+msgid "Not required, but important: "
+msgstr "Ei pakollinen, mutta tärkeä: "
+
+msgid "One or more items in the checklist are not completed"
+msgstr "Yksi tai useampi kohde tarkistuslistassa ei ole täytetty"
+
+#, php-format
+msgid "You don't have to complete any %sChecklist tasks%s."
+msgstr "Sinun ei tarvitse suorittaa mitään %sChecklist-tehtäviä%s."
+
+msgid "Check Now"
+msgstr "Tarkista nyt"
+
+msgid "Ok"
+msgstr "Ok"
+
+msgid "No"
+msgstr "Ei"
+
+msgid "Yes"
+msgstr "Kyllä"
+
+msgid "Task"
+msgstr "Tehtävä"
+
+msgid "Disabled, Recommended or Required"
+msgstr "Poistettu käytöstä, Suositeltu tai Vaatimuksena"
+
+msgid "Options"
+msgstr "Asetukset"
+
+msgid "Add custom task"
+msgstr "Lisää mukautettu tehtävä"
+
+msgid "Please complete the required(*) checklists task."
+msgstr "Ole hyvä ja suorita vaaditut(*) tarkistuslistatehtävät."
+
+msgid "required"
+msgstr "pakollinen"
+
+msgid "Checklists tasks are not available in Elementor editors"
+msgstr "Tarkistuslistan tehtävät eivät ole saatavilla Elementor-editorissa"
+
+msgid "All in One SEO Headline Score"
+msgstr "Kaikki yhdessä SEO Otsikkopisteet"
+
+msgid "All in One SEO Score"
+msgstr "Kaikki yhdessä SEO Pisteet"
+
+msgid "Featured image height"
+msgstr "Esittelykuvan korkeus"
+
+msgid "Featured image width"
+msgstr "Esittelykuvan leveys"
+
+msgid "Heading in hierarchy"
+msgstr "Otsikko hierarkiassa"
+
+msgid "Number of images in content"
+msgstr "Kuvien määrä sisällössä"
+
+msgid "Number of characters in image captions"
+msgstr "Merkkien määrä kuvateksteissä"
+
+msgid "Number of audio in content"
+msgstr "Äänitiedostojen määrä sisällössä"
+
+msgid "Number of video in content"
+msgstr "Videotiedostojen määrä sisällössä"
+
+msgid "Approved by role"
+msgstr "Hyväksytty roolin mukaan"
+
+msgid "Approved by user"
+msgstr "Hyväksytty käyttäjän mukaan"
+
+msgid "Avoid heading tags in content"
+msgstr "Vältä otsikkotunnisteita sisällössä"
+
+msgid "Published at exact time"
+msgstr "Julkaistu tarkalla ajalla"
+
+msgid "Publish time should be in the future"
+msgstr "Julkaisuaika tulisi olla tulevaisuudessa"
+
+msgid "Rank Math SEO Score"
+msgstr "Rank Math SEO Pisteet"
+
+msgid "Only one H1 tag in content"
+msgstr "Ainoastaan yksi H1-tunniste sisällössä"
+
+msgid "Tables have a header row"
+msgstr "Tauluilla on otsikkorivi"
+
+msgid "Check the \"Allow backorders?\" box"
+msgstr "Tarkista \"Salli takatilaus?\" -ruutu"
+
+msgid "Select some products for \"Cross-sells\""
+msgstr "Valitse joitakin tuotteita \"Ristiinmyynnille\""
+
+msgid "Discount for the \"Sale price\""
+msgstr "Alennus \"Myyntihinnasta\""
+
+msgid "Check the \"Downloadable\" box"
+msgstr "Valitse \"Ladattava\" -ruutu"
+
+msgid "Product image"
+msgstr "Tuotekuva"
+
+msgid "Check the \"Manage stock?\" box"
+msgstr "Valitse \"Hallitse varasto?\" -ruutu"
+
+msgid "Enter a \"Regular price\""
+msgstr "Syötä \"Normaalihinta\""
+
+msgid "Enter a \"Sale price\""
+msgstr "Syötä \"Myyntihinta\""
+
+msgid "Schedule the \"Sale price\""
+msgstr "Aikatauluta \"Myyntihinta\""
+
+msgid "Enter a \"SKU\""
+msgstr "Syötä \"SKU\""
+
+msgid "Check the \"Sold individually\" box"
+msgstr "Valitse \"Myydään erikseen\" -ruutu"
+
+msgid "Select some products for \"Upsells\""
+msgstr "Valitse joitakin tuotteita \"Yläristeyksille\""
+
+msgid "Check the \"Virtual\" box"
+msgstr "Valitse \"Virtuaalinen\" -ruutu"
+
+#, php-format
+msgid "Number of Characters in %s field"
+msgstr "Merkkien määrä %s kentässä"
+
+#, php-format
+msgid "%s is filled"
+msgstr "%s on täytetty"
+
+msgid "About PublishPress Checklists"
+msgstr "Tietoa PublishPress Checklistsistä"
+
+msgid "About"
+msgstr "Tietoja"
+
+msgid "PublishPress Checklists Documentation"
+msgstr "PublishPress Checklists -dokumentaatio"
+
+msgid "Documentation"
+msgstr "Dokumentaatio"
+
+msgid "Contact the PublishPress team"
+msgstr "Ota yhteyttä PublishPress-tiimiin"
+
+msgid "Contact"
+msgstr "Yhteystiedot"
+
+msgid "Settings saved successfully!"
+msgstr "Asetukset tallennettiin onnistuneesti!"
+
+msgid "Save Changes"
+msgstr "Tallenna muutokset"
+
+msgid "Pro feature"
+msgstr "Pro-ominaisuus"
+
+#, php-format
+msgid "No %s requirements for this post type."
+msgstr "Ei %s vaatimuksia tälle viestityypille."
+
+msgid "New Item"
+msgstr "Uusi kohde"
+
+msgid "Description"
+msgstr "Kuvaus"
+
+msgid ""
+"Custom tasks do not complete automatically. Users must check the box to show "
+"they have completed the task."
+msgstr ""
+"Mukautetut tehtävät eivät valmistu automaattisesti. Käyttäjien on "
+"rastitettava ruutu osoittaakseen, että he ovat suorittaneet tehtävän."
+
+msgid "Add OpenAI Prompt task"
+msgstr "Lisää OpenAI Prompt -tehtävä"
+
+msgid "The prompt should be in form of a question."
+msgstr "Kehyksen tulee olla kysymysmuodossa."
+
+msgid "This feature requires an OpenAI API Key."
+msgstr "Tämä toiminto vaatii OpenAI API -avaimen."
+
+msgid "Latin characters in permalink"
+msgstr "Latinalaiset merkit pysyvässä linkissä"
+
+msgid "Permalinks"
+msgstr "Pysyvät linkit"
+
+msgid "Define tasks related to permalinks"
+msgstr "Määritä permalinkkeihin liittyvät tehtävät"
+
+msgid "Permissions"
+msgstr "Oikeudet"
+
+msgid "Exclude User Roles"
+msgstr "Poista käyttäjäroolit"
+
+msgid "Reviews"
+msgstr "Arvostelut"
+
+msgid "Checklists Settings"
+msgstr "Tarkistuslistojen asetukset"
+
+msgid ""
+"Are you sure you want to reset all renamed checklist items to their default "
+"labels? This action cannot be undone."
+msgstr ""
+"Oletko varma, että haluat palauttaa kaikki nimettyjen tarkistuslistan "
+"kohteet niiden oletusnimilappuihin? Tätä toimintoa ei voida peruuttaa."
+
+msgid "Features"
+msgstr "Ominaisuudet"
+
+msgid "Feel free to select only the features you need."
+msgstr "Voit valita vain tarvitsemiasi ominaisuuksia."
+
+msgid "Enabled features"
+msgstr "Käytössä olevat ominaisuudet"
+
+msgid "There are no PublishPress modules registered"
+msgstr "PublishPress-moduuleja ei ole rekisteröity"
+
+#, php-format
+msgid ""
+"Disabled because add_post_type_support('%1$s', '%2$s') is included in a "
+"loaded file."
+msgstr ""
+"Poistettu käytöstä, koska add_post_type_support('%1$s', '%2$s') on mukana "
+"ladatussa tiedostossa."
+
+msgid "Enable Who Can Ignore:"
+msgstr "Ota käyttöön ketkä voivat ohittaa:"
+
+msgid "Show warning icon:"
+msgstr "Näytä varoituskuvake:"
+
+msgid "Delete data on uninstall:"
+msgstr "Poista tiedot poistaessasi:"
+
+msgid "Enable Status Filter:"
+msgstr "Ota käyttöön tilasuodatin:"
+
+msgid "Enable Duplicate Checklists:"
+msgstr "Ota käyttöön kaksoislistojen tarkistus:"
+
+msgid "Show Checklists column in post lists:"
+msgstr "Näytä tarkistuslistat-sarake viestilistassa:"
+
+msgid "Enable Taxonomy Filter:"
+msgstr "Ota käyttöön taksonomiasuodatin:"
+
+msgid "Disable the \"Status\" option when using \"Quick Edit\":"
+msgstr "Poista \"Tila\" -vaihtoehto käytöstä käyttäessäsi \"Pika muokkaus\":"
+
+msgid "Disable \"Quick Edit\" completely:"
+msgstr "Poista \"Nopea muokkaus\" kokonaan käytöstä:"
+
+msgid "Disable \"Publish\" button:"
+msgstr "Poista \"Julkaise\" -painike käytöstä:"
+
+msgid "Complete Icon:"
+msgstr "Valmis kuvake:"
+
+msgid "Incomplete Icon:"
+msgstr "Kesken oleva kuvake:"
+
+msgid "Required Complete Color:"
+msgstr "Pakollinen valmis väri:"
+
+msgid "Required Incomplete Color:"
+msgstr "Pakollinen kesken oleva väri:"
+
+msgid "Recommended Complete Color:"
+msgstr "Suositeltu valmis väri:"
+
+msgid "Recommended Incomplete Color:"
+msgstr "Suositeltu puutteellinen väri:"
+
+msgid "OpenAI API Key:"
+msgstr "OpenAI API-avain:"
+
+msgid "Reset Renamed Checklist:"
+msgstr "Nollaa nimetyt tarkistuslistat:"
+
+msgid "Post types:"
+msgstr "Julkaisutyypit:"
+
+msgid ""
+"This allows tasks to be disabled for specific statuses such as \"Draft\" or "
+"\"Published."
+msgstr ""
+"Tämä mahdollistaa tehtävien poistamisen käytöstä tietyille statuksille, "
+"kuten \"Luonnos\" tai \"Julkaistu.\""
+
+msgid "This allows users to duplicate existing checklist tasks."
+msgstr ""
+"Tämä mahdollistaa käyttäjille olemassa olevien tarkistuslistatehtävien "
+"kopioimisen."
+
+msgid ""
+"Add a Checklists column to the Posts screen showing how many requirements "
+"are complete."
+msgstr ""
+"Lisää Checklists-sarake Postit-näytölle, joka näyttää, kuinka monta "
+"vaatimusta on valmis."
+
+msgid ""
+"This allows tasks to be disabled for posts with specific taxonomy terms. Go "
+"to the \"Post Types\" tab to choose the terms."
+msgstr ""
+"Tämä mahdollistaa tehtävien poistamisen käytöstä julkaisuissa, joissa on "
+"tiettyjä taksonomitermejä. Siirry \"Julkaisutyypit\" -välilehteen "
+"valitsemaan termejä."
+
+msgid ""
+"This will display a warning icon in the \"Checklists\" box if requirements "
+"are incomplete."
+msgstr ""
+"Tämä näyttää varoitusikonin \"Tarkistuslistat\" -ruudussa, jos vaatimukset "
+"ovat puutteelliset."
+
+msgid ""
+"When enabled, all PublishPress Checklists data will be deleted if the plugin "
+"is uninstalled."
+msgstr ""
+"Kun tämä on käytössä, kaikki PublishPress Checklists -tiedot poistetaan, jos "
+"liitännäinen poistetaan."
+
+msgid "This will show \"Who can ignore\" options."
+msgstr "Tämä näyttää \"Kuka voi ohittaa\" -vaihtoehdot."
+
+msgid ""
+"Disabling the \"Status\" option is recommended because it can be used to "
+"avoid using the Checklists requirements."
+msgstr ""
+"\"Tila\" -vaihtoehdon poistamista käytöstä suositellaan, koska sitä voidaan "
+"käyttää Checklists-vaatimusten välttämiseen."
+
+msgid ""
+"This will disable \"Quick Edit\" for all users except those with the "
+"\"manage_options\" capability."
+msgstr ""
+"Tämä poistaa \"Nopea muokkaus\" kaikilta käyttäjiltä lukuun ottamatta niitä, "
+"joilla on \"manage_options\" -oikeus."
+
+msgid ""
+"This will disable the \"Publish\" button when checklist requirements are not "
+"met."
+msgstr ""
+"Tämä poistaa \"Julkaise\" -painikkeen, kun tarkistuslistan vaatimuksia ei "
+"ole täytetty."
+
+msgid "Enter your API Key to use OpenAI prompts in checklist tasks."
+msgstr ""
+"Syötä API-avaimesi, jotta voit käyttää OpenAI-kehotuksia "
+"tarkistuslistatehtävissä."
+
+msgid "Post Types"
+msgstr "Viestityypit"
+
+msgid "General"
+msgstr "Yleinen"
+
+msgid "Publishing Options"
+msgstr "Julkaisuvaihtoehdot"
+
+msgid "Appearance"
+msgstr "Ulkoasu"
+
+msgid "Integration"
+msgstr "Integraatio"
+
+msgid "Tools"
+msgstr "Työkalut"
+
+msgid "Enter a Dashicons class name (e.g., dashicons-yes, dashicons-saved). "
+msgstr "Syötä Dashicons-luokan nimi (esim. dashicons-yes, dashicons-saved). "
+
+msgid "View Dashicons"
+msgstr "Näytä Dashicons"
+
+msgid "Enter a Dashicons class name (e.g., dashicons-no, dashicons-dismiss). "
+msgstr "Syötä Dashicons-luokan nimi (esim. dashicons-no, dashicons-dismiss). "
+
+msgid "Reset All Custom Labels"
+msgstr "Nollaa kaikki mukautetut tunnisteet"
+
+msgid ""
+"This will reset all renamed checklist items back to their default labels."
+msgstr ""
+"Tämä palauttaa kaikki nimetyt tarkistuslistan kohteet takaisin "
+"oletustunnisteisiin."
+
+msgid "Security check failed."
+msgstr "Turvatarkastus epäonnistui."
+
+msgid "You do not have permission to perform this action."
+msgstr "Sinulla ei ole lupaa suorittaa tätä toimintoa."
+
+msgid "All custom labels have been reset successfully."
+msgstr "Kaikki mukautetut tunnisteet on nollattu onnistuneesti."
+
+msgid "Number of characters in Yoast SEO focus keyword"
+msgstr "Merkkien määrä Yoast SEO:n keskittymisavainsanassa"
+
+#, php-format
+msgid "Minimum of %d character in Yoast SEO focus keyword"
+msgstr "Vähintään %d merkkiä Yoast SEO:n keskittymisanalyysisanassa"
+
+#, php-format
+msgid "Minimum of %d characters in Yoast SEO focus keyword"
+msgstr "Vähintään %d merkkiä Yoast SEO keskeisessä avainsanassa"
+
+#, php-format
+msgid "Maximum of %d character in Yoast SEO focus keyword"
+msgstr "Maksimi %d merkkiä Yoast SEO:n avainsanassa"
+
+#, php-format
+msgid "Maximum of %d characters in Yoast SEO focus keyword"
+msgstr "Enintään %d merkkiä Yoast SEO:n keskittymisanalyysisanassa"
+
+#, php-format
+msgid "%d character in Yoast SEO focus keyword"
+msgstr "%d merkkiä Yoast SEO:n keskeisessä avainsanassa"
+
+#, php-format
+msgid "%d characters in Yoast SEO focus keyword"
+msgstr "%d merkkiä Yoast SEO:n keskeisessä avainsanassa"
+
+#, php-format
+msgid "Between %d and %d characters in Yoast SEO focus keyword"
+msgstr "Välillä %d ja %d merkkiä Yoast SEO keskeisessä avainsanassa"
+
+msgid "Number of characters in Yoast SEO meta description"
+msgstr "Merkkien määrä Yoast SEO:n meta-kuvauksessa"
+
+#, php-format
+msgid "Minimum of %d character in Yoast SEO meta description"
+msgstr "Vähintään %d merkkiä Yoast SEO meta-kuvauksessa"
+
+#, php-format
+msgid "Minimum of %d characters in Yoast SEO meta description"
+msgstr "Vähintään %d merkkiä Yoast SEO meta-kuvauksessa"
+
+#, php-format
+msgid "Maximum of %d character in Yoast SEO meta description"
+msgstr "Maksimi %d merkkiä Yoast SEO:n metakuvaustekstissä"
+
+#, php-format
+msgid "Maximum of %d characters in Yoast SEO meta description"
+msgstr "Enintään %d merkkiä Yoast SEO:n meta-kuvauksessa"
+
+#, php-format
+msgid "%d character in Yoast SEO meta description"
+msgstr "%d merkkiä Yoast SEO:n meta-kuvauksessa"
+
+#, php-format
+msgid "%d characters in Yoast SEO meta description"
+msgstr "%d merkkiä Yoast SEO:n meta-kuvauksessa"
+
+#, php-format
+msgid "Between %d and %d characters in Yoast SEO meta description"
+msgstr "Välillä %d ja %d merkkiä Yoast SEO meta-kuvauksessa"
+
+msgid "Minimum Yoast SEO readability score"
+msgstr "Vähimmäispistemäärä Yoast SEO -luettavuudessa"
+
+#. translators: %s expands to the readability score
+#, php-format
+msgid "Yoast Readability: %s"
+msgstr "Yoast-lukemisen helppous: %s"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Good"
+msgstr "Hyvä"
+
+msgid "Minimum Yoast SEO analysis score"
+msgstr "Vähimmäispistemäärä Yoast SEO -analyysissä"
+
+#. translators: %s expands to the seo score
+#, php-format
+msgid "Yoast SEO: %s"
+msgstr "Yoast SEO: %s"
+
+msgid "Define tasks related to Yoast SEO"
+msgstr "Määritä Yoast SEO:hon liittyvät tehtävät"
+
+msgid "This plugin can be deleted."
+msgstr "Tämä laajennus voidaan poistaa."
+
+#, php-format
+msgid ""
+"You're using PublishPress Checklists Free. The Pro version has more features "
+"and support. %sUpgrade to Pro%s"
+msgstr ""
+"Käytät PublishPress Checklists Free -versiota. Pro-versiossa on enemmän "
+"ominaisuuksia ja tukea. %sPäivitä Pro:ksi%s"
+
+#~ msgid "Who can ignore the task?"
+#~ msgstr "Kuka voi ohittaa tehtävän?"
+
+#~ msgid "Add to these post types:"
+#~ msgstr "Lisää näihin julkaisutyyppeihin:"
+
+#~ msgid "This allows users to duplicate existing checklist task."
+#~ msgstr ""
+#~ "Tämä mahdollistaa käyttäjien kopioida olemassa olevan "
+#~ "tarkistuslistatehtävän."
+
+#~ msgid "Validation error. Kindly reload this page and try agai.n"
+#~ msgstr "Validointivirhe. Lataa tämä sivu uudelleen ja yritä uudelleen."

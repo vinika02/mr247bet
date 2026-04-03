@@ -7,8 +7,7 @@ namespace wpdFormAttr\Login\twitter;
  *
  * @author Abraham Williams <abraham@abrah.am>
  */
-class Config
-{
+class Config {
     /** @var int How long to wait for a response from the API */
     protected $timeout = 5;
     /** @var int how long to wait while connecting to the API */
@@ -17,7 +16,6 @@ class Config
     protected $maxRetries = 0;
     /** @var int Delay in seconds before we retry the request */
     protected $retriesDelay = 1;
-
 
 
     /**
@@ -45,10 +43,9 @@ class Config
      * @param int $connectionTimeout
      * @param int $timeout
      */
-    public function setTimeouts($connectionTimeout, $timeout)
-    {
+    public function setTimeouts($connectionTimeout, $timeout) {
         $this->connectionTimeout = (int)$connectionTimeout;
-        $this->timeout = (int)$timeout;
+        $this->timeout           = (int)$timeout;
     }
 
     /**
@@ -57,33 +54,29 @@ class Config
      * @param int $maxRetries
      * @param int $retriesDelay
      */
-    public function setRetries($maxRetries, $retriesDelay)
-    {
-        $this->maxRetries = (int)$maxRetries;
+    public function setRetries($maxRetries, $retriesDelay) {
+        $this->maxRetries   = (int)$maxRetries;
         $this->retriesDelay = (int)$retriesDelay;
     }
 
     /**
      * @param bool $value
      */
-    public function setDecodeJsonAsArray($value)
-    {
+    public function setDecodeJsonAsArray($value) {
         $this->decodeJsonAsArray = (bool)$value;
     }
 
     /**
      * @param string $userAgent
      */
-    public function setUserAgent($userAgent)
-    {
+    public function setUserAgent($userAgent) {
         $this->userAgent = (string)$userAgent;
     }
 
     /**
      * @param array $proxy
      */
-    public function setProxy(array $proxy)
-    {
+    public function setProxy(array $proxy) {
         $this->proxy = $proxy;
     }
 
@@ -92,8 +85,7 @@ class Config
      *
      * @param boolean $gzipEncoding
      */
-    public function setGzipEncoding($gzipEncoding)
-    {
+    public function setGzipEncoding($gzipEncoding) {
         $this->gzipEncoding = (bool)$gzipEncoding;
     }
 
@@ -102,8 +94,7 @@ class Config
      *
      * @param int $value
      */
-    public function setChunkSize($value)
-    {
+    public function setChunkSize($value) {
         $this->chunkSize = (int)$value;
     }
 }

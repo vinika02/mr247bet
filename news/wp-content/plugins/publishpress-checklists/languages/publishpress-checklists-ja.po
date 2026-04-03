@@ -1,0 +1,1121 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PublishPress Checklists\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress-"
+"checklists\n"
+"POT-Creation-Date: 2026-01-27T14:26:22+00:00\n"
+"PO-Revision-Date: 2026-01-30 15:14+0000\n"
+"Last-Translator: Riza Maulana Ardiyanto <riza@publishpress.com>\n"
+"Language-Team: Japanese <https://weblate.publishpress.com/projects/"
+"publishpress-checklists/publishpress-checklists/ja/>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.14.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: publishpress-checklists.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+"X-Poedit-SearchPathExcluded-2: node_modules\n"
+
+#. Plugin Name of the plugin
+#. Plugin Name of the plugin
+msgid "PublishPress Checklists"
+msgstr "PublishPress チェックリスト"
+
+#. Plugin URI of the plugin
+msgid "https://publishpress.com/"
+msgstr "https://publishpress.com/"
+
+#. Description of the plugin
+msgid ""
+"With PublishPress Checklists, you can choose publishing requirements for "
+"your content."
+msgstr ""
+"PublishPressチェックリストを使用すると、コンテンツの公開要件を選択できます。"
+
+#. Author of the plugin
+msgid "PublishPress"
+msgstr "PublishPress"
+
+#. Author URI of the plugin
+msgid "https://publishpress.com"
+msgstr "https://publishpress.com"
+
+msgid "Disabled"
+msgstr "無効"
+
+msgid "Recommended"
+msgstr "推奨"
+
+msgid "Required"
+msgstr "必須"
+
+msgid "Please correct your form errors below and try again."
+msgstr "以下のフォームエラーを修正して再試行してください。"
+
+msgid "Cheatin&#8217; uh?"
+msgstr "チートしてるんじゃないの？"
+
+msgid "You do not have necessary permissions to complete this action."
+msgstr "このアクションを完了するための必要な権限がありません。"
+
+msgid "Post does not exist"
+msgstr "投稿は存在しません"
+
+msgid "Checklists"
+msgstr "チェックリスト"
+
+#, php-format
+msgid "If you like %s please leave us a %s rating. Thank you!"
+msgstr "もし%sが気に入ったら、%sの評価をお願いします。ありがとうございます！"
+
+msgid "Need PublishPress Checklists Support?"
+msgstr "PublishPressチェックリストのサポートが必要ですか？"
+
+msgid "If you need help or have a new feature request, let us know."
+msgstr "助けが必要な場合や新しい機能リクエストがある場合は、お知らせください。"
+
+msgid "Request Support"
+msgstr "サポートをリクエスト"
+
+msgid "Detailed documentation is also available on the plugin website."
+msgstr "詳細なドキュメントはプラグインのウェブサイトにもあります。"
+
+msgid "View Knowledge Base"
+msgstr "ナレッジベースを表示"
+
+msgid "Settings"
+msgstr "設定"
+
+msgid "Upgrade to Pro"
+msgstr "Proにアップグレード"
+
+#, php-format
+msgid "Approved by %s"
+msgstr "%s によって承認されました"
+
+msgid "Approved by a user in this role"
+msgstr "この役割のユーザーによって承認されました"
+
+msgid "Min"
+msgstr "最小"
+
+msgid "Max"
+msgstr "最大"
+
+msgid "Edit label"
+msgstr "ラベルを編集"
+
+msgid "Number of categories"
+msgstr "カテゴリの数"
+
+#, php-format
+msgid "Minimum of %s category"
+msgstr "最小カテゴリ数は%sです"
+
+#, php-format
+msgid "Minimum of %s categories"
+msgstr "最小カテゴリ数は%sです"
+
+#, php-format
+msgid "Maximum of %s category"
+msgstr "最大%sカテゴリー"
+
+#, php-format
+msgid "Maximum of %s categories"
+msgstr "最大%sカテゴリ"
+
+#, php-format
+msgid "%s category"
+msgstr "%s カテゴリ"
+
+#, php-format
+msgid "%s categories"
+msgstr "%s カテゴリ"
+
+#, php-format
+msgid "Between %s and %s categories"
+msgstr "%s と %s カテゴリの間"
+
+msgid "Custom"
+msgstr "カスタム"
+
+msgid "Which roles can mark this task as complete?"
+msgstr "どの役割がこのタスクを完了したとマークできますか？"
+
+msgid "Enter name of custom task"
+msgstr "カスタムタスクの名前を入力してください"
+
+msgid "Remove"
+msgstr "削除"
+
+msgid "Number of external links in content"
+msgstr "コンテンツ内の外部リンクの数"
+
+#, php-format
+msgid "Minimum of %d external link in content"
+msgstr "コンテンツ内の最小外部リンク数は%dです"
+
+#, php-format
+msgid "Minimum of %d external links in content"
+msgstr "コンテンツ内の最小外部リンク数は%dです"
+
+#, php-format
+msgid "Maximum of %d external link in content"
+msgstr "コンテンツ内の外部リンクの最大数は%dです"
+
+#, php-format
+msgid "Maximum of %d external links in content"
+msgstr "コンテンツ内の外部リンクの最大数は%dです"
+
+#, php-format
+msgid "%d external link in content"
+msgstr "%d 外部リンクがコンテンツにあります"
+
+#, php-format
+msgid "%d external links in content"
+msgstr "%d 外部リンクがコンテンツにあります"
+
+#, php-format
+msgid "Between %d and %d external links in content"
+msgstr "コンテンツ内の %d と %d 外部リンクの間"
+
+msgid "Featured image is added"
+msgstr "特集画像が追加されました"
+
+msgid "Featured image has Alt text"
+msgstr "特集画像には代替テキストがあります"
+
+msgid "Featured image has caption"
+msgstr "フィーチャー画像にはキャプションがあります"
+
+msgid "Numbers of characters in excerpt"
+msgstr "抜粋の文字数"
+
+#, php-format
+msgid "Minimum of %d character in excerpt"
+msgstr "抜粋の最小文字数は%dです"
+
+#, php-format
+msgid "Minimum of %d characters in excerpt"
+msgstr "抜粋の最小文字数は%d文字です"
+
+#, php-format
+msgid "Maximum of %d character in excerpt"
+msgstr "抜粋での最大 %d 文字"
+
+#, php-format
+msgid "Maximum of %d characters in excerpt"
+msgstr "抜粋の最大文字数は%dです"
+
+#, php-format
+msgid "%d character in excerpt"
+msgstr "%d 文字の抜粋"
+
+#, php-format
+msgid "%d characters in excerpt"
+msgstr "%d 文字の抜粋"
+
+#, php-format
+msgid "Between %d and %d characters in excerpt"
+msgstr "抜粋内の %d と %d 文字の間"
+
+msgid "All images have Alt text"
+msgstr "すべての画像に代替テキストがあります"
+
+msgid "Number of characters in Alt text"
+msgstr "代替テキストの文字数"
+
+#, php-format
+msgid "Minimum of %d character in Alt text"
+msgstr "Altテキストの最小文字数は%d文字です"
+
+#, php-format
+msgid "Minimum of %d characters in Alt text"
+msgstr "Altテキストの最小文字数は%dです"
+
+#, php-format
+msgid "Maximum of %d character in Alt text"
+msgstr "Altテキストに最大 %d 文字"
+
+#, php-format
+msgid "Maximum of %d characters in Alt text"
+msgstr "Altテキストに最大 %d 文字"
+
+#, php-format
+msgid "%d character in Alt text"
+msgstr "%d 文字の代替テキスト"
+
+#, php-format
+msgid "%d characters in Alt text"
+msgstr "%d 文字の代替テキスト"
+
+#, php-format
+msgid "Between %d and %d characters in Alt text"
+msgstr "代替テキストの %d と %d 文字の間"
+
+msgid "Number of internal links in content"
+msgstr "コンテンツ内の内部リンクの数"
+
+#, php-format
+msgid "Minimum of %d internal link in content"
+msgstr "コンテンツ内の最小内部リンク数は%dです"
+
+#, php-format
+msgid "Minimum of %d internal links in content"
+msgstr "コンテンツ内の最小内部リンク数は%dです"
+
+#, php-format
+msgid "Maximum of %d internal link in content"
+msgstr "コンテンツ内の内部リンクの最大数は%dです"
+
+#, php-format
+msgid "Maximum of %d internal links in content"
+msgstr "コンテンツ内の内部リンクの最大数は%dです"
+
+#, php-format
+msgid "%d internal link in content"
+msgstr "%d 内部リンクがコンテンツにあります"
+
+#, php-format
+msgid "%d internal links in content"
+msgstr "%d 内部リンクがコンテンツにあります"
+
+#, php-format
+msgid "Between %d and %d internal links in content"
+msgstr "コンテンツ内の %d と %d 内部リンクの間"
+
+msgid "Openai"
+msgstr "Openai"
+
+msgid "Enter OpenAI task prompt"
+msgstr "OpenAIタスクのプロンプトを入力してください"
+
+msgid "An error occured."
+msgstr "エラーが発生しました。"
+
+msgid "Validation error. Kindly reload this page and try again."
+msgstr ""
+"バリデーションエラーです。このページを再読み込みしてもう一度お試しください。"
+
+msgid "Post content is empty."
+msgstr "投稿コンテンツは空です。"
+
+msgid ""
+"OpenAI tasks require an API Key. Please add your API Key in the Settings "
+"area."
+msgstr ""
+"OpenAIタスクにはAPIキーが必要です。設定エリアにAPIキーを追加してください。"
+
+#, php-format
+msgid "API Error: %1s."
+msgstr "API エラー: %1s。"
+
+msgid "See the full response."
+msgstr "全体の応答を見る。"
+
+msgid "Invalid response"
+msgstr "無効な応答"
+
+#, php-format
+msgid "Prohibited categories: %s"
+msgstr "禁止カテゴリ：%s"
+
+msgid "Prohibited categories"
+msgstr "禁止カテゴリ"
+
+#, php-format
+msgid "Prohibited tags: %s"
+msgstr "禁止されたタグ: %s"
+
+msgid "Prohibited tags"
+msgstr "禁止されたタグ"
+
+#, php-format
+msgid "Required categories: %s"
+msgstr "必須カテゴリ: %s"
+
+msgid "Required categories"
+msgstr "必須カテゴリ"
+
+#, php-format
+msgid "Required tags: %s"
+msgstr "必須タグ: %s"
+
+msgid "Required tags"
+msgstr "必須タグ"
+
+msgid "Number of tags"
+msgstr "タグの数"
+
+#, php-format
+msgid "Minimum of %d tag"
+msgstr "最小タグ数は%dです"
+
+#, php-format
+msgid "Minimum of %d tags"
+msgstr "最小タグ数は%dです"
+
+#, php-format
+msgid "Maximum of %d tag"
+msgstr "最大%dタグ"
+
+#, php-format
+msgid "Maximum of %d tags"
+msgstr "最大%dタグ"
+
+#, php-format
+msgid "%d tag"
+msgstr "%d タグ"
+
+#, php-format
+msgid "%d tags"
+msgstr "%d タグ"
+
+#, php-format
+msgid "Between %d and %d tags"
+msgstr "タグの %d と %d の間"
+
+msgid "Number of "
+msgstr "数 "
+
+#, php-format
+msgid "Minimum of %d "
+msgstr "最小%d "
+
+#, php-format
+msgid "Maximum of %d "
+msgstr "最大 %d "
+
+#, php-format
+msgid "%d "
+msgstr "%d "
+
+#, php-format
+msgid "Between %d and %d "
+msgstr "%d と %d の間 "
+
+msgid "Number of characters in title"
+msgstr "タイトルの文字数"
+
+#, php-format
+msgid "Minimum of %d character in title"
+msgstr "タイトルの最小文字数は%dです"
+
+#, php-format
+msgid "Minimum of %d characters in title"
+msgstr "タイトルの最小文字数は%d文字です"
+
+#, php-format
+msgid "Maximum of %d character in title"
+msgstr "タイトルでの最大 %d 文字"
+
+#, php-format
+msgid "Maximum of %d characters in title"
+msgstr "タイトルの最大文字数は%dです"
+
+#, php-format
+msgid "%d character in title"
+msgstr "%d 文字のタイトル"
+
+#, php-format
+msgid "%d characters in title"
+msgstr "%d 文字のタイトル"
+
+#, php-format
+msgid "Between %d and %d characters in title"
+msgstr "タイトル内の %d と %d 文字の間"
+
+msgid "All links use a valid format"
+msgstr "すべてのリンクは有効なフォーマットを使用しています"
+
+msgid "Number of words in content"
+msgstr "コンテンツ内の単語の数"
+
+#, php-format
+msgid "Minimum of %d word in content"
+msgstr "コンテンツ内の最小単語数は%dです"
+
+#, php-format
+msgid "Minimum of %d words in content"
+msgstr "コンテンツ内の最小単語数は%dです"
+
+#, php-format
+msgid "Maximum of %d word in content"
+msgstr "コンテンツ内の最大単語数は%dです"
+
+#, php-format
+msgid "Maximum of %d words in content"
+msgstr "コンテンツ内の最大単語数は%dです"
+
+#, php-format
+msgid "%d word in content"
+msgstr "%d 単語がコンテンツにあります"
+
+#, php-format
+msgid "%d words in content"
+msgstr "%d 単語がコンテンツにあります"
+
+#, php-format
+msgid "Between %d and %d words in content"
+msgstr "コンテンツ内の %d と %d 単語の間"
+
+msgid "Title"
+msgstr "タイトル"
+
+msgid "Content"
+msgstr "コンテンツ"
+
+msgid "Publish Date / Time"
+msgstr "公開日 / 時間"
+
+msgid "Approval"
+msgstr "承認"
+
+msgid "Images"
+msgstr "画像"
+
+msgid "Audio / Video"
+msgstr "音声 / 動画"
+
+msgid "Featured Image"
+msgstr "フィーチャー画像"
+
+msgid "Links"
+msgstr "リンク"
+
+msgid "Permalink"
+msgstr "パーマリンク"
+
+msgid "Categories"
+msgstr "カテゴリ"
+
+msgid "Tags"
+msgstr "タグ"
+
+msgid "Taxonomies"
+msgstr "分類"
+
+msgid "Accessibility"
+msgstr "アクセシビリティ"
+
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+msgid "Rank Math SEO"
+msgstr "Rank Math SEO"
+
+msgid "All in One SEO"
+msgstr "オールインワン SEO"
+
+msgid "Yoast SEO"
+msgstr "Yoast SEO"
+
+msgid "ACF"
+msgstr "ACF"
+
+msgid "options cannot be empty."
+msgstr "オプションは空にできません。"
+
+msgid "Please make sure to add a name for all the custom tasks."
+msgstr "すべてのカスタムタスクに名前を追加することを確認してください。"
+
+msgid "No results found"
+msgstr "結果が見つかりませんでした"
+
+msgid "Searching…"
+msgstr "検索中…"
+
+msgid "Suggested Prompts"
+msgstr "推奨プロンプト"
+
+msgid "What's the expected OpenAI response to mark the requirement as pass?"
+msgstr "要件を合格としてマークするために期待されるOpenAIの応答は何ですか？"
+
+msgid "Clear Content"
+msgstr "コンテンツをクリア"
+
+msgid "Is this content clear and easy to read?"
+msgstr "この内容は明確で読みやすいですか？"
+
+msgid "Friendly Tone Content"
+msgstr "フレンドリーなトーンのコンテンツ"
+
+msgid "Is this content tone friendly?"
+msgstr "この内容のトーンは親しみやすいですか？"
+
+msgid "Professional Tone Content"
+msgstr "専門的なトーンのコンテンツ"
+
+msgid "Is this content tone professional?"
+msgstr "この内容のトーンはプロフェッショナルですか？"
+
+msgid "Persuasive Tone Content"
+msgstr "説得力のあるトーンのコンテンツ"
+
+msgid "Is this content tone persuasive?"
+msgstr "この内容のトーンは説得力がありますか？"
+
+msgid "Empathetic Tone Content"
+msgstr "共感的トーンのコンテンツ"
+
+msgid "Is this content tone empathetic?"
+msgstr "この内容のトーンは共感的ですか？"
+
+msgid "Adventurous Tone Content"
+msgstr "冒険的なトーンのコンテンツ"
+
+msgid "Is this content tone adventurous?"
+msgstr "この内容のトーンは冒険的ですか？"
+
+msgid "Promotional Tone Content"
+msgstr "プロモーショントーンコンテンツ"
+
+msgid "Is this content tone promotional?"
+msgstr "この内容のトーンはプロモーション的ですか？"
+
+msgid "Checklist"
+msgstr "チェックリスト"
+
+msgid "You don't have to complete any Checklist tasks."
+msgstr "チェックリストタスクを完了する必要はありません。"
+
+msgid "Are you sure you want to publish anyway?"
+msgstr "それでも公開してもよろしいですか？"
+
+msgid "Are you sure you want to update the published post anyway?"
+msgstr "公開された投稿を更新してもよろしいですか？"
+
+msgid "Please complete the following tasks before publishing:"
+msgstr "公開する前に以下のタスクを完了してください："
+
+msgid "Please complete the following tasks before updating the published post:"
+msgstr "公開された投稿を更新する前に以下のタスクを完了してください："
+
+msgid "Not required, but important: "
+msgstr "必須ではありませんが、重要です： "
+
+msgid "One or more items in the checklist are not completed"
+msgstr "チェックリストの項目の1つ以上が未完了です"
+
+#, php-format
+msgid "You don't have to complete any %sChecklist tasks%s."
+msgstr "任意の%sチェックリストタスク%sを完了する必要はありません。"
+
+msgid "Check Now"
+msgstr "今すぐチェック"
+
+msgid "Ok"
+msgstr "大丈夫"
+
+msgid "No"
+msgstr "いいえ"
+
+msgid "Yes"
+msgstr "はい"
+
+msgid "Task"
+msgstr "タスク"
+
+msgid "Disabled, Recommended or Required"
+msgstr "無効、推奨または必須"
+
+msgid "Options"
+msgstr "オプション"
+
+msgid "Add custom task"
+msgstr "カスタムタスクを追加"
+
+msgid "Please complete the required(*) checklists task."
+msgstr "必須(*)チェックリストタスクを完了してください。"
+
+msgid "required"
+msgstr "必須"
+
+msgid "Checklists tasks are not available in Elementor editors"
+msgstr "チェックリストのタスクは Elementor エディターでは利用できません"
+
+msgid "All in One SEO Headline Score"
+msgstr "オールインワンSEOヘッドラインスコア"
+
+msgid "All in One SEO Score"
+msgstr "オールインワンSEOスコア"
+
+msgid "Featured image height"
+msgstr "アイキャッチ画像の高さ"
+
+msgid "Featured image width"
+msgstr "アイキャッチ画像の幅"
+
+msgid "Heading in hierarchy"
+msgstr "階層内の見出し"
+
+msgid "Number of images in content"
+msgstr "コンテンツ内の画像の数"
+
+msgid "Number of characters in image captions"
+msgstr "画像キャプション内の文字数"
+
+msgid "Number of audio in content"
+msgstr "コンテンツ内の音声の数"
+
+msgid "Number of video in content"
+msgstr "コンテンツ内の動画の数"
+
+msgid "Approved by role"
+msgstr "役割によって承認されました"
+
+msgid "Approved by user"
+msgstr "ユーザーによって承認されました"
+
+msgid "Avoid heading tags in content"
+msgstr "コンテンツ内での見出しタグの使用を避ける"
+
+msgid "Published at exact time"
+msgstr "正確な時間に公開"
+
+msgid "Publish time should be in the future"
+msgstr "公開時間は未来である必要があります"
+
+msgid "Rank Math SEO Score"
+msgstr "Rank Math SEOスコア"
+
+msgid "Only one H1 tag in content"
+msgstr "コンテンツ内にH1タグは1つのみ"
+
+msgid "Tables have a header row"
+msgstr "テーブルにはヘッダー行があります"
+
+msgid "Check the \"Allow backorders?\" box"
+msgstr "「バックオーダーを許可しますか？」ボックスをチェック"
+
+msgid "Select some products for \"Cross-sells\""
+msgstr "\"クロスセル\"のためのいくつかの製品を選択してください"
+
+msgid "Discount for the \"Sale price\""
+msgstr "\"セール価格\"の割引"
+
+msgid "Check the \"Downloadable\" box"
+msgstr "\"ダウンロード可能\"ボックスをチェックしてください"
+
+msgid "Product image"
+msgstr "製品画像"
+
+msgid "Check the \"Manage stock?\" box"
+msgstr "\"在庫管理しますか？\"ボックスをチェックしてください"
+
+msgid "Enter a \"Regular price\""
+msgstr "\"通常価格\"を入力してください"
+
+msgid "Enter a \"Sale price\""
+msgstr "\"セール価格\"を入力してください"
+
+msgid "Schedule the \"Sale price\""
+msgstr "\"セール価格\"をスケジュールしてください"
+
+msgid "Enter a \"SKU\""
+msgstr "\"SKU\"を入力してください"
+
+msgid "Check the \"Sold individually\" box"
+msgstr "\"個別販売\"ボックスをチェックしてください"
+
+msgid "Select some products for \"Upsells\""
+msgstr "\"アップセル\"のためのいくつかの製品を選択してください"
+
+msgid "Check the \"Virtual\" box"
+msgstr "\"バーチャル\"ボックスをチェックしてください"
+
+#, php-format
+msgid "Number of Characters in %s field"
+msgstr "%sフィールドの文字数"
+
+#, php-format
+msgid "%s is filled"
+msgstr "%s が入力されています"
+
+msgid "About PublishPress Checklists"
+msgstr "PublishPress チェックリストについて"
+
+msgid "About"
+msgstr "概要"
+
+msgid "PublishPress Checklists Documentation"
+msgstr "PublishPress チェックリスト ドキュメンテーション"
+
+msgid "Documentation"
+msgstr "ドキュメント"
+
+msgid "Contact the PublishPress team"
+msgstr "PublishPress チームに連絡する"
+
+msgid "Contact"
+msgstr "連絡先"
+
+msgid "Settings saved successfully!"
+msgstr "設定が正常に保存されました！"
+
+msgid "Save Changes"
+msgstr "変更を保存"
+
+msgid "Pro feature"
+msgstr "プロ機能"
+
+#, php-format
+msgid "No %s requirements for this post type."
+msgstr "この投稿タイプには%sの要件はありません。"
+
+msgid "New Item"
+msgstr "新しいアイテム"
+
+msgid "Description"
+msgstr "説明"
+
+msgid ""
+"Custom tasks do not complete automatically. Users must check the box to show "
+"they have completed the task."
+msgstr ""
+"カスタムタスクは自動的に完了しません。ユーザーはタスクを完了したことを示すた"
+"めにチェックボックスをチェックする必要があります。"
+
+msgid "Add OpenAI Prompt task"
+msgstr "OpenAI プロンプトタスクを追加"
+
+msgid "The prompt should be in form of a question."
+msgstr "プロンプトは質問の形式である必要があります。"
+
+msgid "This feature requires an OpenAI API Key."
+msgstr "この機能にはOpenAI APIキーが必要です。"
+
+msgid "Latin characters in permalink"
+msgstr "パーマリンク内のラテン文字"
+
+msgid "Permalinks"
+msgstr "パーマリンク"
+
+msgid "Define tasks related to permalinks"
+msgstr "パーマリンクに関連するタスクを定義"
+
+msgid "Permissions"
+msgstr "権限"
+
+msgid "Exclude User Roles"
+msgstr "ユーザーロールを除外"
+
+msgid "Reviews"
+msgstr "レビュー"
+
+msgid "Checklists Settings"
+msgstr "チェックリスト設定"
+
+msgid ""
+"Are you sure you want to reset all renamed checklist items to their default "
+"labels? This action cannot be undone."
+msgstr ""
+"すべての名前変更されたチェックリスト項目をデフォルトのラベルにリセットしても"
+"よろしいですか？この操作は元に戻せません。"
+
+msgid "Features"
+msgstr "機能"
+
+msgid "Feel free to select only the features you need."
+msgstr "必要な機能だけを自由に選択してください。"
+
+msgid "Enabled features"
+msgstr "有効な機能"
+
+msgid "There are no PublishPress modules registered"
+msgstr "登録されたPublishPressモジュールはありません"
+
+#, php-format
+msgid ""
+"Disabled because add_post_type_support('%1$s', '%2$s') is included in a "
+"loaded file."
+msgstr ""
+"add_post_type_support('%1$s', '%2$s')が読み込まれたファイルに含まれているため"
+"無効になっています。"
+
+msgid "Enable Who Can Ignore:"
+msgstr "誰が無視できるかを有効にする:"
+
+msgid "Show warning icon:"
+msgstr "警告アイコンを表示："
+
+msgid "Delete data on uninstall:"
+msgstr "アンインストール時にデータを削除："
+
+msgid "Enable Status Filter:"
+msgstr "ステータスフィルターを有効にする:"
+
+msgid "Enable Duplicate Checklists:"
+msgstr "重複チェックリストを有効にする:"
+
+msgid "Show Checklists column in post lists:"
+msgstr "投稿リストにチェックリストの列を表示："
+
+msgid "Enable Taxonomy Filter:"
+msgstr "タクソノミーフィルターを有効にする："
+
+msgid "Disable the \"Status\" option when using \"Quick Edit\":"
+msgstr "「クイック編集」を使用する際に「ステータス」オプションを無効にする："
+
+msgid "Disable \"Quick Edit\" completely:"
+msgstr "「クイック編集」を完全に無効にする："
+
+msgid "Disable \"Publish\" button:"
+msgstr "「公開」ボタンを無効にする："
+
+msgid "Complete Icon:"
+msgstr "完了アイコン："
+
+msgid "Incomplete Icon:"
+msgstr "未完了アイコン："
+
+msgid "Required Complete Color:"
+msgstr "必須完了色："
+
+msgid "Required Incomplete Color:"
+msgstr "必須未完了色："
+
+msgid "Recommended Complete Color:"
+msgstr "推奨完了色："
+
+msgid "Recommended Incomplete Color:"
+msgstr "推奨される未完成の色："
+
+msgid "OpenAI API Key:"
+msgstr "OpenAI APIキー："
+
+msgid "Reset Renamed Checklist:"
+msgstr "名前が変更されたチェックリストをリセット："
+
+msgid "Post types:"
+msgstr "投稿タイプ："
+
+msgid ""
+"This allows tasks to be disabled for specific statuses such as \"Draft\" or "
+"\"Published."
+msgstr ""
+"これにより、\"ドラフト\"や\"公開済み\"などの特定のステータスに対してタスクを"
+"無効にできます。"
+
+msgid "This allows users to duplicate existing checklist tasks."
+msgstr "これにより、ユーザーは既存のチェックリストタスクを複製できます。"
+
+msgid ""
+"Add a Checklists column to the Posts screen showing how many requirements "
+"are complete."
+msgstr "投稿画面にチェックリスト列を追加し、完了した要件の数を表示します。"
+
+msgid ""
+"This allows tasks to be disabled for posts with specific taxonomy terms. Go "
+"to the \"Post Types\" tab to choose the terms."
+msgstr ""
+"これにより、特定のタクソノミー用語を持つ投稿に対してタスクを無効にすることが"
+"できます。「投稿タイプ」タブに移動して用語を選択してください。"
+
+msgid ""
+"This will display a warning icon in the \"Checklists\" box if requirements "
+"are incomplete."
+msgstr ""
+"要件が不完全な場合、\"チェックリスト\"ボックスに警告アイコンが表示されます。"
+
+msgid ""
+"When enabled, all PublishPress Checklists data will be deleted if the plugin "
+"is uninstalled."
+msgstr ""
+"有効にすると、プラグインがアンインストールされた場合、すべてのPublishPress"
+"チェックリストデータが削除されます。"
+
+msgid "This will show \"Who can ignore\" options."
+msgstr "\"無視できる人\"オプションを表示します。"
+
+msgid ""
+"Disabling the \"Status\" option is recommended because it can be used to "
+"avoid using the Checklists requirements."
+msgstr ""
+"「ステータス」オプションを無効にすることが推奨されます。これはチェックリスト"
+"の要件を避けるために使用できます。"
+
+msgid ""
+"This will disable \"Quick Edit\" for all users except those with the "
+"\"manage_options\" capability."
+msgstr ""
+"これにより、\"manage_options\"権限を持つユーザーを除いて、すべてのユーザーに"
+"対して\"クイック編集\"が無効になります。"
+
+msgid ""
+"This will disable the \"Publish\" button when checklist requirements are not "
+"met."
+msgstr ""
+"これにより、チェックリスト要件が満たされていない場合、\"公開\"ボタンが無効に"
+"なります。"
+
+msgid "Enter your API Key to use OpenAI prompts in checklist tasks."
+msgstr ""
+"チェックリストタスクでOpenAIプロンプトを使用するためのAPIキーを入力してくださ"
+"い。"
+
+msgid "Post Types"
+msgstr "投稿タイプ"
+
+msgid "General"
+msgstr "一般"
+
+msgid "Publishing Options"
+msgstr "公開オプション"
+
+msgid "Appearance"
+msgstr "外観"
+
+msgid "Integration"
+msgstr "統合"
+
+msgid "Tools"
+msgstr "ツール"
+
+msgid "Enter a Dashicons class name (e.g., dashicons-yes, dashicons-saved). "
+msgstr ""
+"Dashiconsクラス名を入力してください（例：dashicons-yes、dashicons-saved）。 "
+
+msgid "View Dashicons"
+msgstr "Dashiconsを表示"
+
+msgid "Enter a Dashicons class name (e.g., dashicons-no, dashicons-dismiss). "
+msgstr ""
+"Dashiconsクラス名を入力してください（例：dashicons-no、dashicons-dismiss）。 "
+
+msgid "Reset All Custom Labels"
+msgstr "すべてのカスタムラベルをリセット"
+
+msgid ""
+"This will reset all renamed checklist items back to their default labels."
+msgstr ""
+"これにより、すべての名前が変更されたチェックリスト項目がデフォルトのラベルに"
+"リセットされます。"
+
+msgid "Security check failed."
+msgstr "セキュリティチェックに失敗しました。"
+
+msgid "You do not have permission to perform this action."
+msgstr "この操作を実行する権限がありません。"
+
+msgid "All custom labels have been reset successfully."
+msgstr "すべてのカスタムラベルが正常にリセットされました。"
+
+msgid "Number of characters in Yoast SEO focus keyword"
+msgstr "Yoast SEOのフォーカスキーワードの文字数"
+
+#, php-format
+msgid "Minimum of %d character in Yoast SEO focus keyword"
+msgstr "Yoast SEOのフォーカスキーワードの最小文字数は%d文字です"
+
+#, php-format
+msgid "Minimum of %d characters in Yoast SEO focus keyword"
+msgstr "Yoast SEOフォーカスキーワードの最小文字数は%dです"
+
+#, php-format
+msgid "Maximum of %d character in Yoast SEO focus keyword"
+msgstr "Yoast SEO フォーカスキーワードに最大 %d 文字"
+
+#, php-format
+msgid "Maximum of %d characters in Yoast SEO focus keyword"
+msgstr "Yoast SEOのフォーカスキーワードの最大文字数は%d文字です"
+
+#, php-format
+msgid "%d character in Yoast SEO focus keyword"
+msgstr "%d 文字のYoast SEOフォーカスキーワード"
+
+#, php-format
+msgid "%d characters in Yoast SEO focus keyword"
+msgstr "%d 文字のYoast SEOフォーカスキーワード"
+
+#, php-format
+msgid "Between %d and %d characters in Yoast SEO focus keyword"
+msgstr "Yoast SEO のフォーカスキーワードの %d と %d 文字の間"
+
+msgid "Number of characters in Yoast SEO meta description"
+msgstr "Yoast SEOのメタ説明の文字数"
+
+#, php-format
+msgid "Minimum of %d character in Yoast SEO meta description"
+msgstr "Yoast SEOメタディスクリプションの最小文字数は%dです"
+
+#, php-format
+msgid "Minimum of %d characters in Yoast SEO meta description"
+msgstr "Yoast SEOメタディスクリプションの最小文字数は%dです"
+
+#, php-format
+msgid "Maximum of %d character in Yoast SEO meta description"
+msgstr "Yoast SEO メタディスクリプションに最大 %d 文字"
+
+#, php-format
+msgid "Maximum of %d characters in Yoast SEO meta description"
+msgstr "Yoast SEOのメタディスクリプションの最大文字数は%d文字です"
+
+#, php-format
+msgid "%d character in Yoast SEO meta description"
+msgstr "%d 文字のYoast SEOメタディスクリプション"
+
+#, php-format
+msgid "%d characters in Yoast SEO meta description"
+msgstr "%d 文字のYoast SEOメタディスクリプション"
+
+#, php-format
+msgid "Between %d and %d characters in Yoast SEO meta description"
+msgstr "Yoast SEO のメタディスクリプションの %d と %d 文字の間"
+
+msgid "Minimum Yoast SEO readability score"
+msgstr "Yoast SEO可読性スコアの最小値"
+
+#. translators: %s expands to the readability score
+#, php-format
+msgid "Yoast Readability: %s"
+msgstr "Yoastの読みやすさ: %s"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Good"
+msgstr "良い"
+
+msgid "Minimum Yoast SEO analysis score"
+msgstr "Yoast SEO分析スコアの最小値"
+
+#. translators: %s expands to the seo score
+#, php-format
+msgid "Yoast SEO: %s"
+msgstr "Yoast SEO: %s"
+
+msgid "Define tasks related to Yoast SEO"
+msgstr "Yoast SEOに関連するタスクを定義"
+
+msgid "This plugin can be deleted."
+msgstr "このプラグインは削除できます。"
+
+#, php-format
+msgid ""
+"You're using PublishPress Checklists Free. The Pro version has more features "
+"and support. %sUpgrade to Pro%s"
+msgstr ""
+"あなたはPublishPressチェックリストFreeを使用しています。Pro版にはより多くの機"
+"能とサポートがあります。%sProにアップグレード%s"
+
+#~ msgid "Who can ignore the task?"
+#~ msgstr "誰がタスクを無視できますか？"
+
+#~ msgid "Add to these post types:"
+#~ msgstr "これらの投稿タイプに追加:"
+
+#~ msgid "This allows users to duplicate existing checklist task."
+#~ msgstr "これにより、ユーザーは既存のチェックリストタスクを複製できます。"
+
+#~ msgid "Validation error. Kindly reload this page and try agai.n"
+#~ msgstr "検証エラーです。このページを再読み込みして再試行してください。"

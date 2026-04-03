@@ -13,11 +13,9 @@ namespace RankMath\Monitor;
 use RankMath\KB;
 use RankMath\Helper;
 use RankMath\Module\Base;
-use MyThemeShop\Admin\Page;
-use MyThemeShop\Helpers\Str;
-use MyThemeShop\Helpers\Arr;
-use MyThemeShop\Helpers\Param;
-use MyThemeShop\Helpers\WordPress;
+use RankMath\Admin\Page;
+use RankMath\Helpers\Arr;
+use RankMath\Helpers\Param;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,10 +25,38 @@ defined( 'ABSPATH' ) || exit;
 class Admin extends Base {
 
 	/**
+	 * Module directory.
+	 *
+	 * @var string
+	 */
+	public $directory;
+
+	/**
+	 * WP_List_Table class name.
+	 *
+	 * @var string
+	 */
+	public $table;
+
+	/**
+	 * Screen options.
+	 *
+	 * @var array
+	 */
+	public $screen_options = [];
+
+	/**
+	 * Page object.
+	 *
+	 * @var Page
+	 */
+	public $page;
+
+	/**
 	 * The Constructor.
 	 */
 	public function __construct() {
-		$directory = dirname( __FILE__ );
+		$directory = __DIR__;
 		$this->config(
 			[
 				'id'             => '404-monitor',
@@ -57,7 +83,7 @@ class Admin extends Base {
 	 * Initialize.
 	 */
 	public function init() {
-		$action = WordPress::get_request_action();
+		$action = Helper::get_request_action();
 		if ( false === $action || ! in_array( $action, [ 'delete', 'clear_log' ], true ) ) {
 			return;
 		}
@@ -139,7 +165,10 @@ class Admin extends Base {
 					],
 				],
 				'assets'     => [
-					'styles'  => [ 'rank-math-common' => '' ],
+					'styles'  => [
+						'rank-math-common'      => '',
+						'rank-math-404-monitor' => $uri . '/assets/css/404-monitor.css',
+					],
 					'scripts' => [ 'rank-math-404-monitor' => $uri . '/assets/js/404-monitor.js' ],
 				],
 			]
@@ -167,8 +196,11 @@ class Admin extends Base {
 					'icon'  => 'rm-icon rm-icon-404',
 					'title' => esc_html__( '404 Monitor', 'rank-math' ),
 					/* translators: 1. Link to KB article 2. Link to redirection setting scree */
-					'desc'  => sprintf( esc_html__( 'Monitor broken pages that ruin user-experience and affect SEO. %s.', 'rank-math' ), '<a href="' . \RankMath\KB::get( '404-monitor-settings' ) . '" target="_blank">' . esc_html__( 'Learn more', 'rank-math' ) . '</a>' ),
+					'desc'  => sprintf( esc_html__( 'Monitor broken pages that ruin user-experience and affect SEO. %s.', 'rank-math' ), '<a href="' . KB::get( '404-monitor-settings', 'Options Panel 404 Monitor Tab' ) . '" target="_blank">' . esc_html__( 'Learn more', 'rank-math' ) . '</a>' ),
 					'file'  => $this->directory . '/views/options.php',
+					'json'  => [
+						'choicesComparisonTypes' => Helper::choices_comparison_types(),
+					],
 				],
 			],
 			7
@@ -184,14 +216,14 @@ class Admin extends Base {
 	 */
 	public function page_title_actions() {
 		$actions = [
-			'settings' => [
+			'settings'   => [
 				'class' => 'page-title-action',
-				'href'  => Helper::get_admin_url( 'options-general#setting-panel-404-monitor' ),
+				'href'  => Helper::get_settings_url( 'general', '404-monitor' ),
 				'label' => __( 'Settings', 'rank-math' ),
 			],
 			'learn_more' => [
 				'class' => 'page-title-action',
-				'href'  => KB::get( '404-monitor' ),
+				'href'  => KB::get( '404-monitor', '404 Page Learn More Button' ),
 				'label' => __( 'Learn More', 'rank-math' ),
 			],
 		];
@@ -205,7 +237,7 @@ class Admin extends Base {
 
 		foreach ( $actions as $action_name => $action ) {
 			?>
-				<a class="<?php echo esc_attr( $action['class'] ); ?> rank-math-404-monitor-<?php echo esc_attr( $action_name ); ?>" href="<?php echo esc_attr( $action['href'] ); ?>"><?php echo esc_attr( $action['label'] ); ?></a>
+				<a class="<?php echo esc_attr( $action['class'] ); ?> rank-math-404-monitor-<?php echo esc_attr( $action_name ); ?>" href="<?php echo esc_attr( $action['href'] ); ?>" target="_blank"><?php echo esc_attr( $action['label'] ); ?></a>
 			<?php
 		}
 	}

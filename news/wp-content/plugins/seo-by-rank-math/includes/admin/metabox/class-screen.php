@@ -16,7 +16,8 @@ use RankMath\Traits\Meta;
 use RankMath\Traits\Hooker;
 use RankMath\Helpers\Locale;
 use RankMath\Admin\Admin_Helper;
-use MyThemeShop\Helpers\Url;
+use RankMath\Helpers\Url;
+use RankMath\Helpers\Param;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -121,31 +122,32 @@ class Screen implements IScreen {
 	 */
 	public function get_values() {
 		$editor      = Helper::get_current_editor();
-		$trends_link = 'https://rankmath.com/pricing/?utm_source=Plugin&utm_medium=CE%20General%20Tab%20Trends&utm_campaign=WP';
+		$trends_link = KB::get( 'pro', 'CE General Tab Trends' );
 		if ( 'gutenberg' === $editor ) {
-			$trends_link = 'https://rankmath.com/pricing/?utm_source=Plugin&utm_medium=Gutenberg%20General%20Tab%20Trends&utm_campaign=WP';
+			$trends_link = KB::get( 'pro', 'Gutenberg General Tab Trends' );
 		} elseif ( 'elementor' === $editor ) {
-			$trends_link = 'https://rankmath.com/pricing/?utm_source=Plugin&utm_medium=Elementor%20General%20Tab%20Trends&utm_campaign=WP';
+			$trends_link = KB::get( 'pro', 'Elementor General Tab Trends' );
 		}
 
 		$values = array_merge_recursive(
 			$this->screen->get_values(),
 			[
-				'homeUrl'            => home_url(),
-				'objectID'           => $this->get_object_id(),
-				'objectType'         => $this->get_object_type(),
-				'locale'             => Locale::get_site_language(),
-				'localeFull'         => get_locale(),
-				'overlayImages'      => Helper::choices_overlay_images(),
-				'defautOgImage'      => Helper::get_settings( 'titles.open_graph_image', rank_math()->plugin_url() . 'assets/admin/img/social-placeholder.jpg' ),
-				'customPermalinks'   => (bool) get_option( 'permalink_structure', false ),
-				'isUserRegistered'   => Helper::is_site_connected(),
-				'connectSiteUrl'     => Admin_Helper::get_activate_url( Url::get_current_url() ),
-				'maxTags'            => $this->do_filter( 'focus_keyword/maxtags', 5 ),
-				'trendsIcon'         => Admin_Helper::get_trends_icon_svg(),
-				'showScore'          => Helper::is_score_enabled(),
-				'siteFavIcon'        => $this->get_site_icon(),
-				'canUser'            => [
+				'homeUrl'             => home_url(),
+				'objectID'            => $this->get_object_id(),
+				'objectType'          => $this->get_object_type(),
+				'locale'              => Locale::get_site_language(),
+				'localeFull'          => get_locale(),
+				'overlayImages'       => Helper::choices_overlay_images(),
+				'defaultOgImage'      => Helper::get_settings( 'titles.open_graph_image', rank_math()->plugin_url() . 'assets/admin/img/social-placeholder.jpg' ),
+				'customPermalinks'    => (bool) get_option( 'permalink_structure', false ),
+				'isUserRegistered'    => Helper::is_site_connected(),
+				'autoSuggestKeywords' => Helper::is_site_connected(),
+				'connectSiteUrl'      => Admin_Helper::get_activate_url( Url::get_current_url() ),
+				'maxTags'             => $this->do_filter( 'focus_keyword/maxtags', 5 ),
+				'trendsIcon'          => Admin_Helper::get_trends_icon_svg(),
+				'showScore'           => Helper::is_score_enabled(),
+				'siteFavIcon'         => $this->get_site_icon(),
+				'canUser'             => [
 					'general'    => Helper::has_cap( 'onpage_general' ),
 					'advanced'   => Helper::has_cap( 'onpage_advanced' ) && Helper::is_advanced_mode(),
 					'snippet'    => Helper::has_cap( 'onpage_snippet' ),
@@ -154,23 +156,45 @@ class Screen implements IScreen {
 					'analytics'  => Helper::has_cap( 'analytics' ),
 					'content_ai' => Helper::has_cap( 'content_ai' ),
 				],
-				'assessor'           => [
-					'serpData'         => $this->get_object_values(),
-					'powerWords'       => $this->power_words(),
-					'diacritics'       => $this->diacritics(),
-					'sentimentKbLink'  => KB::get( 'sentiments' ),
-					'hundredScoreLink' => KB::get( 'score-100-ge' ),
-					'futureSeo'        => KB::get( 'pro-general-g' ),
-					'researchesTests'  => $this->get_analysis(),
-					'hasRedirection'   => Helper::is_module_active( 'redirections' ),
-					'hasBreadcrumb'    => Helper::is_breadcrumbs_enabled(),
+				'showKeywordIntent'   => Helper::should_determine_search_intent(),
+				'assessor'            => [
+					'serpData'        => $this->get_object_values(),
+					'powerWords'      => $this->power_words(),
+					'diacritics'      => $this->diacritics(),
+					'researchesTests' => $this->get_analysis(),
+					'hasRedirection'  => Helper::is_module_active( 'redirections' ),
+					'hasBreadcrumb'   => Helper::is_breadcrumbs_enabled(),
 				],
-				'isPro'              => defined( 'RANK_MATH_PRO_FILE' ),
-				'is_front_page'      => Admin_Helper::is_home_page(),
-				'trendsUpgradeLink'  => esc_url_raw( $trends_link ),
-				'trendsUpgradeLabel' => esc_html__( 'Upgrade', 'rank-math' ),
-				'trendsPreviewImage' => esc_url( rank_math()->plugin_url() . 'assets/admin/img/trends-preview.jpg' ),
-				'currentEditor'      => $editor,
+				'isPro'               => defined( 'RANK_MATH_PRO_FILE' ),
+				'is_front_page'       => Admin_Helper::is_home_page(),
+				'trendsUpgradeLink'   => esc_url_raw( $trends_link ),
+				'trendsUpgradeLabel'  => esc_html__( 'Upgrade', 'rank-math' ),
+				'trendsPreviewImage'  => esc_url( rank_math()->plugin_url() . 'assets/admin/img/trends-preview.jpg' ),
+				'currentEditor'       => $editor,
+				'homepageData'        => [
+					'assessor' => [
+						'powerWords'      => $this->power_words(),
+						'diacritics'      => $this->diacritics(),
+						'researchesTests' => $this->get_analysis(),
+						'hasBreadcrumb'   => Helper::is_breadcrumbs_enabled(),
+						'serpData'        => [
+							'title'               => Helper::get_settings( 'titles.homepage_title' ),
+							'description'         => Helper::get_settings( 'titles.homepage_description', '' ),
+							'titleTemplate'       => '%sitename% %page% %sep% %sitedesc%',
+							'descriptionTemplate' => '',
+							'focusKeywords'       => '',
+							'breadcrumbTitle'     => Helper::get_settings( 'general.breadcrumbs_home_label' ),
+							'robots'              => $this->normalize_robots( Helper::get_settings( 'titles.homepage_robots' ) ),
+							'advancedRobots'      => $this->normalize_advanced_robots( Helper::get_settings( 'titles.homepage_advanced_robots' ) ),
+
+							// Facebook.
+							'facebookTitle'       => Helper::get_settings( 'titles.homepage_facebook_title', '' ),
+							'facebookDescription' => Helper::get_settings( 'titles.homepage_facebook_description', '' ),
+							'facebookImage'       => Helper::get_settings( 'titles.homepage_facebook_image', '' ),
+							'facebookImageID'     => Helper::get_settings( 'titles.homepage_facebook_image_id', '' ),
+						],
+					],
+				],
 			]
 		);
 
@@ -312,8 +336,9 @@ class Screen implements IScreen {
 		$locale = Locale::get_site_language();
 		$file   = rank_math()->plugin_dir() . 'assets/vendor/powerwords/' . $locale . '.php';
 		if ( ! file_exists( $file ) ) {
-			return false;
+			return $this->do_filter( 'metabox/power_words', [], $locale );
 		}
+
 		$words = $words ? $words : include $file;
 		return $this->do_filter( 'metabox/power_words', array_map( 'strtolower', $words ), $locale );
 	}
@@ -341,12 +366,13 @@ class Screen implements IScreen {
 	 * @param string $manual To load any screen manually.
 	 */
 	public function load_screen( $manual = '' ) {
-		if ( Admin_Helper::is_post_edit() || 'post' === $manual ) {
+		if ( Admin_Helper::is_post_edit() || 'post' === $manual || Helper::is_site_editor() ) {
 			$this->screen = new Post_Screen();
 			return;
 		}
 
-		if ( Admin_Helper::is_term_edit() || 'term' === $manual ) {
+		$doing_quick_edit = Param::request( 'action' ) === 'inline-save-tax';
+		if ( Admin_Helper::is_term_edit() || 'term' === $manual || $doing_quick_edit ) {
 			$this->screen = new Taxonomy_Screen();
 			return;
 		}

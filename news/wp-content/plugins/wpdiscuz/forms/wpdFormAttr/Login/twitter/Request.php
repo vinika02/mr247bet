@@ -3,10 +3,10 @@
  * The MIT License
  * Copyright (c) 2007 Andy Smith
  */
+
 namespace wpdFormAttr\Login\twitter;
 
-class Request
-{
+class Request {
     protected $parameters;
     protected $httpMethod;
     protected $httpUrl;
@@ -15,40 +15,39 @@ class Request
     /**
      * Constructor
      *
-     * @param string     $httpMethod
-     * @param string     $httpUrl
+     * @param string $httpMethod
+     * @param string $httpUrl
      * @param array|null $parameters
      */
-    public function __construct($httpMethod, $httpUrl, array $parameters = [])
-    {
-        $parameters = array_merge(Util::parseParameters(parse_url($httpUrl, PHP_URL_QUERY)), $parameters);
+    public function __construct($httpMethod, $httpUrl, array $parameters = []) {
+        $parameters       = array_merge(Util::parseParameters(parse_url($httpUrl, PHP_URL_QUERY)), $parameters);
         $this->parameters = $parameters;
         $this->httpMethod = $httpMethod;
-        $this->httpUrl = $httpUrl;
+        $this->httpUrl    = $httpUrl;
     }
 
     /**
      * pretty much a helper function to set up the request
      *
      * @param Consumer $consumer
-     * @param Token    $token
-     * @param string   $httpMethod
-     * @param string   $httpUrl
-     * @param array    $parameters
+     * @param Token $token
+     * @param string $httpMethod
+     * @param string $httpUrl
+     * @param array $parameters
      *
      * @return Request
      */
     public static function fromConsumerAndToken(
         Consumer $consumer,
-        Token $token = null,
-        $httpMethod,
-        $httpUrl,
-        array $parameters = []
+        Token    $token = null,
+                 $httpMethod,
+                 $httpUrl,
+        array    $parameters = []
     ) {
         $defaults = [
-            "oauth_version" => Request::$version,
-            "oauth_nonce" => Request::generateNonce(),
-            "oauth_timestamp" => time(),
+            "oauth_version"      => Request::$version,
+            "oauth_nonce"        => Request::generateNonce(),
+            "oauth_timestamp"    => time(),
             "oauth_consumer_key" => $consumer->key
         ];
         if (null !== $token) {
@@ -64,8 +63,7 @@ class Request
      * @param string $name
      * @param string $value
      */
-    public function setParameter($name, $value)
-    {
+    public function setParameter($name, $value) {
         $this->parameters[$name] = $value;
     }
 
@@ -74,24 +72,21 @@ class Request
      *
      * @return string|null
      */
-    public function getParameter($name)
-    {
+    public function getParameter($name) {
         return isset($this->parameters[$name]) ? $this->parameters[$name] : null;
     }
 
     /**
      * @return array
      */
-    public function getParameters()
-    {
+    public function getParameters() {
         return $this->parameters;
     }
 
     /**
      * @param $name
      */
-    public function removeParameter($name)
-    {
+    public function removeParameter($name) {
         unset($this->parameters[$name]);
     }
 
@@ -100,8 +95,7 @@ class Request
      *
      * @return string
      */
-    public function getSignableParameters()
-    {
+    public function getSignableParameters() {
         // Grab all parameters
         $params = $this->parameters;
 
@@ -123,8 +117,7 @@ class Request
      *
      * @return string
      */
-    public function getSignatureBaseString()
-    {
+    public function getSignatureBaseString() {
         $parts = [
             $this->getNormalizedHttpMethod(),
             $this->getNormalizedHttpUrl(),
@@ -141,8 +134,7 @@ class Request
      *
      * @return string
      */
-    public function getNormalizedHttpMethod()
-    {
+    public function getNormalizedHttpMethod() {
         return strtoupper($this->httpMethod);
     }
 
@@ -152,13 +144,12 @@ class Request
      *
      * @return string
      */
-    public function getNormalizedHttpUrl()
-    {
+    public function getNormalizedHttpUrl() {
         $parts = parse_url($this->httpUrl);
 
         $scheme = $parts['scheme'];
-        $host = strtolower($parts['host']);
-        $path = $parts['path'];
+        $host   = strtolower($parts['host']);
+        $path   = $parts['path'];
 
         return "$scheme://$host$path";
     }
@@ -168,10 +159,9 @@ class Request
      *
      * @return string
      */
-    public function toUrl()
-    {
+    public function toUrl() {
         $postData = $this->toPostdata();
-        $out = $this->getNormalizedHttpUrl();
+        $out      = $this->getNormalizedHttpUrl();
         if ($postData) {
             $out .= '?' . $postData;
         }
@@ -183,8 +173,7 @@ class Request
      *
      * @return string
      */
-    public function toPostdata()
-    {
+    public function toPostdata() {
         return Util::buildHttpQuery($this->parameters);
     }
 
@@ -194,10 +183,9 @@ class Request
      * @return string
      * @throws TwitterOAuthException
      */
-    public function toHeader()
-    {
+    public function toHeader() {
         $first = true;
-        $out = 'Authorization: OAuth';
+        $out   = 'Authorization: OAuth';
         foreach ($this->parameters as $k => $v) {
             if (substr($k, 0, 5) !== "oauth") {
                 continue;
@@ -205,8 +193,8 @@ class Request
             if (is_array($v)) {
                 throw new TwitterOAuthException('Arrays not supported in headers');
             }
-            $out .= ($first) ? ' ' : ', ';
-            $out .= Util::urlencodeRfc3986($k) . '="' . Util::urlencodeRfc3986($v) . '"';
+            $out   .= ($first) ? ' ' : ', ';
+            $out   .= Util::urlencodeRfc3986($k) . '="' . Util::urlencodeRfc3986($v) . '"';
             $first = false;
         }
         return $out;
@@ -215,18 +203,16 @@ class Request
     /**
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->toUrl();
     }
 
     /**
      * @param SignatureMethod $signatureMethod
-     * @param Consumer        $consumer
-     * @param Token           $token
+     * @param Consumer $consumer
+     * @param Token $token
      */
-    public function signRequest(SignatureMethod $signatureMethod, Consumer $consumer, Token $token = null)
-    {
+    public function signRequest(SignatureMethod $signatureMethod, Consumer $consumer, Token $token = null) {
         $this->setParameter("oauth_signature_method", $signatureMethod->getName());
         $signature = $this->buildSignature($signatureMethod, $consumer, $token);
         $this->setParameter("oauth_signature", $signature);
@@ -234,21 +220,19 @@ class Request
 
     /**
      * @param SignatureMethod $signatureMethod
-     * @param Consumer        $consumer
-     * @param Token           $token
+     * @param Consumer $consumer
+     * @param Token $token
      *
      * @return string
      */
-    public function buildSignature(SignatureMethod $signatureMethod, Consumer $consumer, Token $token = null)
-    {
+    public function buildSignature(SignatureMethod $signatureMethod, Consumer $consumer, Token $token = null) {
         return $signatureMethod->buildSignature($this, $consumer, $token);
     }
 
     /**
      * @return string
      */
-    public static function generateNonce()
-    {
+    public static function generateNonce() {
         return md5(microtime() . mt_rand());
     }
 }
