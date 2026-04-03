@@ -5,9 +5,9 @@ const { casino } = defineProps(['casino'])
 <template>
     <div class="col-xl-2 col-md-4 col-sm-6">
         <div class="featured-card">
-            <NuxtLink :to="`/casinos/all/${casino.slug}`" class="info"><i class="bi bi-info"></i></NuxtLink>
+            <NuxtLink :to="`/casinos/all/${casino?.slug}`" class="info"><i class="bi bi-info"></i></NuxtLink>
             <div class="featured-card-img">
-                <NuxtLink :to="`/casinos/all/${casino.slug}`">
+                <NuxtLink :to="`/casinos/all/${casino?.slug}`">
                     <img :src="casino._embedded['wp:featuredmedia'][0].source_url" class="img-fluid"
                         :alt="`${casino.acf.casinoName.replace(/\s+/g, '-')}-image`"
                         :title="`Image of ${casino.acf.casinoName} brand`" loading="eager" width="87.19" height="57.13" />

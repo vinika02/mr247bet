@@ -23,7 +23,7 @@ const { params } = useRoute();
                     <li>
                         <NuxtLink to="/betting-guides">Betting Guides</NuxtLink>
                     </li>
-                    <li v-if="params.slug">{{ params.slug }}</li>
+                    <li v-if="params?.slug">{{ params?.slug }}</li>
                 </ol>
             </div>
         </nav>

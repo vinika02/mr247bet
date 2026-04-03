@@ -87,7 +87,7 @@ const { data: posts } = await useFetch(() => '/AWS/posts?perPage=20&page=1&categ
                             :name="post.acf?.casinoName" :casinoUrl="post.acf?.casinoUrl"
                             :affiliateLink="post?.acf.affiliateLink" :affiliateTerms="post?.acf.affiliateTerms"
                             :casinoTerms="post.acf?.casinoTerms" size="3" :key="post?.id"
-                            :casinoRating="post.acf?.casinoRating" :fullPath="fullPath" :slug="post.slug" />
+                            :casinoRating="post.acf?.casinoRating" :fullPath="fullPath" :slug="post?.slug" />
                     </div>
                     <!-- <CasinosPagination /> -->
                 </div>

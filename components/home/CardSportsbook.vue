@@ -5,9 +5,9 @@ const { item } = defineProps(['item'])
 <template>
     <div class="card-wrapper">
         <div class="card">
-            <NuxtLink :to="`/sportsbooks/all/${item.slug}`" class="info"><i class="bi bi-info"></i></NuxtLink>
+            <NuxtLink :to="`/sportsbooks/all/${item?.slug}`" class="info"><i class="bi bi-info"></i></NuxtLink>
             <div class="img-wrapper">
-                <NuxtLink :to="`/sportsbooks/all/${item.slug}`">
+                <NuxtLink :to="`/sportsbooks/all/${item?.slug}`">
                     <img :src="item?._embedded['wp:featuredmedia'][0].source_url" class="card-img-top"
                         :alt="`${item.acf.sportsbookName.replace(/\s+/g, '-')}-image`"
                         :title="`Image of ${item.acf.sportsbookName} brand`" loading="eager" width="120" height="80">

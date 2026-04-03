@@ -70,7 +70,7 @@ const { data: posts } = await useFetch(() => '/AWS/posts?perPage=20&page=1&categ
                             :name="post.acf?.sportsbookName" :sportsbookUrl="post.acf?.sportsbookUrl"
                             :affiliateLink="post?.acf.affiliateLink" :affiliateTerms="post?.acf.affiliateTerms"
                             :sportsbookTerms="post.acf?.sportsbookTerms" size="3" :key="post?.id"
-                            :sportsbookRating="post.acf?.sportsbookRating" :fullPath="fullPath" :slug="post.slug" />
+                            :sportsbookRating="post.acf?.sportsbookRating" :fullPath="fullPath" :slug="post?.slug" />
                     </div>
                     <!-- <CasinosPagination /> -->
                 </div>
