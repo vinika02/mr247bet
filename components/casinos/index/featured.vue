@@ -22,7 +22,7 @@ let orderedFeaturedCasinos = [playOjo, pledoo, slotNite, dreamVegas, pubCasino, 
 <template>
     <section id="featured" class="featured sections-bg">
         <div class="container position-relative">
-            <div class="row gy-4 mt-5">
+            <div class="row justify-content-center gy-4 mt-5">
                 <div class="section-header">
                     <h2>Featured Casinos</h2>
                 </div>
