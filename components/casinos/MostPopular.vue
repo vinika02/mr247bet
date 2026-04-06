@@ -3,31 +3,41 @@
 // check if computed has value, if not call API
 
 // let items;
+const items = useState('featuredCasinos', () => []);
 
-let items = computed(() => {
-    return useState('featuredCasinos').value
-})
+if (!items.value || items.value.length === 0) {
+  const { data: featuredCasinos } = await useFetch(
+    () => '/AWS/posts?perPage=20&page=1&categories=28',
+    {
+      transform: (data) => {
+        return data
+          // ✅ remove undefined/null
+          .filter(casino => casino && casino.acf)
 
-if (items.value === undefined) {
-    const { data: featuredCasinos } = await useFetch(() => '/AWS/posts?perPage=20&page=1&categories=28',
-        {
-            transform: (featuredCasinos) =>
-                featuredCasinos.filter((casino) =>
-                    casino?.acf.casinoSubcategory.includes('Featured')
-                )
-        }
-    )
+          // ✅ safe check for subcategory
+          .filter(casino =>
+            Array.isArray(casino.acf.casinoSubcategory) &&
+            casino.acf.casinoSubcategory.includes('Featured')
+          )
 
-    let pledoo = featuredCasinos.value[0]
-    let dreamVegas = featuredCasinos.value[1]
-    let playOjo = featuredCasinos.value[2]
-    let slotNite = featuredCasinos.value[3]
-    let pubCasino = featuredCasinos.value[4]
-    let tonyBet = featuredCasinos.value[5]
+          // ✅ limit to 6 early
+          .slice(0, 6);
+      }
+    }
+  );
 
-    items = [playOjo, pledoo, slotNite, dreamVegas, pubCasino, tonyBet]
+  const list = featuredCasinos.value || [];
+
+  // ✅ reorder + auto-remove undefined
+  items.value = [
+    list[2], // playOjo
+    list[0], // pledoo
+    list[3], // slotNite
+    list[1], // dreamVegas
+    list[4], // pubCasino
+    list[5], // tonyBet
+  ].filter(Boolean); // 🔥 removes undefined
 }
-
 // console.log('items:', items)
 
 </script>
