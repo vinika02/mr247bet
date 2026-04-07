@@ -5,9 +5,9 @@ const { sportsbookItems } = defineProps(['sportsbookItems'])
 <template>
     <div id="sportsBookCarouselTablet" class="carousel slide d-none d-md-block d-lg-none">
         <div class="carousel-inner">
-            <HomeSportsCarouselItem itemClass="carousel-item active" :items="sportsbookItems.carousel1" />
-            <HomeSportsCarouselItem itemClass="carousel-item" :items="sportsbookItems.carousel2" />
-            <HomeSportsCarouselItem itemClass="carousel-item" :items="sportsbookItems.carousel3" />
+            <HomeSportsCarouselItem v-if="sportsbookItems.carousel1.length > 0" itemClass="carousel-item active" :items="sportsbookItems.carousel1" />
+            <HomeSportsCarouselItem v-if="sportsbookItems.carousel2.length > 0" itemClass="carousel-item" :items="sportsbookItems.carousel2" />
+            <HomeSportsCarouselItem v-if="sportsbookItems.carousel3.length > 0" itemClass="carousel-item" :items="sportsbookItems.carousel3" />
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#sportsBookCarouselTablet" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
