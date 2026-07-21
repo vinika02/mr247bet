@@ -16,6 +16,9 @@
   },
   "dependencies": {
     "@nuxt/image": "^2.0.0",
+    "@oxc-minify/binding-win32-x64-msvc": "^0.117.0",
+    "@oxc-parser/binding-win32-x64-msvc": "^0.117.0",
+    "@oxc-transform/binding-win32-x64-msvc": "^0.117.0",
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.3",
     "compression": "^1.7.4",
