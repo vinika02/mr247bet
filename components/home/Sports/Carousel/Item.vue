@@ -5,7 +5,7 @@ const { itemClass, items } = defineProps(['itemClass', 'items'])
 <template>
     <div :class="itemClass">
         <div class="cards-wrapper">
-            <HomeCardSportsbook v-for="item in items" :item="item" :key="item.id" />
+            <HomeCardSportsbook v-for="item in items" :item="item" :key="item?.id" />
         </div>
     </div>
 </template>

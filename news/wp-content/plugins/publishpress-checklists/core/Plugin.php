@@ -50,10 +50,18 @@ class Plugin
      */
     public function init()
     {
-        add_action('plugins_loaded', [$this, 'loadTextDomain']);
         add_action('init', [$this, 'deactivateLegacyPlugin']);
 
+        $this->loadTextDomain();
+
+        // Initialize the API
+        \PublishPress\Checklists\Core\API\Bootstrap::init();
+
         Factory::getLegacyPlugin();
+
+        add_filter('plugin_row_meta', [$this, 'add_plugin_meta'], 10, 2);
+
+        add_filter( 'plugin_action_links_' . plugin_basename(PPCH_FILE), [$this, 'add_action_links']);
     }
 
     /**
@@ -64,7 +72,7 @@ class Plugin
         load_plugin_textdomain(
             'publishpress-checklists',
             false,
-            PPCH_RELATIVE_PATH . '/languages/'
+            dirname(plugin_basename(PPCH_FILE)) . '/languages/'
         );
     }
 
@@ -88,4 +96,24 @@ class Plugin
         } catch (Exception $e) {
         }
     }
+
+    public function add_plugin_meta($links, $file)
+    {
+        if ($file == plugin_basename(PPCH_FILE)) {
+            $links[] = '<a href="'. esc_url(admin_url('admin.php?page=ppch-checklists')) .'">' . esc_html__('Checklists', 'publishpress-checklists') . '</a>';
+            $links[] = '<a href="'. esc_url(admin_url('admin.php?page=ppch-settings')) .'">' . esc_html__('Settings', 'publishpress-checklists') . '</a>';
+        }
+
+        return $links;
+    }
+
+    public function add_action_links($links)
+    {
+        $upgrade_link = '<a href="https://publishpress.com/checklists/" target="_blank" style="font-weight: bold; color: #655997;">' . esc_html__('Upgrade to Pro', 'publishpress-checklists') . '</a>';
+
+        array_unshift($links, $upgrade_link);
+
+        return $links;
+    }
+
 }

@@ -10,7 +10,7 @@ const { post } = defineProps(['post'])
             </div>
 
             <h4 class="title">
-                <NuxtLink :to="post.link" target="_blank">
+                <NuxtLink v-if="post?.link" :to="post?.link" target="_blank">
                     {{ post.title.rendered }}</NuxtLink>
             </h4>
         </article>

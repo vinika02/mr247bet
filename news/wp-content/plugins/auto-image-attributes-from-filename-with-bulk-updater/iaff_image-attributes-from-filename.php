@@ -5,7 +5,7 @@
  * Description: Automatically Add Image Title, Image Caption, Description And Alt Text From Image Filename. Since this plugin includes a bulk updater this can update both existing images in the Media Library and new images. 
  * Author: Arun Basil Lal
  * Author URI: https://imageattributespro.com/?utm_source=plugin-header&utm_medium=author-uri
- * Version: 3.2
+ * Version: 4.9
  * Text Domain: auto-image-attributes-from-filename-with-bulk-updater
  * Domain Path: /languages
  * License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -21,14 +21,12 @@
  * ~ Directory Structure ~
  *
  * /admin/ 						- Plugin backend stuff.
- * /includes/					- External third party classes and libraries.
- * /languages/					- Translation files go here. 
- * /public/						- Front end files go here.
+ * /languages/					- Translation files go here.
  * index.php					- Dummy file.
  * license.txt					- GPL v2
  * iaff_starter-plugin.php		- File containing plugin name and other version info for WordPress.
  * readme.txt					- Readme for WordPress plugin repository. https://wordpress.org/plugins/files/2017/03/readme.txt
- * uninstall.php				- Fired when the plugin is uninstalled. 
+ * uninstall.php				- Fired when the plugin is uninstalled.
  */
 
 // Exit if accessed directly
@@ -67,7 +65,7 @@ if ( ! defined( 'IAFF_IMAGE_ATTRIBUTES_FROM_FILENAME_URL' ) ) {
  * @since 1.3
  */
 if ( ! defined( 'IAFF_VERSION_NUM' ) ) {
-	define( 'IAFF_VERSION_NUM', '3.2' );
+	define( 'IAFF_VERSION_NUM', '4.9' );
 }
 
 /**
@@ -98,8 +96,107 @@ function iaff_upgrader() {
 		$settings = get_option( 'iaff_settings' );
 
 		if ( $settings !== false ) {
-			$settings['bu_caption_behaviour'] 	= 1;
-			$settings['bu_description_behaviour'] 	= 1;
+			$settings['bu_caption_behaviour'] = 1;
+			$settings['bu_description_behaviour'] = 1;
+
+			update_option('iaff_settings', $settings);
+		}
+	}
+
+	/**
+	 * @since 4.3
+	 * 
+	 * Some major changes were made in the UI:
+	 * - Removed Filter Settings and Custom Filter from Bulk Updater Settings. The bulk updater will use the same filters from the Advanced settings from here on.
+	 * - Removed Capitalization Settings from Bulk Updater Settings. The bulk updater will use the capitalization settings from the Advanced settings from here on.
+	 * - Removed image attribute configuration in Bulk Updater Settings. The image attributes set in the Advanced settings will be used by the bulk updater from here on.
+	 * - Choose where to update image title and alt text while running the Bulk Updater. Image attributes can be updated in Media Library, post HTML, or both.
+	 */
+	if ( version_compare( $current_ver, '4.2', '<=' ) ) {
+
+		// This will return false during first install since iaff_settings does not exist.
+		$settings = get_option( 'iaff_settings' );
+
+		if ( $settings !== false ) {
+
+			/**
+			 * Add "Update in: Media Library and Post HTML" setting for all attributes.
+			 * 
+			 * Up until now, there was no option to disable updating the Media Library.
+			 * So this setting being turned on is the default expected behaviour when users update.
+			 * 
+			 * For Post HTML, users had the option to disable it before by selecting "Update image titles in media library only.".
+			 * Setting it to be enabled might be unexpected to some users. However a compromise had to be made.
+			 * Users can still choose to downgrade to version 4.2 of the basic plugin and use it.
+			 */
+			$settings['bu_title_location_ml'] = 1;
+			$settings['bu_alt_text_location_ml'] = 1;
+			$settings['bu_caption_location_ml'] = 1;
+			$settings['bu_description_location_ml'] = 1;
+
+			$settings['bu_title_location_post'] = 1;
+			$settings['bu_alt_text_location_post'] = 1;
+
+			/**
+			 * If current image title setting is set to "Update image titles in media library only.",
+			 * then set it to "Update all attributes overwriting any existing attributes.".
+			 *
+			 * The value of "Update all attributes overwriting any existing attributes." is 1. 
+			 * Users can manage updating the Media Library using the "Update in:" setting.
+			 * 
+			 * bu_titles_in_post can have values 0, 1 or 2.
+			 * bu_titles_in_post is renamed to bu_title_behaviour in 4.3 and can have values 1 or 2.
+			 */
+			if ( $settings['bu_titles_in_post'] == '0' ) {
+				$settings['bu_title_behaviour'] = 1;
+			} else {
+				$settings['bu_title_behaviour'] = $settings['bu_titles_in_post'];
+			}
+
+			/**
+			 * If current alt text setting is set to "Update alt text in media library only.",
+			 * then set it to "Update all attributes overwriting any existing attributes.".
+			 *
+			 * The value of "Update all attributes overwriting any existing attributes." is 1. 
+			 * Users can manage updating the Media Library using the "Update in:" setting.
+			 * 
+			 * bu_alt_text_in_post can have values 0, 1 or 2.
+			 * bu_alt_text_in_post is renamed to bu_alt_text_behaviour in 4.3 and can have values 1 or 2.
+			 */
+			if ( $settings['bu_alt_text_in_post'] == '0' ) {
+				$settings['bu_alt_text_behaviour'] = 1;
+			} else {
+				$settings['bu_alt_text_behaviour'] = $settings['bu_alt_text_in_post'];
+			}
+
+			// Remove deleted settings.
+			unset(
+				$settings['bu_hyphens'],
+				$settings['bu_under_score'],
+				$settings['bu_full_stop'],
+				$settings['bu_commas'],
+				$settings['bu_all_numbers'],
+				$settings['bu_apostrophe'],
+				$settings['bu_tilde'],
+				$settings['bu_plus'],
+				$settings['bu_pound'],
+				$settings['bu_ampersand'],
+				$settings['bu_round_brackets'],
+				$settings['bu_square_brackets'],
+				$settings['bu_curly_brackets'],
+				$settings['bu_custom_filter'],
+				$settings['bu_regex_filter'],
+				$settings['bu_capitalization'],
+				$settings['bu_title_source'],
+				$settings['custom_attribute_bu_title'],
+				$settings['bu_alt_text_source'],
+				$settings['custom_attribute_bu_alt_text'],
+				$settings['bu_caption_source'],
+				$settings['custom_attribute_bu_caption'],
+				$settings['bu_description_source'],
+				$settings['custom_attribute_bu_description']
+			);
+
 			update_option('iaff_settings', $settings);
 		}
 	}
@@ -114,7 +211,7 @@ function iaff_upgrader() {
 	 */
 	if ( $current_ver !== '1.2' ) {
 		
-		// Set transient to show upgrade complete notice
+		// Set transient to show upgrade complete notice.
 		set_transient( 'iaff_upgrade_complete_admin_notice', true, 300 );
 	}
 	
@@ -124,7 +221,7 @@ function iaff_upgrader() {
 add_action( 'admin_init', 'iaff_upgrader' );
 
 // Load everything
-require_once( IAFF_IMAGE_ATTRIBUTES_FROM_FILENAME_DIR . '/admin/iaff_image-attributes-from-filename-loader.php');
+require_once( IAFF_IMAGE_ATTRIBUTES_FROM_FILENAME_DIR . '/loader.php');
 
 // Register activation hook
 register_activation_hook( __FILE__ , 'iaff_activate_plugin' );

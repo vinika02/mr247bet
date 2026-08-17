@@ -22,10 +22,17 @@ class ValidChars extends Base_simple
      */
     public $name = 'permalink_valid_chars';
 
+     /**
+     * The name of the group, used for the tabs
+     * 
+     * @var string
+     */
+    public $group = 'permalinks';
+
     /**
      * @var int
      */
-    public $position = 110;
+    public $position = 160;
 
     /**
      * Initialize the language strings for the instance
@@ -74,11 +81,12 @@ class ValidChars extends Base_simple
         // Register in the requirements list
         $requirements[$this->name] = [
             'status'    => $this->get_current_status($post, $value),
-            'label'     => $this->lang['label_settings'],
+            'label'     => $this->get_requirement_display_label($this->lang['label_settings']),
             'value'     => $value,
             'rule'      => $this->get_option_rule(),
             'is_custom' => false,
             'type'      => $this->type,
+            'has_editor_label' => $this->has_editor_label(),
         ];
 
         return $requirements;
@@ -114,8 +122,11 @@ class ValidChars extends Base_simple
      */
     public function get_current_status($post, $option_value)
     {
-        $slug = $post->post_name;
+        // Fallback to title if slug is empty
+        $post_name = isset($post->post_name) ? $post->post_name : '';
+        $post_title = isset($post->post_title) ? $post->post_title : '';
+        $slug = $post_name ?: $post_title;
 
-        return preg_match('/^[a-z0-9\-_]+$/', $slug) === 1;
+        return preg_match('/^[a-z0-9_\-]+$/', sanitize_title($slug)) === 1;
     }
 }

@@ -14,9 +14,13 @@ class Submit extends Field {
         ?>
         <div class="wpd-field-body" style="display: <?php echo esc_attr($this->display); ?>">
             <div class="wpd-field-option wpdiscuz-item">
-                <input class="wpd-field-type" type="hidden" value="<?php echo esc_attr($this->type); ?>" name="<?php echo esc_attr($this->fieldInputName); ?>[type]" />
-                <label for="<?php echo esc_attr($this->fieldInputName); ?>[name]"><?php esc_html_e("Name", "wpdiscuz"); ?>:</label> 
-                <input class="wpd-field-name" type="text" value="<?php echo esc_attr($this->fieldData["name"]); ?>" name="<?php echo esc_attr($this->fieldInputName); ?>[name]" id="<?php echo esc_attr($this->fieldInputName); ?>[name]" required />
+                <input class="wpd-field-type" type="hidden" value="<?php echo esc_attr($this->type); ?>"
+                       name="<?php echo esc_attr($this->fieldInputName); ?>[type]"/>
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[name]"><?php esc_html_e("Name", "wpdiscuz"); ?>
+                    :</label>
+                <input class="wpd-field-name" type="text" value="<?php echo esc_attr($this->fieldData["name"]); ?>"
+                       name="<?php echo esc_attr($this->fieldInputName); ?>[name]"
+                       id="<?php echo esc_attr($this->fieldInputName); ?>[name]" required/>
                 <p class="wpd-info"><?php esc_html_e("Button Text", "wpdiscuz"); ?></p>
             </div>
             <div style="clear:both;"></div>
@@ -35,8 +39,10 @@ class Submit extends Field {
             if ($isMainForm && (current_user_can("moderate_comments") || ($post && isset($post->post_author) && $post->post_author == $currentUser->ID))) {
                 ?>
                 <?php if ($options->moderation['enableStickButton']) { ?>
-                    <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_stick_comment_btn_title")); ?>">
-                        <input id="wc_sticky_comment" class="wpd_label__checkbox" value="1" type="checkbox" name="wc_sticky_comment"/>
+                    <label class="wpd_label"
+                           wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_stick_comment_btn_title")); ?>">
+                        <input id="wc_sticky_comment" class="wpd_label__checkbox" value="1" type="checkbox"
+                               name="wc_sticky_comment"/>
                         <span class="wpd_label__text">
                             <span class="wpd_label__check">
                                 <i class="fas fa-thumbtack wpdicon wpdicon-on"></i>
@@ -46,8 +52,10 @@ class Submit extends Field {
                     </label>
                 <?php } ?>
                 <?php if ($options->moderation['enableCloseButton']) { ?>
-                    <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_close_comment_btn_title")); ?>">
-                        <input id="wc_closed_comment" class="wpd_label__checkbox" value="1" type="checkbox" name="wc_closed_comment"/>
+                    <label class="wpd_label"
+                           wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_close_comment_btn_title")); ?>">
+                        <input id="wc_closed_comment" class="wpd_label__checkbox" value="1" type="checkbox"
+                               name="wc_closed_comment"/>
                         <span class="wpd_label__text">
                             <span class="wpd_label__check">
                                 <i class="fas fa-lock wpdicon wpdicon-on"></i>
@@ -58,8 +66,7 @@ class Submit extends Field {
                 <?php } ?>
                 <?php
             }
-            ?>
-            <?php if ($options->wp["threadComments"] || class_exists("Prompt_Comment_Form_Handling")) { ?>
+            if ($options->wp["threadComments"]) { ?>
                 <?php
                 $isShowSubscribeWrapper = false;
                 if ($options->subscription["showReplyCheckbox"]) {
@@ -71,48 +78,38 @@ class Submit extends Field {
                 }
                 if ($isShowSubscribeWrapper) {
                     $isReplyDefaultChecked = $options->subscription["isReplyDefaultChecked"] ? "checked='checked'" : "";
-                    ?>    
-                    <?php
-                    if (class_exists("Prompt_Comment_Form_Handling") && $options->subscription["usePostmaticForCommentNotification"]) {
-                        ?>
-                        <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_postmatic_subscription_label")); ?>">
-                            <input id="wc_notification_new_comment-<?php echo esc_attr($uniqueId); ?>" class="wc_notification_new_comment-<?php echo esc_attr($uniqueId); ?> wpd_label__checkbox" value="post" type="checkbox" name="wpdiscuz_notification_type" <?php echo $isReplyDefaultChecked; ?>/>
-                            <span class="wpd_label__text">
-                                <span class="wpd_label__check">
-                                    <i class="fas fa-bell wpdicon wpdicon-on"></i>
-                                    <i class="fas fa-bell-slash wpdicon wpdicon-off"></i>
-                                </span>
-                            </span>
-                        </label>
-                        <?php
-                    } else {
-                        ?>
-                        <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_notify_on_new_reply", ["unique_id" => $uniqueId])); ?>">
-                            <input id="wc_notification_new_comment-<?php echo esc_attr($uniqueId); ?>" class="wc_notification_new_comment-<?php echo esc_attr($uniqueId); ?> wpd_label__checkbox" value="comment" type="checkbox" name="wpdiscuz_notification_type" <?php echo $isReplyDefaultChecked; ?>/>
-                            <span class="wpd_label__text">
-                                <span class="wpd_label__check">
-                                    <i class="fas fa-bell wpdicon wpdicon-on"></i>
-                                    <i class="fas fa-bell-slash wpdicon wpdicon-off"></i>
-                                </span>
-                            </span>
-                        </label>
-                        <?php
-                    }
                     ?>
-                <?php } ?>
-            <?php } ?>
-            <input id="wpd-field-submit-<?php echo esc_attr($uniqueId); ?>" class="wc_comm_submit wpd_not_clicked wpd-prim-button" type="submit" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr($args["name"]); ?>" />
+                    <label class="wpd_label"
+                           wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_notify_on_new_reply", ["unique_id" => $uniqueId])); ?>">
+                        <input id="wc_notification_new_comment-<?php echo esc_attr($uniqueId); ?>"
+                               class="wc_notification_new_comment-<?php echo esc_attr($uniqueId); ?> wpd_label__checkbox"
+                               value="comment" type="checkbox"
+                               name="wpdiscuz_notification_type" <?php echo $isReplyDefaultChecked; ?>/>
+                        <span class="wpd_label__text">
+                                <span class="wpd_label__check">
+                                    <i class="fas fa-bell wpdicon wpdicon-on"></i>
+                                    <i class="fas fa-bell-slash wpdicon wpdicon-off"></i>
+                                </span>
+                            </span>
+                    </label>
+                <?php }
+            } ?>
+            <input id="wpd-field-submit-<?php echo esc_attr($uniqueId); ?>"
+                   class="wc_comm_submit wpd_not_clicked wpd-prim-button" type="submit"
+                   name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr($args["name"]); ?>"
+                   aria-label="<?php echo esc_attr($args["name"]); ?>"/>
         </div>
         <?php
     }
 
     public function sanitizeFieldData($data) {
-        $cleanData = [];
-        $cleanData["type"] = $data["type"];
+        $cleanData         = [];
+        $cleanData["type"] = sanitize_text_field($data["type"]);
         if (isset($data["name"])) {
-            $name = trim(strip_tags($data["name"]));
+            $name              = sanitize_text_field(trim(strip_tags($data["name"])));
             $cleanData["name"] = $name ? $name : $this->fieldDefaultData["name"];
         }
+
         return wp_parse_args($cleanData, $this->fieldDefaultData);
     }
 
@@ -123,15 +120,15 @@ class Submit extends Field {
     }
 
     public function frontHtml($value, $args) {
-        
+
     }
 
     public function validateFieldData($fieldName, $args, $options, $currentUser) {
-        
+
     }
 
     public function editCommentHtml($key, $value, $data, $comment) {
-        
+
     }
 
 }

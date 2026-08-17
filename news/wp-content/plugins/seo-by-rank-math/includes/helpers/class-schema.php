@@ -24,7 +24,7 @@ trait Schema {
 	 *
 	 * @param int     $post_id      Post ID.
 	 * @param boolean $return_valid Whether to return valid schema type which can be used on the frontend.
-	 * @param boolean $sanitize     Return santized Schema type.
+	 * @param boolean $sanitize     Return sanitized Schema type.
 	 *
 	 * @return string Default Schema Type.
 	 */
@@ -77,7 +77,8 @@ trait Schema {
 	/**
 	 * Sanitize schema title.
 	 *
-	 * @param  string $schema Schema.
+	 * @param  string  $schema    Schema.
+	 * @param  boolean $translate Whether to return the translated string.
 	 * @return string
 	 */
 	public static function sanitize_schema_title( $schema, $translate = true ) {

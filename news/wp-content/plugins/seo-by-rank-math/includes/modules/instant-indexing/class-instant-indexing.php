@@ -15,7 +15,9 @@ use RankMath\Module\Base;
 use RankMath\Traits\Hooker;
 use RankMath\Traits\Ajax;
 use RankMath\Admin\Options;
-use MyThemeShop\Helpers\Param;
+use RankMath\Admin\Register_Options_Page;
+use RankMath\Helpers\Param;
+use RankMath\Helpers\Sitepress;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -24,7 +26,8 @@ defined( 'ABSPATH' ) || exit;
  */
 class Instant_Indexing extends Base {
 
-	use Hooker, Ajax;
+	use Hooker;
+	use Ajax;
 
 	/**
 	 * API Object.
@@ -41,6 +44,20 @@ class Instant_Indexing extends Base {
 	private $submitted = [];
 
 	/**
+	 * Store previous post status that we can check against in save_post.
+	 *
+	 * @var array
+	 */
+	private $previous_post_status = [];
+
+	/**
+	 * Store original permalinks for when they get trashed.
+	 *
+	 * @var array
+	 */
+	private $previous_post_permalinks = [];
+
+	/**
 	 * Restrict to one request every X seconds to a given URL.
 	 */
 	const THROTTLE_LIMIT = 5;
@@ -51,13 +68,16 @@ class Instant_Indexing extends Base {
 	public function __construct() {
 		parent::__construct();
 
-		$this->action( 'admin_enqueue_scripts', 'enqueue', 20 );
-
 		if ( ! $this->is_configured() ) {
 			Api::get()->reset_key();
 		}
 
+		$this->action( 'init', 'register_instant_indexing_settings', 125 );
 		$post_types = $this->get_auto_submit_post_types();
+		if ( ! empty( $post_types ) ) {
+			$this->filter( 'wp_insert_post_data', 'before_save_post', 10, 4 );
+		}
+
 		foreach ( $post_types as $post_type ) {
 			$this->action( 'save_post_' . $post_type, 'save_post', 10, 3 );
 			$this->filter( "bulk_actions-edit-{$post_type}", 'post_bulk_actions', 11 );
@@ -68,7 +88,7 @@ class Instant_Indexing extends Base {
 		$this->filter( 'page_row_actions', 'post_row_actions', 10, 2 );
 		$this->filter( 'admin_init', 'handle_post_row_actions' );
 
-		$this->action( 'template_redirect', 'serve_api_key' );
+		$this->action( 'wp', 'serve_api_key' );
 		$this->action( 'rest_api_init', 'init_rest_api' );
 	}
 
@@ -188,28 +208,28 @@ class Instant_Indexing extends Base {
 	/**
 	 * Register admin page.
 	 */
-	public function register_admin_page() {
+	public function register_instant_indexing_settings() {
 		$tabs = [
 			'url-submission' => [
 				'icon'    => 'rm-icon rm-icon-instant-indexing',
 				'title'   => esc_html__( 'Submit URLs', 'rank-math' ),
-				'desc'    => esc_html__( 'Send URLs directly to the IndexNow API.', 'rank-math' ) . ' <a href="' . KB::get( 'instant-indexing' ) . '" target="_blank">' . esc_html__( 'Learn more', 'rank-math' ) . '</a>',
+				'desc'    => esc_html__( 'Send URLs directly to the IndexNow API.', 'rank-math' ) . ' <a href="' . KB::get( 'instant-indexing', 'Indexing Submit URLs' ) . '" target="_blank">' . esc_html__( 'Learn more', 'rank-math' ) . '</a>',
 				'classes' => 'rank-math-advanced-option',
-				'file'    => dirname( __FILE__ ) . '/views/console.php',
+				'file'    => __DIR__ . '/views/console.php',
 			],
 			'settings'       => [
 				'icon'  => 'rm-icon rm-icon-settings',
 				'title' => esc_html__( 'Settings', 'rank-math' ),
 				/* translators: Link to kb article */
-				'desc'  => sprintf( esc_html__( 'Instant Indexing module settings. %s.', 'rank-math' ), '<a href="' . KB::get( 'instant-indexing' ) . '" target="_blank">' . esc_html__( 'Learn more', 'rank-math' ) . '</a>' ),
-				'file'  => dirname( __FILE__ ) . '/views/options.php',
+				'desc'  => sprintf( esc_html__( 'Instant Indexing module settings. %s.', 'rank-math' ), '<a href="' . KB::get( 'instant-indexing', 'Indexing Settings' ) . '" target="_blank">' . esc_html__( 'Learn more', 'rank-math' ) . '</a>' ),
+				'file'  => __DIR__ . '/views/options.php',
 			],
 			'history'        => [
 				'icon'    => 'rm-icon rm-icon-htaccess',
 				'title'   => esc_html__( 'History', 'rank-math' ),
 				'desc'    => esc_html__( 'The last 100 IndexNow API requests.', 'rank-math' ),
 				'classes' => 'rank-math-advanced-option',
-				'file'    => dirname( __FILE__ ) . '/views/history.php',
+				'file'    => __DIR__ . '/views/history.php',
 			],
 		];
 
@@ -225,16 +245,35 @@ class Instant_Indexing extends Base {
 		 */
 		$tabs = $this->do_filter( 'settings/instant_indexing', $tabs );
 
-		new Options(
+		new Register_Options_Page(
 			[
 				'key'        => 'rank-math-options-instant-indexing',
 				'title'      => esc_html__( 'Instant Indexing', 'rank-math' ),
 				'menu_title' => esc_html__( 'Instant Indexing', 'rank-math' ),
 				'capability' => 'rank_math_general',
 				'tabs'       => $tabs,
-				'position'   => 100,
+				'position'   => 11,
 			]
 		);
+	}
+
+	/**
+	 * Store previous post status & permalink before saving the post.
+	 *
+	 * @param  array $data                Post data.
+	 * @param  array $postarr             Raw post data.
+	 * @param  array $unsanitized_postarr Unsanitized post data.
+	 * @param  bool  $update              Whether this is an existing post being updated or not.
+	 */
+	public function before_save_post( $data, $postarr, $unsanitized_postarr, $update = false ) {
+		if ( ! $update ) {
+			return $data;
+		}
+
+		$this->previous_post_status[ $postarr['ID'] ]     = get_post_status( $postarr['ID'] );
+		$this->previous_post_permalinks[ $postarr['ID'] ] = str_replace( '__trashed', '', get_permalink( $postarr['ID'] ) );
+
+		return $data;
 	}
 
 	/**
@@ -247,20 +286,58 @@ class Instant_Indexing extends Base {
 	 * @return void
 	 */
 	public function save_post( $post_id, $post ) {
+		if ( defined( 'RANK_MATH_IMPORTING_CSV' ) && RANK_MATH_IMPORTING_CSV ) {
+			return;
+		}
+		// Check if already submitted.
 		if ( in_array( $post_id, $this->submitted, true ) ) {
 			return;
 		}
 
+		// Check if post status changed to publish or trash.
 		if ( ! in_array( $post->post_status, [ 'publish', 'trash' ], true ) ) {
 			return;
 		}
 
-		if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) ) {
+		// If new status is trash, check if previous status was publish.
+		if ( 'trash' === $post->post_status && 'publish' !== $this->previous_post_status[ $post_id ] ) {
+			return;
+		}
+
+		if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) || ! empty( Helper::get_post_meta( 'lock_modified_date', $post_id ) ) ) {
 			return;
 		}
 
 		if ( ! Helper::is_post_indexable( $post_id ) ) {
 			return;
+		}
+
+		// Check if it's a hidden product.
+		if ( 'product' === $post->post_type && Helper::is_woocommerce_active() ) {
+			$product = wc_get_product( $post_id );
+			if ( $product && ! $product->is_visible() ) {
+				return;
+			}
+		}
+
+		$url = get_permalink( $post );
+		if ( 'trash' === $post->post_status ) {
+			$url = $this->previous_post_permalinks[ $post_id ];
+		}
+
+		if ( Sitepress::get()->is_active() ) {
+			$details = apply_filters( 'wpml_post_language_details', null, $post_id );
+			$code    = $details['language_code'] ?? '';
+			$url     = apply_filters( 'wpml_permalink', get_the_permalink( $post_id ), $code );
+
+			$sitepress = Sitepress::get()->get_var();
+			$urls      = $sitepress->get_setting( 'urls' );
+			if ( isset( $urls['directory_for_default_language'] ) && $urls['directory_for_default_language'] ) {
+				$lang = $sitepress->get_current_language();
+				if ( 0 !== strpos( $url, '/' . $lang ) ) {
+					$url = get_home_url() . $post->post_name;
+				}
+			}
 		}
 
 		/**
@@ -270,7 +347,7 @@ class Instant_Indexing extends Base {
 		 * @param string  $url  URL to be submitted.
 		 * @param WP_POST $post Post object.
 		 */
-		$send_url = $this->do_filter( 'instant_indexing/publish_url', get_permalink( $post ), $post );
+		$send_url = $this->do_filter( 'instant_indexing/publish_url', $url, $post );
 
 		// Early exit if filter is set to false.
 		if ( ! $send_url ) {
@@ -288,34 +365,6 @@ class Instant_Indexing extends Base {
 	 */
 	private function is_configured() {
 		return (bool) Helper::get_settings( 'instant_indexing.indexnow_api_key' );
-	}
-
-	/**
-	 * Enqueue CSS & JS.
-	 *
-	 * @param string $hook Page hook name.
-	 * @return void
-	 */
-	public function enqueue( $hook ) {
-		if ( 'rank-math_page_rank-math-options-instant-indexing' !== $hook && 'rank-math_page_instant-indexing' !== $hook ) {
-			return;
-		}
-
-		$uri = untrailingslashit( plugin_dir_url( __FILE__ ) );
-		wp_enqueue_script( 'rank-math-instant-indexing', $uri . '/assets/js/instant-indexing.js', [ 'jquery' ], rank_math()->version, true );
-		Helper::add_json(
-			'indexNow',
-			[
-				'restUrl'                => rest_url( \RankMath\Rest\Rest_Helper::BASE . '/in' ),
-				'refreshHistoryInterval' => 30000,
-				'i18n'                   => [
-					'submitError'       => esc_html__( 'An error occurred while submitting the URL.', 'rank-math' ),
-					'clearHistoryError' => esc_html__( 'Error: could not clear history.', 'rank-math' ),
-					'getHistoryError'   => esc_html__( 'Error: could not get history.', 'rank-math' ),
-					'noHistory'         => esc_html__( 'No submissions yet.', 'rank-math' ),
-				],
-			]
-		);
 	}
 
 	/**
@@ -361,8 +410,9 @@ class Instant_Indexing extends Base {
 			return false;
 		}
 
-		if ( ! $is_manual_submission ) {
-			$logs = array_values( array_reverse( $api->get_log() ) );
+		$api_logs = $api->get_log();
+		if ( ! $is_manual_submission && ! empty( $api_logs ) ) {
+			$logs = array_values( array_reverse( $api_logs ) );
 			if ( ! empty( $logs[0] ) && $logs[0]['url'] === $url && time() - $logs[0]['time'] < self::THROTTLE_LIMIT ) {
 				return false;
 			}
@@ -413,5 +463,4 @@ class Instant_Indexing extends Base {
 		$post_types = Helper::get_settings( 'instant_indexing.bing_post_types', [] );
 		return $post_types;
 	}
-
 }

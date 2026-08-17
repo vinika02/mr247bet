@@ -25,6 +25,13 @@ class Custom_item extends Base_multiple implements Interface_required
     protected $title;
 
     /**
+     * The name of the group, used for the tabs
+     * 
+     * @var string
+     */
+    public $group = 'custom';
+
+    /**
      * The constructor. It adds the action to load the requirement.
      *
      * @param string $name
@@ -38,6 +45,7 @@ class Custom_item extends Base_multiple implements Interface_required
         $this->name      = trim((string)$name);
         $this->is_custom = true;
         $this->field_name = 'editable_by';
+        $this->group     = 'custom';
 
         parent::__construct($module, $post_type);
     }
@@ -66,10 +74,11 @@ class Custom_item extends Base_multiple implements Interface_required
         $name = 'publishpress_checklists_checklists_options[' . $var_name . '][' . $this->post_type . ']';
 
         $html = sprintf(
-            '<input type="text" name="%s" value="%s" data-id="%s" class="pp-checklists-custom-item-title" />',
+            '<input type="text" name="%s" value="%s" data-id="%s" placeholder="%s" class="pp-checklists-custom-item-title" />',
             $name,
             esc_attr($this->get_title()),
-            esc_attr($this->name)
+            esc_attr($this->name),
+            esc_html__('Enter name of custom task', 'publishpress-checklists')
         );
 
         $html .= sprintf(
@@ -115,7 +124,7 @@ class Custom_item extends Base_multiple implements Interface_required
         $html = parent::get_setting_field_html(esc_attr($css_class));
 
         $html .= sprintf(
-            '<a href="javascript:void(0);" class="pp-checklists-remove-custom-item" data-id="%1$s" title="%2$s"><span class="dashicons dashicons-no" data-id="%1$s"></span></a>',
+            '<a href="javascript:void(0);" class="pp-checklists-remove-custom-item" data-id="%1$s" data-type="custom" title="%2$s"><span class="dashicons dashicons-no" data-id="%1$s" data-type="custom"></span></a>',
             esc_attr($this->name),
             __('Remove', 'publishpress-checklists')
         );
@@ -173,6 +182,10 @@ class Custom_item extends Base_multiple implements Interface_required
      */
     public function get_current_status($post, $option_value)
     {
+        if (!($post instanceof WP_Post)) {
+            $post = get_post($post);
+        }
+        
         return self::VALUE_YES === get_post_meta($post->ID, PPCH_Checklists::POST_META_PREFIX . $this->name, true);
     }
 

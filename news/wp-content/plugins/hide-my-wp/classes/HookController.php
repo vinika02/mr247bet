@@ -7,105 +7,103 @@
  * @since 4.0.0
  */
 
-defined('ABSPATH') || die('Cheatin\' uh?');
+defined( 'ABSPATH' ) || die( 'Cheating uh?' );
 
-class HMWP_Classes_HookController
-{
+class HMWP_Classes_HookController {
 
-    /**
-     * 
-     *
-     * @var array the WP actions list from admin 
-     */
-    private $admin_hooks;
-    private $front_hooks;
+	/**
+	 * @var array An array to hold hooks for admin actions
+	 */
+	private $admin_hooks;
+	/**
+	 * @var array An array to hold hooks for frontend actions
+	 */
+	private $front_hooks;
 
-    public function __construct()
-    {
-        //called in admin
-        $this->admin_hooks = array(
-            'init' => 'init',
-            'menu' => 'admin_menu',
-            'head' => 'admin_head',
-            'multisiteMenu' => 'network_admin_menu',
-            'footer' => 'admin_footer',
-        );
+	public function __construct() {
+		// Called in admin context
+		$this->admin_hooks = array(
+			'init'          => 'init', // WP init action
+			'menu'          => 'admin_menu', // WP admin menu action
+			'head'          => 'admin_head', // WP admin head action
+			'multisiteMenu' => 'network_admin_menu', // WP network admin menu action
+			'footer'        => 'admin_footer', // WP admin footer action
+		);
 
-        //called in frontend
-        $this->front_hooks = array(
-            // --
-            'frontinit' => 'init',
-        );
+		// Called in frontend context
+		$this->front_hooks = array(
+			// --
+			'frontinit' => 'init', // WP frontend init action
+			'load'      => 'plugins_loaded', // WP plugins_loaded action
+		);
 
-    }
+	}
 
-    /**
-     * Calls the specified action in WP
-     *
-     * @param object $instance The parent class instance
-     *
-     * @return void
-     */
-    public function setHooks($instance)
-    {
-        if (is_admin() || is_network_admin()) {
-            $this->setAdminHooks($instance);
-        } else {
-            $this->setFrontHooks($instance);
-        }
-    }
+	/**
+	 * Calls the specified action in WP
+	 *
+	 * @param  object  $instance  The parent class instance
+	 *
+	 * @return void
+	 */
+	public function setHooks( $instance ) {
+		if ( is_admin() || is_network_admin() ) {
+			// Set hooks for admin context
+			$this->setAdminHooks( $instance );
+		} else {
+			// Set hooks for frontend context
+			$this->setFrontHooks( $instance );
+		}
+	}
 
-    /**
-     * Calls the specified action in WP
-     *
-     * @param object $instance The parent class instance
-     *
-     * @return void
-     */
-    public function setAdminHooks($instance)
-    {
-        /* for each admin action check if is defined in class and call it */
-        foreach ($this->admin_hooks as $hook => $value) {
+	/**
+	 * Calls the specified action in WP for admin
+	 *
+	 * @param  object  $instance  The parent class instance
+	 *
+	 * @return void
+	 */
+	public function setAdminHooks( $instance ) {
+		// For each admin action, check if it is defined in the class and call it
+		foreach ( $this->admin_hooks as $hook => $value ) {
 
-            if (is_callable(array($instance, 'hook' . ucfirst($hook)))) {
-                //call the WP add_action function
-                add_action($value, array($instance, 'hook' . ucfirst($hook)));
-            }
-        }
-    }
+			if ( is_callable( array( $instance, 'hook' . ucfirst( $hook ) ) ) ) {
+				// Call the WP add_action function
+				add_action( $value, array( $instance, 'hook' . ucfirst( $hook ) ) );
+			}
+		}
+	}
 
-    /**
-     * Calls the specified action in WP
-     *
-     * @param object $instance The parent class instance
-     *
-     * @return void
-     */
-    public function setFrontHooks($instance)
-    {
-        /* for each admin action check if is defined in class and call it */
-        foreach ($this->front_hooks as $hook => $value) {
-            if (is_callable(array($instance, 'hook' . ucfirst($hook)))) {
-                //call the WP add_action function
-                add_action($value, array($instance, 'hook' . ucfirst($hook)), 11111);
-            }
-        }
-    }
+	/**
+	 * Calls the specified action in WP for frontend
+	 *
+	 * @param  object  $instance  The parent class instance
+	 *
+	 * @return void
+	 */
+	public function setFrontHooks( $instance ) {
+		// For each frontend action, check if it is defined in the class and call it
+		foreach ( $this->front_hooks as $hook => $value ) {
+			if ( is_callable( array( $instance, 'hook' . ucfirst( $hook ) ) ) ) {
+				// Call the WP add_action function with priority 11111
+				add_action( $value, array( $instance, 'hook' . ucfirst( $hook ) ), 11111 );
+			}
+		}
+	}
 
-    /**
-     * Calls the specified action in WP
-     *
-     * @param string                       $action
-     * @param HMWP_Classes_FrontController $obj
-     * @param array                        $callback Contains the class name or object and the callback function
-     *
-     * @return void
-     */
-    public function setAction($action, $obj, $callback)
-    {
+	/**
+	 * Calls the specified action in WP
+	 *
+	 * @param  string  $action  The action to set
+	 * @param  HMWP_Classes_FrontController  $obj  The object that contains the callback
+	 * @param  array  $callback  Contains the class name or object and the callback function
+	 *
+	 * @return void
+	 */
+	public function setAction( $action, $obj, $callback ) {
 
-        /* calls the custom action function from WP */
-        add_action($action, array($obj, $callback), 10);
-    }
+		// Call the custom action function from WP with priority 10
+		add_action( $action, array( $obj, $callback ), 10 );
+	}
 
 }

@@ -23,7 +23,8 @@
 						action: 'display_posts',
 						post_id: post_id,
 						post_type: post_type,
-						inc_exc: inc_exc
+						inc_exc: inc_exc,
+						security: ivory_search.admin_ajax_nonce,
 					},
 					success: function( response ) {
 						$(this_load).parent().find('select').find('option').remove().end().append(response );
@@ -38,7 +39,9 @@
 					}
 				} );
 			} );
-
+			if( $( '#search-form-editor #is_search_in_header' ).is(':checked') ) {
+				$('#search-form-editor .site-uses-cache-wrapper').show();
+			}
 		} );
 
 			$( document ).ready( function() {
@@ -541,6 +544,15 @@
 				$( '.is-mime-radio, .search-attachments-wrapper' ).show();            	
             } else {
             	$( '.is-mime-radio, .is-mime, .search-attachments-wrapper' ).hide();
+            }
+        } );
+
+        $('#search-form-editor #is_search_in_header').on('click', function() {
+            if( $( this ).is(':checked') ) {
+                $('#search-form-editor .site-uses-cache-wrapper').show();
+            } else {
+                $('#search-form-editor .site-uses-cache-wrapper').hide();
+				$('#search-form-editor #is_site_uses_cache').prop( "checked", false );
             }
         } );
 

@@ -43,6 +43,9 @@ onMounted(() => {
                             <li>
                                 <NuxtLink to="/casinos/pay-n-play">Pay 'N' Play Casinos </NuxtLink>
                             </li>
+                            <li>
+                                <NuxtLink to="/freddyvegas">FreddyVegas</NuxtLink>
+                            </li>
                         </ul>
                     </li>
                     <li class="dropdown">

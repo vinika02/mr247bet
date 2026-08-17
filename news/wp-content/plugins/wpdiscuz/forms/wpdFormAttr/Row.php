@@ -9,18 +9,23 @@ class Row {
     public function dashboardForm($id, $args) {
         $defaultArgs = [
             "column_type" => "full",
-            "row_order" => 0
+            "row_order"   => 0
         ];
-        $data = wp_parse_args($args, $defaultArgs);
-        $columnType = $data["column_type"];
-        $rowOrder = $data["row_order"];
+        $data        = wp_parse_args($args, $defaultArgs);
+        $columnType  = $data["column_type"];
+        $rowOrder    = $data["row_order"];
         ?>
         <div class="wpd-form-row-wrap" id="<?php echo $id; ?>">
-            <input type="hidden" name="<?php echo esc_attr(wpdFormConst::WPDISCUZ_META_FORMS_STRUCTURE); ?>[<?php echo $id; ?>][column_type]" class="column_type" value="<?php echo esc_attr($columnType); ?>"  />
-            <input type="hidden" name="<?php echo esc_attr(wpdFormConst::WPDISCUZ_META_FORMS_STRUCTURE); ?>[<?php echo $id; ?>][row_order]" class="row_order" value="<?php echo esc_attr($rowOrder); ?>" />
+            <input type="hidden"
+                   name="<?php echo esc_attr(wpdFormConst::WPDISCUZ_META_FORMS_STRUCTURE); ?>[<?php echo $id; ?>][column_type]"
+                   class="column_type" value="<?php echo esc_attr($columnType); ?>"/>
+            <input type="hidden"
+                   name="<?php echo esc_attr(wpdFormConst::WPDISCUZ_META_FORMS_STRUCTURE); ?>[<?php echo $id; ?>][row_order]"
+                   class="row_order" value="<?php echo esc_attr($rowOrder); ?>"/>
             <div class="wpd-form-row-head">
                 <div class="wpd-form-row-actions">
-                    <i title="<?php esc_attr_e("Two column", "wpdiscuz"); ?>" class="fas fa-columns wpd-form-columns-<?php echo esc_attr($columnType); ?>"></i>
+                    <i title="<?php esc_attr_e("Two column", "wpdiscuz"); ?>"
+                       class="fas fa-columns wpd-form-columns-<?php echo esc_attr($columnType); ?>"></i>
                     |<i class="fas fa-trash-alt" title="<?php esc_attr_e("Delete", "wpdiscuz"); ?>"></i>
                     |<i class="fas fa-arrows-alt" title="<?php esc_attr_e("Move", "wpdiscuz"); ?>"></i>
                 </div>
@@ -38,7 +43,7 @@ class Row {
         <div class="wpd-form-row-body <?php echo $isTwoCol ? "two-col" : ""; ?>">
             <?php
             if ($isTwoCol) {
-                $leftData = isset($args["left"]) ? $args["left"] : [];
+                $leftData  = isset($args["left"]) ? $args["left"] : [];
                 $rightData = isset($args["right"]) ? $args["right"] : [];
                 $this->renderCol($id, "left", $leftData);
                 $this->renderCol($id, "right", $rightData);
@@ -81,7 +86,7 @@ class Row {
         <div class="wpd-form-row">
             <?php
             if ($args["column_type"] === "two") {
-                $left = $args["left"];
+                $left  = $args["left"];
                 $right = $args["right"];
                 $this->renderFrontFormCol("left", $left, $options, $currentUser, $uniqueId, $isMainForm);
                 $this->renderFrontFormCol("right", $right, $options, $currentUser, $uniqueId, $isMainForm);
@@ -114,14 +119,14 @@ class Row {
 
     public function sanitizeRowData($data, &$fields) {
         if (isset($data["full"])) {
-            $data["full"] = is_array($data["full"]) ? $data["full"] : [];
-            $data["full"] = $this->callFieldSanitize($data["full"], $fields);
+            $data["full"]        = is_array($data["full"]) ? $data["full"] : [];
+            $data["full"]        = $this->callFieldSanitize($data["full"], $fields);
             $data["column_type"] = "full";
         } else if (isset($data["left"]) || isset($data["right"])) {
-            $data["left"] = isset($data["left"]) && is_array($data["left"]) ? $data["left"] : [];
-            $data["right"] = isset($data["right"]) && is_array($data["right"]) ? $data["right"] : [];
-            $data["left"] = $this->callFieldSanitize($data["left"], $fields);
-            $data["right"] = $this->callFieldSanitize($data["right"], $fields);
+            $data["left"]        = isset($data["left"]) && is_array($data["left"]) ? $data["left"] : [];
+            $data["right"]       = isset($data["right"]) && is_array($data["right"]) ? $data["right"] : [];
+            $data["left"]        = $this->callFieldSanitize($data["left"], $fields);
+            $data["right"]       = $this->callFieldSanitize($data["right"], $fields);
             $data["column_type"] = "two";
         } else {
             return null;
@@ -142,14 +147,14 @@ class Row {
             }
             $callableClass = str_replace("\\\\", "\\", $fieldData["type"]);
             if (in_array($callableClass, $allowedFieldsType, true) && is_callable($callableClass . "::getInstance")) {
-                $field = call_user_func($callableClass . "::getInstance");
+                $field        = call_user_func($callableClass . "::getInstance");
                 $fieldNewName = $this->changeFieldName($fieldName, $fieldData);
                 if ($fieldNewName !== $fieldName) {
-                    $args = $this->chageArrayKey($args, $fieldName, $fieldNewName);
-                    $args[$fieldNewName] = $field->sanitizeFieldData($fieldData);
+                    $args                  = $this->chageArrayKey($args, $fieldName, $fieldNewName);
+                    $args[$fieldNewName]   = $field->sanitizeFieldData($fieldData);
                     $fields[$fieldNewName] = $field->sanitizeFieldData($fieldData);
                 } else {
-                    $args[$fieldName] = $field->sanitizeFieldData($fieldData);
+                    $args[$fieldName]   = $field->sanitizeFieldData($fieldData);
                     $fields[$fieldName] = $field->sanitizeFieldData($fieldData);
                 }
             }
@@ -159,7 +164,7 @@ class Row {
 
     private function changeFieldName($fieldName, $fieldData) {
         if (isset($fieldData["meta_key"])) {
-            $metaKey = trim($fieldData["meta_key"]);
+            $metaKey = sanitize_text_field(trim($fieldData["meta_key"]));
             if ($metaKey && $fieldName !== $metaKey) {
                 $newName = str_replace(['-', ' '], '_', remove_accents($metaKey));
                 $this->replaceMetaKeyInDB($fieldName, $newName, $fieldData);
@@ -203,12 +208,12 @@ class Row {
     }
 
     private function chageArrayKey($array, $oldKey, $newKey) {
-        $keys = array_keys($array);
-        $values = array_values($array);
+        $keys        = array_keys($array);
+        $values      = array_values($array);
         $oldKeyIndex = array_search($oldKey, $keys);
         if (is_numeric($oldKeyIndex)) {
             $keys[$oldKeyIndex] = $newKey;
-            $array = array_combine($keys, $values);
+            $array              = array_combine($keys, $values);
         }
         return $array;
     }

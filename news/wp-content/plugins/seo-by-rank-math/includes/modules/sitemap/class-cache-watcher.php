@@ -48,6 +48,13 @@ class Cache_Watcher {
 	protected static $clear_types = [];
 
 	/**
+	 * Holds the array of post types being imported.
+	 *
+	 * @var array
+	 */
+	private $importing_post_types = [];
+
+	/**
 	 * The constructor.
 	 */
 	public function __construct() {
@@ -76,6 +83,7 @@ class Cache_Watcher {
 		self::register_clear_on_option_update( 'rank-math-options-titles' );
 		self::register_clear_on_option_update( 'rank-math-options-general' );
 		self::register_clear_on_option_update( 'rank-math-options-sitemap' );
+		self::register_clear_on_option_update( 'date_format' );
 	}
 
 	/**
@@ -84,12 +92,8 @@ class Cache_Watcher {
 	 * @param int $post_id Post ID to possibly invalidate for.
 	 */
 	public function save_post( $post_id ) {
-		if ( false === Sitemap::is_object_indexable( $post_id ) ) {
-			return false;
-		}
-
 		$post = get_post( $post_id );
-		if ( ! empty( $post->post_password ) ) {
+		if ( ! empty( $post->post_password ) || 'auto-draft' === $post->post_status ) {
 			return false;
 		}
 
@@ -123,14 +127,6 @@ class Cache_Watcher {
 
 		if ( WP_CACHE ) {
 			wp_schedule_single_event( ( time() + 300 ), 'rank_math/sitemap/hit_index' );
-		}
-
-		if ( ! Sitemap::can_ping() ) {
-			return;
-		}
-
-		if ( ! Helper::is_post_excluded( $post->ID ) && ! wp_next_scheduled( 'rank_math/sitemap/ping_search_engines' ) ) {
-			wp_schedule_single_event( ( time() + 300 ), 'rank_math/sitemap/ping_search_engines' );
 		}
 	}
 
@@ -180,8 +176,6 @@ class Cache_Watcher {
 		if ( WP_CACHE ) {
 			do_action( 'rank_math/sitemap/hit_index' );
 		}
-
-		Sitemap::ping_google();
 	}
 
 	/**

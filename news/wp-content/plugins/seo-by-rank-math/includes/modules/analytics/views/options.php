@@ -6,8 +6,9 @@
  */
 
 use RankMath\KB;
+use RankMath\Helper;
 use RankMath\Analytics\DB;
-use MyThemeShop\Helpers\Str;
+use RankMath\Helpers\Str;
 use RankMath\Google\Authentication;
 
 defined( 'ABSPATH' ) || exit;
@@ -82,7 +83,7 @@ $buttons     = '<br>' .
 $buttons .= '<br>' . join( '', $db_info );
 
 // Translators: placeholder is a link to rankmath.com, with "free version" as the anchor text.
-$description = sprintf( __( 'Enter the number of days to keep Analytics data in your database. The maximum allowed days are 90 in the %s. Though, 2x data will be stored in the DB for calculating the difference properly.', 'rank-math' ), '<a href="https://rankmath.com/pricing/?utm_source=Plugin&utm_medium=Analytics%20DB%20Option&utm_campaign=WP" target="_blank" rel="noopener noreferrer">' . __( 'free version', 'rank-math' ) . '</a>' );
+$description = sprintf( __( 'Enter the number of days to keep Analytics data in your database. The maximum allowed days are 90 in the %s. Though, 2x data will be stored in the DB for calculating the difference properly.', 'rank-math' ), '<a href="' . KB::get( 'pro', 'Analytics DB Option' ) . '" target="_blank" rel="noopener noreferrer">' . __( 'free version', 'rank-math' ) . '</a>' );
 $description = apply_filters_deprecated( 'rank_math/analytics/options/cahce_control/description', [ $description ], '1.0.61.1', 'rank_math/analytics/options/cache_control/description' );
 $description = apply_filters( 'rank_math/analytics/options/cache_control/description', $description );
 
@@ -94,7 +95,7 @@ $cmb->add_field(
 		// translators: Anchor text 'free version', linking to pricing page.
 		'description'     => $description,
 		'default'         => 90,
-		'sanitization_cb' => function( $value ) {
+		'sanitization_cb' => function ( $value ) {
 			$max   = apply_filters( 'rank_math/analytics/max_days_allowed', 90 );
 			$value = absint( $value );
 			if ( $value > $max ) {
@@ -112,7 +113,7 @@ $cmb->add_field(
 		'id'          => 'analytics_stats',
 		'type'        => 'toggle',
 		'name'        => __( 'Frontend Stats Bar', 'rank-math' ),
-		'description' =>  esc_html__( 'Enable this option to show Analytics Stats on the front just after the admin bar.', 'rank-math' ),
+		'description' => esc_html__( 'Enable this option to show Analytics Stats on the front just after the admin bar.', 'rank-math' ),
 		'default'     => 'on',
 	]
 );
@@ -121,15 +122,15 @@ if ( RankMath\Analytics\Email_Reports::are_fields_hidden() ) {
 	return;
 }
 
-$preview_url = home_url( '?rank_math_analytics_report_preview=1' );
-$title       = esc_html__( 'Email Reports', 'rank-math' );
+$preview_url  = home_url( '?rank_math_analytics_report_preview=1' );
+$report_title = esc_html__( 'Email Reports', 'rank-math' );
 // Translators: Placeholders are the opening and closing tag for the link.
 $description = sprintf( esc_html__( 'Receive periodic SEO Performance reports via email. Once enabled and options are saved, you can see %1$s the preview here%2$s.', 'rank-math' ), '<a href="' . esc_url_raw( $preview_url ) . '" target="_blank">', '</a>' );
 $cmb->add_field(
 	[
 		'id'      => 'email_reports_title',
 		'type'    => 'raw',
-		'content' => sprintf( '<div class="cmb-form cmb-row nopb"><header class="email-reports-title"><h3>%1$s</h3><p class="description">%2$s</p></header></div>', $title, $description ),
+		'content' => sprintf( '<div class="cmb-form cmb-row nopb"><header class="email-reports-title"><h3>%1$s</h3><p class="description">%2$s</p></header></div>', $report_title, $description ),
 	]
 );
 
@@ -139,13 +140,13 @@ $cmb->add_field(
 		'type'        => 'toggle',
 		'name'        => __( 'Email Reports', 'rank-math' ),
 		'description' => __( 'Turn on email reports.', 'rank-math' ),
-		'default'     => 'on',
+		'default'     => Helper::get_settings( 'general.console_email_reports' ) ? 'on' : 'off',
 		'classes'     => 'nob',
 	]
 );
 
 $is_pro_active = defined( 'RANK_MATH_PRO_FILE' );
-$pro_badge     = '<span class="rank-math-pro-badge"><a href="https://rankmath.com/kb/seo-email-reporting/?utm_source=Plugin&utm_medium=Email%20Frequency%20Toggle&utm_campaign=WP" target="_blank" rel="noopener noreferrer">' . __( 'PRO', 'rank-math' ) . '</a></span>';
+$pro_badge     = '<span class="rank-math-pro-badge"><a href="' . KB::get( 'seo-email-reporting', 'Email Frequency Toggle' ) . '" target="_blank" rel="noopener noreferrer">' . __( 'PRO', 'rank-math' ) . '</a></span>';
 $args          = [
 	'id'         => 'console_email_frequency',
 	'type'       => 'select',
@@ -157,7 +158,7 @@ $args          = [
 	],
 	'dep'        => [ [ 'console_email_reports', 'on' ] ],
 	'attributes' => ! $is_pro_active ? [ 'disabled' => 'disabled' ] : [],
-	'before_row' => ! $is_pro_active ? '<div class="cmb-redirector-element" data-url="https://rankmath.com/kb/seo-email-reporting/?utm_source=Plugin&utm_medium=Email%20Frequency%20Toggle&utm_campaign=WP">' : '',
+	'before_row' => ! $is_pro_active ? '<div class="cmb-redirector-element" data-url="' . KB::get( 'seo-email-reporting', 'Email Frequency Toggle' ) . '">' : '',
 	'after_row'  => ! $is_pro_active ? '</div>' : '',
 ];
 

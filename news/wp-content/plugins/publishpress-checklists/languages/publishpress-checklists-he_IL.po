@@ -1,0 +1,1103 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PublishPress Checklists\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/publishpress-"
+"checklists\n"
+"POT-Creation-Date: 2026-01-27T14:26:22+00:00\n"
+"PO-Revision-Date: 2025-12-10 18:01+0000\n"
+"Last-Translator: Anderson <anderson@publishpress.com>\n"
+"Language-Team: Hebrew <https://weblate.publishpress.com/projects/"
+"publishpress-checklists/publishpress-checklists/he/>\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
+"n % 10 == 0) ? 2 : 3));\n"
+"X-Generator: Weblate 5.14.3\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: publishpress-checklists.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+"X-Poedit-SearchPathExcluded-2: node_modules\n"
+
+#. Plugin Name of the plugin
+#. Plugin Name of the plugin
+msgid "PublishPress Checklists"
+msgstr "PublishPress Checklists"
+
+#. Plugin URI of the plugin
+msgid "https://publishpress.com/"
+msgstr "https://publishpress.com/"
+
+#. Description of the plugin
+msgid ""
+"With PublishPress Checklists, you can choose publishing requirements for "
+"your content."
+msgstr "עם PublishPress Checklists, אתה יכול לבחור דרישות פרסום לתוכן שלך."
+
+#. Author of the plugin
+msgid "PublishPress"
+msgstr "PublishPress"
+
+#. Author URI of the plugin
+msgid "https://publishpress.com"
+msgstr "https://publishpress.com"
+
+msgid "Disabled"
+msgstr "מושבת"
+
+msgid "Recommended"
+msgstr "מומלץ"
+
+msgid "Required"
+msgstr "נדרש"
+
+msgid "Please correct your form errors below and try again."
+msgstr "אנא תקן את שגיאות הטופס שלך למטה ונסה שוב."
+
+msgid "Cheatin&#8217; uh?"
+msgstr "רמאות&#8217; אה?"
+
+msgid "You do not have necessary permissions to complete this action."
+msgstr "אין לך את ההרשאות הנדרשות כדי להשלים פעולה זו."
+
+msgid "Post does not exist"
+msgstr "הפוסט אינו קיים"
+
+msgid "Checklists"
+msgstr "רשימות בדיקה"
+
+#, php-format
+msgid "If you like %s please leave us a %s rating. Thank you!"
+msgstr "אם אתה אוהב %s בבקשה השאר לנו דירוג %s. תודה!"
+
+msgid "Need PublishPress Checklists Support?"
+msgstr "צריך תמיכה ב-PublishPress Checklists?"
+
+msgid "If you need help or have a new feature request, let us know."
+msgstr "אם אתה צריך עזרה או יש לך בקשה לתכונה חדשה, תן לנו לדעת."
+
+msgid "Request Support"
+msgstr "בקש תמיכה"
+
+msgid "Detailed documentation is also available on the plugin website."
+msgstr "תיעוד מפורט זמין גם באתר הפלאגין."
+
+msgid "View Knowledge Base"
+msgstr "צפה במאגר הידע"
+
+msgid "Settings"
+msgstr "הגדרות"
+
+msgid "Upgrade to Pro"
+msgstr "שדרוג לגרסה מקצועית"
+
+#, php-format
+msgid "Approved by %s"
+msgstr "אושר על ידי %s"
+
+msgid "Approved by a user in this role"
+msgstr "אושר על ידי משתמש בתפקיד זה"
+
+msgid "Min"
+msgstr "מינימום"
+
+msgid "Max"
+msgstr "מקסימום"
+
+msgid "Edit label"
+msgstr ""
+
+msgid "Number of categories"
+msgstr "מספר קטגוריות"
+
+#, php-format
+msgid "Minimum of %s category"
+msgstr "מינימום של %s קטגוריה"
+
+#, php-format
+msgid "Minimum of %s categories"
+msgstr "מינימום של %s קטגוריות"
+
+#, php-format
+msgid "Maximum of %s category"
+msgstr "מקסימום של %s קטגוריה"
+
+#, php-format
+msgid "Maximum of %s categories"
+msgstr "מקסימום של %s קטגוריות"
+
+#, php-format
+msgid "%s category"
+msgstr "%s קטגוריה"
+
+#, php-format
+msgid "%s categories"
+msgstr "%s קטגוריות"
+
+#, php-format
+msgid "Between %s and %s categories"
+msgstr "בין %s ל-%s קטגוריות"
+
+msgid "Custom"
+msgstr "מותאם אישית"
+
+msgid "Which roles can mark this task as complete?"
+msgstr "אילו תפקידים יכולים לסמן את המשימה הזו כהושלמה?"
+
+msgid "Enter name of custom task"
+msgstr "הזן שם של משימת מותאמת אישית"
+
+msgid "Remove"
+msgstr "הסר"
+
+msgid "Number of external links in content"
+msgstr "מספר קישורים חיצוניים בתוכן"
+
+#, php-format
+msgid "Minimum of %d external link in content"
+msgstr "מינימום של %d קישור חיצוני בתוכן"
+
+#, php-format
+msgid "Minimum of %d external links in content"
+msgstr "מינימום של %d קישורים חיצוניים בתוכן"
+
+#, php-format
+msgid "Maximum of %d external link in content"
+msgstr "מקסימום של %d קישור חיצוני בתוכן"
+
+#, php-format
+msgid "Maximum of %d external links in content"
+msgstr "מקסימום של %d קישורים חיצוניים בתוכן"
+
+#, php-format
+msgid "%d external link in content"
+msgstr "%d קישור חיצוני בתוכן"
+
+#, php-format
+msgid "%d external links in content"
+msgstr "%d קישורים חיצוניים בתוכן"
+
+#, php-format
+msgid "Between %d and %d external links in content"
+msgstr "בין %d ל-%d קישורים חיצוניים בתוכן"
+
+msgid "Featured image is added"
+msgstr "התמונה המוצגת נוספה"
+
+msgid "Featured image has Alt text"
+msgstr "לתמונה המוצגת יש טקסט חלופי"
+
+msgid "Featured image has caption"
+msgstr "לתמונה המוצגת יש כותרת"
+
+msgid "Numbers of characters in excerpt"
+msgstr "מספר תווים בציטוט"
+
+#, php-format
+msgid "Minimum of %d character in excerpt"
+msgstr "מינימום של %d תו בציטוט"
+
+#, php-format
+msgid "Minimum of %d characters in excerpt"
+msgstr "מינימום של %d תווים בציטוט"
+
+#, php-format
+msgid "Maximum of %d character in excerpt"
+msgstr "מקסימום של %d תווים בציטוט"
+
+#, php-format
+msgid "Maximum of %d characters in excerpt"
+msgstr "מקסימום של %d תווים בציטוט"
+
+#, php-format
+msgid "%d character in excerpt"
+msgstr "%d תו בציטוט"
+
+#, php-format
+msgid "%d characters in excerpt"
+msgstr "%d תווים בציטוט"
+
+#, php-format
+msgid "Between %d and %d characters in excerpt"
+msgstr "בין %d ל-%d תווים בציטוט"
+
+msgid "All images have Alt text"
+msgstr "כל התמונות כוללות טקסט חלופי"
+
+msgid "Number of characters in Alt text"
+msgstr "מספר תווים בטקסט אלטרנטיבי"
+
+#, php-format
+msgid "Minimum of %d character in Alt text"
+msgstr "מינימום של %d תו בטקסט חלופי"
+
+#, php-format
+msgid "Minimum of %d characters in Alt text"
+msgstr "מינימום של %d תווים בטקסט חלופי"
+
+#, php-format
+msgid "Maximum of %d character in Alt text"
+msgstr "מקסימום של %d תווים בטקסט חלופי"
+
+#, php-format
+msgid "Maximum of %d characters in Alt text"
+msgstr "מקסימום של %d תווים בטקסט חלופי"
+
+#, php-format
+msgid "%d character in Alt text"
+msgstr "%d תו בטקסט חלופי"
+
+#, php-format
+msgid "%d characters in Alt text"
+msgstr "%d תווים בטקסט חלופי"
+
+#, php-format
+msgid "Between %d and %d characters in Alt text"
+msgstr "בין %d ל-%d תווים בטקסט חלופי"
+
+msgid "Number of internal links in content"
+msgstr "מספר קישורים פנימיים בתוכן"
+
+#, php-format
+msgid "Minimum of %d internal link in content"
+msgstr "מינימום של %d קישור פנימי בתוכן"
+
+#, php-format
+msgid "Minimum of %d internal links in content"
+msgstr "מינימום של %d קישורים פנימיים בתוכן"
+
+#, php-format
+msgid "Maximum of %d internal link in content"
+msgstr "מקסימום של %d קישור פנימי בתוכן"
+
+#, php-format
+msgid "Maximum of %d internal links in content"
+msgstr "מקסימום של %d קישורים פנימיים בתוכן"
+
+#, php-format
+msgid "%d internal link in content"
+msgstr "%d קישור פנימי בתוכן"
+
+#, php-format
+msgid "%d internal links in content"
+msgstr "%d קישורים פנימיים בתוכן"
+
+#, php-format
+msgid "Between %d and %d internal links in content"
+msgstr "בין %d ל-%d קישורים פנימיים בתוכן"
+
+msgid "Openai"
+msgstr "Openai"
+
+msgid "Enter OpenAI task prompt"
+msgstr "הזן פקודת משימה של OpenAI"
+
+msgid "An error occured."
+msgstr "אירעה שגיאה."
+
+msgid "Validation error. Kindly reload this page and try again."
+msgstr ""
+
+msgid "Post content is empty."
+msgstr "תוכן הפוסט ריק."
+
+msgid ""
+"OpenAI tasks require an API Key. Please add your API Key in the Settings "
+"area."
+msgstr ""
+"משימות OpenAI דורשות מפתח API. אנא הוסף את מפתח ה-API שלך באזור ההגדרות."
+
+#, php-format
+msgid "API Error: %1s."
+msgstr "שגיאת API: %1s."
+
+msgid "See the full response."
+msgstr "ראה את התגובה המלאה."
+
+msgid "Invalid response"
+msgstr "תגובה לא תקפה"
+
+#, php-format
+msgid "Prohibited categories: %s"
+msgstr "קטגוריות אסורות: %s"
+
+msgid "Prohibited categories"
+msgstr "קטגוריות אסורות"
+
+#, php-format
+msgid "Prohibited tags: %s"
+msgstr "תגים אסורים: %s"
+
+msgid "Prohibited tags"
+msgstr "תגים אסורים"
+
+#, php-format
+msgid "Required categories: %s"
+msgstr "קטגוריות נדרשות: %s"
+
+msgid "Required categories"
+msgstr "קטגוריות נדרשות"
+
+#, php-format
+msgid "Required tags: %s"
+msgstr "תגים נדרשים: %s"
+
+msgid "Required tags"
+msgstr "תגים נדרשים"
+
+msgid "Number of tags"
+msgstr "מספר תגיות"
+
+#, php-format
+msgid "Minimum of %d tag"
+msgstr "מינימום של %d תג"
+
+#, php-format
+msgid "Minimum of %d tags"
+msgstr "מינימום של %d תגים"
+
+#, php-format
+msgid "Maximum of %d tag"
+msgstr "מקסימום של %d תג"
+
+#, php-format
+msgid "Maximum of %d tags"
+msgstr "מקסימום של %d תגים"
+
+#, php-format
+msgid "%d tag"
+msgstr "%d תג"
+
+#, php-format
+msgid "%d tags"
+msgstr "%d תגים"
+
+#, php-format
+msgid "Between %d and %d tags"
+msgstr "בין %d ל-%d תגים"
+
+msgid "Number of "
+msgstr "מספר של "
+
+#, php-format
+msgid "Minimum of %d "
+msgstr "מינימום של %d "
+
+#, php-format
+msgid "Maximum of %d "
+msgstr "מקסימום של %d "
+
+#, php-format
+msgid "%d "
+msgstr "%d "
+
+#, php-format
+msgid "Between %d and %d "
+msgstr "בין %d ל-%d "
+
+msgid "Number of characters in title"
+msgstr "מספר תווים בכותרת"
+
+#, php-format
+msgid "Minimum of %d character in title"
+msgstr "מינימום של %d תו בכותרת"
+
+#, php-format
+msgid "Minimum of %d characters in title"
+msgstr "מינימום של %d תווים בכותרת"
+
+#, php-format
+msgid "Maximum of %d character in title"
+msgstr "מקסימום של %d תווים בכותרת"
+
+#, php-format
+msgid "Maximum of %d characters in title"
+msgstr "מקסימום של %d תווים בכותרת"
+
+#, php-format
+msgid "%d character in title"
+msgstr "%d תו בכותרת"
+
+#, php-format
+msgid "%d characters in title"
+msgstr "%d תווים בכותרת"
+
+#, php-format
+msgid "Between %d and %d characters in title"
+msgstr "בין %d ל-%d תווים בכותרת"
+
+msgid "All links use a valid format"
+msgstr "כל הקישורים משתמשים בפורמט תקף"
+
+msgid "Number of words in content"
+msgstr "מספר מילים בתוכן"
+
+#, php-format
+msgid "Minimum of %d word in content"
+msgstr "מינימום של %d מילה בתוכן"
+
+#, php-format
+msgid "Minimum of %d words in content"
+msgstr "מינימום של %d מילים בתוכן"
+
+#, php-format
+msgid "Maximum of %d word in content"
+msgstr "מקסימום של %d מילה בתוכן"
+
+#, php-format
+msgid "Maximum of %d words in content"
+msgstr "מקסימום של %d מילים בתוכן"
+
+#, php-format
+msgid "%d word in content"
+msgstr "%d מילה בתוכן"
+
+#, php-format
+msgid "%d words in content"
+msgstr "%d מילים בתוכן"
+
+#, php-format
+msgid "Between %d and %d words in content"
+msgstr "בין %d ל-%d מילים בתוכן"
+
+msgid "Title"
+msgstr "כותרת"
+
+msgid "Content"
+msgstr "תוכן"
+
+msgid "Publish Date / Time"
+msgstr "תאריך / שעה פרסום"
+
+msgid "Approval"
+msgstr "אישור"
+
+msgid "Images"
+msgstr "תמונות"
+
+msgid "Audio / Video"
+msgstr "אודיו / וידאו"
+
+msgid "Featured Image"
+msgstr "תמונה מוצגת"
+
+msgid "Links"
+msgstr "קישורים"
+
+msgid "Permalink"
+msgstr "קישור קבוע"
+
+msgid "Categories"
+msgstr "קטגוריות"
+
+msgid "Tags"
+msgstr "תגים"
+
+msgid "Taxonomies"
+msgstr "טקסונומיות"
+
+msgid "Accessibility"
+msgstr "נגישות"
+
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+msgid "Rank Math SEO"
+msgstr "Rank Math SEO"
+
+msgid "All in One SEO"
+msgstr "All in One SEO"
+
+msgid "Yoast SEO"
+msgstr "Yoast SEO"
+
+msgid "ACF"
+msgstr "ACF"
+
+msgid "options cannot be empty."
+msgstr "אפשרויות אינן יכולות להיות ריקות."
+
+msgid "Please make sure to add a name for all the custom tasks."
+msgstr "אנא ודא להוסיף שם לכל המשימות המותאמות אישית."
+
+msgid "No results found"
+msgstr "לא נמצאו תוצאות"
+
+msgid "Searching…"
+msgstr "מחפש…"
+
+msgid "Suggested Prompts"
+msgstr "הנחיות מוצעות"
+
+msgid "What's the expected OpenAI response to mark the requirement as pass?"
+msgstr "מה התגובה הצפויה של OpenAI כדי לסמן את הדרישה כהצלחה?"
+
+msgid "Clear Content"
+msgstr "נקה תוכן"
+
+msgid "Is this content clear and easy to read?"
+msgstr "האם התוכן הזה ברור ונוח לקריאה?"
+
+msgid "Friendly Tone Content"
+msgstr "תוכן בטון ידידותי"
+
+msgid "Is this content tone friendly?"
+msgstr "האם התוכן הזה בעל סגנון ידידותי?"
+
+msgid "Professional Tone Content"
+msgstr "תוכן בטון מקצועי"
+
+msgid "Is this content tone professional?"
+msgstr "האם התוכן הזה בעל סגנון מקצועי?"
+
+msgid "Persuasive Tone Content"
+msgstr "תוכן בטון משכנע"
+
+msgid "Is this content tone persuasive?"
+msgstr "האם התוכן הזה בעל סגנון משכנע?"
+
+msgid "Empathetic Tone Content"
+msgstr "תוכן בטון אמפתי"
+
+msgid "Is this content tone empathetic?"
+msgstr "האם התוכן הזה בעל סגנון אמפתי?"
+
+msgid "Adventurous Tone Content"
+msgstr "תוכן בטון הרפתקני"
+
+msgid "Is this content tone adventurous?"
+msgstr "האם התוכן הזה בעל סגנון הרפתקני?"
+
+msgid "Promotional Tone Content"
+msgstr "תוכן בטון פרסומי"
+
+msgid "Is this content tone promotional?"
+msgstr "האם התוכן הזה בעל סגנון פרסומי?"
+
+msgid "Checklist"
+msgstr "רשימת בדיקה"
+
+msgid "You don't have to complete any Checklist tasks."
+msgstr "אינך חייב להשלים שום משימות Checklist."
+
+msgid "Are you sure you want to publish anyway?"
+msgstr "האם אתה בטוח שאתה רוצה לפרסם בכל מקרה?"
+
+msgid "Are you sure you want to update the published post anyway?"
+msgstr "האם אתה בטוח שתרצה לעדכן את הפוסט שפורסם בכל מקרה?"
+
+msgid "Please complete the following tasks before publishing:"
+msgstr "אנא השלם את המשימות הבאות לפני פרסום:"
+
+msgid "Please complete the following tasks before updating the published post:"
+msgstr "אנא השלם את המשימות הבאות לפני עדכון הפוסט שפורסם:"
+
+msgid "Not required, but important: "
+msgstr "לא נדרש, אבל חשוב: "
+
+msgid "One or more items in the checklist are not completed"
+msgstr "פריט אחד או יותר ברשימת הבדיקה לא הושלמו"
+
+#, php-format
+msgid "You don't have to complete any %sChecklist tasks%s."
+msgstr "אינך חייב להשלים שום %sמשימות Checklist%s."
+
+msgid "Check Now"
+msgstr "בדוק עכשיו"
+
+msgid "Ok"
+msgstr "אוקי"
+
+msgid "No"
+msgstr "לא"
+
+msgid "Yes"
+msgstr "כן"
+
+msgid "Task"
+msgstr "משימה"
+
+msgid "Disabled, Recommended or Required"
+msgstr "מושבת, מומלץ או נדרש"
+
+msgid "Options"
+msgstr "אפשרויות"
+
+msgid "Add custom task"
+msgstr "הוסף משימה מותאמת"
+
+msgid "Please complete the required(*) checklists task."
+msgstr "אנא השלם את רשימות הבדיקה הנדרשות(*)."
+
+msgid "required"
+msgstr "נדרש"
+
+msgid "Checklists tasks are not available in Elementor editors"
+msgstr "משימות רשימות בדיקה אינן זמינות בעורכי Elementor"
+
+msgid "All in One SEO Headline Score"
+msgstr ""
+
+msgid "All in One SEO Score"
+msgstr ""
+
+msgid "Featured image height"
+msgstr ""
+
+msgid "Featured image width"
+msgstr ""
+
+msgid "Heading in hierarchy"
+msgstr ""
+
+msgid "Number of images in content"
+msgstr ""
+
+msgid "Number of characters in image captions"
+msgstr ""
+
+msgid "Number of audio in content"
+msgstr ""
+
+msgid "Number of video in content"
+msgstr ""
+
+msgid "Approved by role"
+msgstr ""
+
+msgid "Approved by user"
+msgstr ""
+
+msgid "Avoid heading tags in content"
+msgstr ""
+
+msgid "Published at exact time"
+msgstr ""
+
+msgid "Publish time should be in the future"
+msgstr ""
+
+msgid "Rank Math SEO Score"
+msgstr ""
+
+msgid "Only one H1 tag in content"
+msgstr ""
+
+msgid "Tables have a header row"
+msgstr ""
+
+msgid "Check the \"Allow backorders?\" box"
+msgstr ""
+
+msgid "Select some products for \"Cross-sells\""
+msgstr ""
+
+msgid "Discount for the \"Sale price\""
+msgstr ""
+
+msgid "Check the \"Downloadable\" box"
+msgstr ""
+
+msgid "Product image"
+msgstr ""
+
+msgid "Check the \"Manage stock?\" box"
+msgstr ""
+
+msgid "Enter a \"Regular price\""
+msgstr ""
+
+msgid "Enter a \"Sale price\""
+msgstr ""
+
+msgid "Schedule the \"Sale price\""
+msgstr ""
+
+msgid "Enter a \"SKU\""
+msgstr ""
+
+msgid "Check the \"Sold individually\" box"
+msgstr ""
+
+msgid "Select some products for \"Upsells\""
+msgstr ""
+
+msgid "Check the \"Virtual\" box"
+msgstr ""
+
+#, php-format
+msgid "Number of Characters in %s field"
+msgstr "מספר תווים בשדה %s"
+
+#, php-format
+msgid "%s is filled"
+msgstr "%s מלא"
+
+msgid "About PublishPress Checklists"
+msgstr "על PublishPress Checklists"
+
+msgid "About"
+msgstr "על"
+
+msgid "PublishPress Checklists Documentation"
+msgstr "תיעוד של PublishPress Checklists"
+
+msgid "Documentation"
+msgstr "תיעוד"
+
+msgid "Contact the PublishPress team"
+msgstr "צור קשר עם צוות PublishPress"
+
+msgid "Contact"
+msgstr "צור קשר"
+
+msgid "Settings saved successfully!"
+msgstr "ההגדרות נשמרו בהצלחה!"
+
+msgid "Save Changes"
+msgstr "שמור שינויים"
+
+msgid "Pro feature"
+msgstr "תכונה פרו"
+
+#, php-format
+msgid "No %s requirements for this post type."
+msgstr "אין דרישות %s לסוג פוסט זה."
+
+msgid "New Item"
+msgstr "פריט חדש"
+
+msgid "Description"
+msgstr "תיאור"
+
+msgid ""
+"Custom tasks do not complete automatically. Users must check the box to show "
+"they have completed the task."
+msgstr ""
+"משימות מותאמות אישית אינן מסתיימות אוטומטית. משתמשים חייבים לסמן את התיבה "
+"כדי להראות שהם סיימו את המשימה."
+
+msgid "Add OpenAI Prompt task"
+msgstr "הוסף משימת OpenAI Prompt"
+
+msgid "The prompt should be in form of a question."
+msgstr "ההנחיה צריכה להיות בצורת שאלה."
+
+msgid "This feature requires an OpenAI API Key."
+msgstr "תכונה זו דורשת מפתח API של OpenAI."
+
+msgid "Latin characters in permalink"
+msgstr "תווים לטיניים בקישור הקבוע"
+
+msgid "Permalinks"
+msgstr "קישורים קבועים"
+
+msgid "Define tasks related to permalinks"
+msgstr "הגדר משימות הקשורות לקישורים קבועים"
+
+msgid "Permissions"
+msgstr "הרשאות"
+
+msgid "Exclude User Roles"
+msgstr ""
+
+msgid "Reviews"
+msgstr "ביקורות"
+
+msgid "Checklists Settings"
+msgstr "הגדרות רשימות בדיקה"
+
+msgid ""
+"Are you sure you want to reset all renamed checklist items to their default "
+"labels? This action cannot be undone."
+msgstr ""
+
+msgid "Features"
+msgstr "תכונות"
+
+msgid "Feel free to select only the features you need."
+msgstr "מרגיש חופשי לבחור רק את התכונות שאתה צריך."
+
+msgid "Enabled features"
+msgstr "תכונות מופעלות"
+
+msgid "There are no PublishPress modules registered"
+msgstr "אין מודולי PublishPress רשומים"
+
+#, php-format
+msgid ""
+"Disabled because add_post_type_support('%1$s', '%2$s') is included in a "
+"loaded file."
+msgstr "מושבת כי add_post_type_support('%1$s', '%2$s') כלול בקובץ שהוטען."
+
+msgid "Enable Who Can Ignore:"
+msgstr "אפשר מי יכול להתעלם:"
+
+msgid "Show warning icon:"
+msgstr "הצג אייקון אזהרה:"
+
+msgid "Delete data on uninstall:"
+msgstr "מחק נתונים בעת הסרה:"
+
+msgid "Enable Status Filter:"
+msgstr "אפשר מסנן מצב:"
+
+msgid "Enable Duplicate Checklists:"
+msgstr "אפשר בדיקת רשימות כפולות:"
+
+msgid "Show Checklists column in post lists:"
+msgstr "הצג עמודת רשימות בדו\"ח הפוסטים:"
+
+msgid "Enable Taxonomy Filter:"
+msgstr ""
+
+msgid "Disable the \"Status\" option when using \"Quick Edit\":"
+msgstr "השבת את אפשרות \"סטטוס\" בעת שימוש ב-\"עריכה מהירה\":"
+
+msgid "Disable \"Quick Edit\" completely:"
+msgstr "השבת לחלוטין את \"עריכה מהירה\":"
+
+msgid "Disable \"Publish\" button:"
+msgstr "השבת את כפתור \"פרסם\":"
+
+msgid "Complete Icon:"
+msgstr ""
+
+msgid "Incomplete Icon:"
+msgstr ""
+
+msgid "Required Complete Color:"
+msgstr ""
+
+msgid "Required Incomplete Color:"
+msgstr ""
+
+msgid "Recommended Complete Color:"
+msgstr ""
+
+msgid "Recommended Incomplete Color:"
+msgstr ""
+
+msgid "OpenAI API Key:"
+msgstr "מפתח API של OpenAI:"
+
+msgid "Reset Renamed Checklist:"
+msgstr ""
+
+msgid "Post types:"
+msgstr ""
+
+msgid ""
+"This allows tasks to be disabled for specific statuses such as \"Draft\" or "
+"\"Published."
+msgstr ""
+"זה מאפשר להשבית משימות עבור סטטוסים ספציפיים כמו \"טיוטה\" או \"פורסם\"."
+
+msgid "This allows users to duplicate existing checklist tasks."
+msgstr ""
+
+msgid ""
+"Add a Checklists column to the Posts screen showing how many requirements "
+"are complete."
+msgstr "הוסף עמודה של רשימות בדיקות למסך הפוסטים שמראה כמה דרישות הושלמו."
+
+msgid ""
+"This allows tasks to be disabled for posts with specific taxonomy terms. Go "
+"to the \"Post Types\" tab to choose the terms."
+msgstr ""
+
+msgid ""
+"This will display a warning icon in the \"Checklists\" box if requirements "
+"are incomplete."
+msgstr "זה יציג אייקון אזהרה בקופסת \"רשימות\" אם הדרישות אינן שלמות."
+
+msgid ""
+"When enabled, all PublishPress Checklists data will be deleted if the plugin "
+"is uninstalled."
+msgstr ""
+"כאשר זה מופעל, כל הנתונים של PublishPress Checklists יימחקו אם התוסף יוסר."
+
+msgid "This will show \"Who can ignore\" options."
+msgstr "זה יראה את האפשרויות של \"מי יכול להתעלם\"."
+
+msgid ""
+"Disabling the \"Status\" option is recommended because it can be used to "
+"avoid using the Checklists requirements."
+msgstr ""
+"מומלץ להשבית את אפשרות \"סטטוס\" מכיוון שניתן להשתמש בה כדי להימנע מהדרישות "
+"של רשימות בדיקה."
+
+msgid ""
+"This will disable \"Quick Edit\" for all users except those with the "
+"\"manage_options\" capability."
+msgstr ""
+"זה ישבית את \"עריכה מהירה\" עבור כל המשתמשים מלבד אלה עם יכולת "
+"\"manage_options\"."
+
+msgid ""
+"This will disable the \"Publish\" button when checklist requirements are not "
+"met."
+msgstr "זה ישבית את כפתור \"פרסם\" כאשר דרישות הרשימה לא מולאו."
+
+msgid "Enter your API Key to use OpenAI prompts in checklist tasks."
+msgstr "הזן את מפתח ה-API שלך כדי להשתמש בפקודות OpenAI במשימות רשימה."
+
+msgid "Post Types"
+msgstr "סוגי פוסטים"
+
+msgid "General"
+msgstr "כללי"
+
+msgid "Publishing Options"
+msgstr "אפשרויות פרסום"
+
+msgid "Appearance"
+msgstr ""
+
+msgid "Integration"
+msgstr "אינטגרציה"
+
+msgid "Tools"
+msgstr "כלים"
+
+msgid "Enter a Dashicons class name (e.g., dashicons-yes, dashicons-saved). "
+msgstr ""
+
+msgid "View Dashicons"
+msgstr ""
+
+msgid "Enter a Dashicons class name (e.g., dashicons-no, dashicons-dismiss). "
+msgstr ""
+
+msgid "Reset All Custom Labels"
+msgstr ""
+
+msgid ""
+"This will reset all renamed checklist items back to their default labels."
+msgstr ""
+
+msgid "Security check failed."
+msgstr ""
+
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+msgid "All custom labels have been reset successfully."
+msgstr ""
+
+msgid "Number of characters in Yoast SEO focus keyword"
+msgstr "מספר תווים במילת המפתח הממוקדת של Yoast SEO"
+
+#, php-format
+msgid "Minimum of %d character in Yoast SEO focus keyword"
+msgstr "מינימום של %d תו במילת מפתח ממוקדת של Yoast SEO"
+
+#, php-format
+msgid "Minimum of %d characters in Yoast SEO focus keyword"
+msgstr "מינימום של %d תווים במילת המפתח הממוקדת של Yoast SEO"
+
+#, php-format
+msgid "Maximum of %d character in Yoast SEO focus keyword"
+msgstr "מקסימום של %d תווים במילת המפתח הממוקדת של Yoast SEO"
+
+#, php-format
+msgid "Maximum of %d characters in Yoast SEO focus keyword"
+msgstr "מקסימום של %d תווים במילת מפתח ממוקדת של Yoast SEO"
+
+#, php-format
+msgid "%d character in Yoast SEO focus keyword"
+msgstr "%d תו במילת המפתח הממוקדת של Yoast SEO"
+
+#, php-format
+msgid "%d characters in Yoast SEO focus keyword"
+msgstr "%d תווים במילת המפתח הממוקדת של Yoast SEO"
+
+#, php-format
+msgid "Between %d and %d characters in Yoast SEO focus keyword"
+msgstr "בין %d ל-%d תווים במילת מפתח ממוקדת של Yoast SEO"
+
+msgid "Number of characters in Yoast SEO meta description"
+msgstr "מספר תווים בתיאור המטא של Yoast SEO"
+
+#, php-format
+msgid "Minimum of %d character in Yoast SEO meta description"
+msgstr "מינימום של %d תו בתיאור המטא של Yoast SEO"
+
+#, php-format
+msgid "Minimum of %d characters in Yoast SEO meta description"
+msgstr "מינימום של %d תו בתיאור המטא של Yoast SEO"
+
+#, php-format
+msgid "Maximum of %d character in Yoast SEO meta description"
+msgstr "מקסימום של %d תווים בתיאור המטה של Yoast SEO"
+
+#, php-format
+msgid "Maximum of %d characters in Yoast SEO meta description"
+msgstr "מקסימום של %d תווים בתיאור מטא של Yoast SEO"
+
+#, php-format
+msgid "%d character in Yoast SEO meta description"
+msgstr "%d תו בתיאור המטא של Yoast SEO"
+
+#, php-format
+msgid "%d characters in Yoast SEO meta description"
+msgstr "%d תווים בתיאור המטא של Yoast SEO"
+
+#, php-format
+msgid "Between %d and %d characters in Yoast SEO meta description"
+msgstr "בין %d ל-%d תווים בתיאור המטה של Yoast SEO"
+
+msgid "Minimum Yoast SEO readability score"
+msgstr "ציון קריאות מינימלי של Yoast SEO"
+
+#. translators: %s expands to the readability score
+#, php-format
+msgid "Yoast Readability: %s"
+msgstr "Yoast Readability: %s"
+
+msgid "OK"
+msgstr "אוקי"
+
+msgid "Good"
+msgstr "טוב"
+
+msgid "Minimum Yoast SEO analysis score"
+msgstr "ציון ניתוח מינימלי של Yoast SEO"
+
+#. translators: %s expands to the seo score
+#, php-format
+msgid "Yoast SEO: %s"
+msgstr "Yoast SEO: %s"
+
+msgid "Define tasks related to Yoast SEO"
+msgstr "הגדר משימות הקשורות ל- Yoast SEO"
+
+msgid "This plugin can be deleted."
+msgstr "ניתן למחוק את התוסף הזה."
+
+#, php-format
+msgid ""
+"You're using PublishPress Checklists Free. The Pro version has more features "
+"and support. %sUpgrade to Pro%s"
+msgstr ""
+"אתה משתמש ב-PublishPress Checklists Free. הגרסה המקצועית כוללת יותר תכונות "
+"ותמיכה. %sשדרג לגרסה מקצועית%s"
+
+#~ msgid "Who can ignore the task?"
+#~ msgstr "מי יכול להתעלם מהמשימה?"
+
+#~ msgid "Add to these post types:"
+#~ msgstr "הוסף לסוגי הפוסטים האלה:"
+
+#~ msgid "This allows users to duplicate existing checklist task."
+#~ msgstr "זה מאפשר למשתמשים לשכפל משימת רשימה קיימת."
+
+#~ msgid "Validation error. Kindly reload this page and try agai.n"
+#~ msgstr "שגיאת אימות. אנא טען מחדש את הדף הזה וניסה שוב."

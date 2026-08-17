@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     PublishPress\Checklists
  * @author      PublishPress <help@publishpress.com>
@@ -36,6 +37,13 @@ class Readability_Analysis extends Base_dropdown
      * @var string
      */
     public $name = 'yoast_readability_analysis';
+
+    /**
+     * The name of the requirement, in a slug format
+     *
+     * @var string
+     */
+    public $group = 'yoastseo';
 
     /**
      * Initialize the language strings for the instance
@@ -120,13 +128,13 @@ class Readability_Analysis extends Base_dropdown
     {
         $labels = [
             self::OK   => sprintf(
-            /* translators: %s expands to the readability score */
-                __('Readability: %s', 'publishpress-checklists'),
+                /* translators: %s expands to the readability score */
+                __('Yoast Readability: %s', 'publishpress-checklists'),
                 __('OK', 'publishpress-checklists')
             ),
             self::GOOD => sprintf(
-            /* translators: %s expands to the readability score */
-                __('Readability: %s', 'publishpress-checklists'),
+                /* translators: %s expands to the readability score */
+                __('Yoast Readability: %s', 'publishpress-checklists'),
                 __('Good', 'publishpress-checklists')
             ),
         ];

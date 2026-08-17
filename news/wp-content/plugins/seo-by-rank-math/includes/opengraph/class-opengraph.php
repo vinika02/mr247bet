@@ -19,6 +19,7 @@ use RankMath\User;
 use RankMath\Helper;
 use RankMath\Paper\Paper;
 use RankMath\Traits\Hooker;
+use RankMath\Helpers\Str;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -61,7 +62,7 @@ class OpenGraph {
 	 * Main OpenGraph output.
 	 */
 	public function output_tags() {
-		wp_reset_query();
+		wp_reset_query(); //phpcs:ignore
 
 		/**
 		 * Hook to add all OpenGraph metadata
@@ -79,9 +80,9 @@ class OpenGraph {
 	 * @return bool|string
 	 */
 	public function get_title() {
-		$title = $this->_title();
+		$title = $this->title();
 		if ( $title && Helper::get_settings( 'titles.capitalize_titles' ) ) {
-			$title = ucwords( $title );
+			$title = Str::mb_ucwords( $title );
 		}
 
 		return $title ? $title : Paper::get()->get_title();
@@ -92,7 +93,7 @@ class OpenGraph {
 	 *
 	 * @return string
 	 */
-	private function _title() {
+	private function title() {
 		$key = $this->prefix . '_title';
 
 		if ( Post::is_simple_page() ) {
@@ -100,7 +101,7 @@ class OpenGraph {
 		}
 
 		if ( is_front_page() ) {
-			return Helper::get_settings( 'titles.homepage_facebook_title' );
+			return Helper::replace_vars( Helper::get_settings( 'titles.homepage_facebook_title' ) );
 		}
 
 		if ( is_category() || is_tax() || is_tag() ) {
@@ -123,7 +124,7 @@ class OpenGraph {
 			$desc = Post::get_meta( $key, Post::get_page_id() );
 			$desc = '' !== $desc ? $desc : $this->fallback_description( 'get_the_excerpt' );
 		} elseif ( is_front_page() ) {
-			$desc = Helper::get_settings( 'titles.homepage_facebook_description' );
+			$desc = Helper::replace_vars( Helper::get_settings( 'titles.homepage_facebook_description' ) );
 		} elseif ( is_category() || is_tag() || is_tax() ) {
 			$desc = Term::get_meta( $key );
 			$desc = '' !== $desc ? $desc : $this->fallback_description( 'term_description' );
@@ -173,12 +174,12 @@ class OpenGraph {
 			return false;
 		}
 
-		$tag = 'facebook' === $this->network ? 'property' : 'name';
+		$tag           = 'facebook' === $this->network ? 'property' : 'name';
 		$escaped_value = esc_attr( $content );
 		if ( false !== filter_var( $content, FILTER_VALIDATE_URL ) ) {
 			$escaped_value = esc_url_raw( $content );
 		}
-		printf( '<meta %1$s="%2$s" content="%3$s" />' . "\n", $tag, esc_attr( $property ), $escaped_value );
+		printf( '<meta %1$s="%2$s" content="%3$s" />' . "\n", esc_attr( $tag ), esc_attr( $property ), $escaped_value ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- $escaped_value is escaped above.
 
 		return true;
 	}

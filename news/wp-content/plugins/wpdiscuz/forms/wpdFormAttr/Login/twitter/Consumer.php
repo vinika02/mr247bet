@@ -3,15 +3,15 @@
  * The MIT License
  * Copyright (c) 2007 Andy Smith
  */
+
 namespace wpdFormAttr\Login\twitter;
 
-class Consumer
-{
-    /** @var string  */
+class Consumer {
+    /** @var string */
     public $key;
-    /** @var string  */
+    /** @var string */
     public $secret;
-    /** @var string|null  */
+    /** @var string|null */
     public $callbackUrl;
 
     /**
@@ -19,18 +19,16 @@ class Consumer
      * @param string $secret
      * @param null $callbackUrl
      */
-    public function __construct($key, $secret, $callbackUrl = null)
-    {
-        $this->key = $key;
-        $this->secret = $secret;
+    public function __construct($key, $secret, $callbackUrl = null) {
+        $this->key         = $key;
+        $this->secret      = $secret;
         $this->callbackUrl = $callbackUrl;
     }
 
     /**
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return "Consumer[key=$this->key,secret=$this->secret]";
     }
 }

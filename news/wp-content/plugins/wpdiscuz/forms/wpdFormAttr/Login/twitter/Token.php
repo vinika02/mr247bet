@@ -3,22 +3,21 @@
  * The MIT License
  * Copyright (c) 2007 Andy Smith
  */
+
 namespace wpdFormAttr\Login\twitter;
 
-class Token
-{
+class Token {
     /** @var string */
     public $key;
     /** @var string */
     public $secret;
 
     /**
-     * @param string $key    The OAuth Token
+     * @param string $key The OAuth Token
      * @param string $secret The OAuth Token Secret
      */
-    public function __construct($key, $secret)
-    {
-        $this->key = $key;
+    public function __construct($key, $secret) {
+        $this->key    = $key;
         $this->secret = $secret;
     }
 
@@ -28,8 +27,7 @@ class Token
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return sprintf("oauth_token=%s&oauth_token_secret=%s",
             Util::urlencodeRfc3986($this->key),
             Util::urlencodeRfc3986($this->secret)

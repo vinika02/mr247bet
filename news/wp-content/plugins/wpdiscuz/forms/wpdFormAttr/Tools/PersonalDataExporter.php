@@ -34,34 +34,34 @@ class PersonalDataExporter implements wpdFormConst {
     public function wpdiscuzCommentsPersonalDataExport($exporters) {
         $exporters["wpdiscuz"] = [
             "exporter_friendly_name" => esc_html__("wpDiscuz Fields Data", "wpdiscuz"),
-            "callback" => [&$this, "customFieldsExport"],
+            "callback"               => [&$this, "customFieldsExport"],
         ];
         return $exporters;
     }
 
     public function customFieldsExport($email_address, $page = 1) {
-        $number = 500; // Limit us to avoid timing out
-        $page = (int) $page;
-        $done = true;
+        $number       = 500; // Limit us to avoid timing out
+        $page         = (int)$page;
+        $done         = true;
         $export_items = [];
 
         $doExport = apply_filters("wpdiscuz_do_export_personal_data", false);
-        
+
         if ($this->fields || $doExport) {
             $comments = get_comments(
-                    [
-                        "author_email" => $email_address,
-                        "number" => $number,
-                        "paged" => $page,
-                        "order_by" => "comment_ID",
-                        "order" => "ASC",
-                    ]
+                [
+                    "author_email" => $email_address,
+                    "number"       => $number,
+                    "paged"        => $page,
+                    "order_by"     => "comment_ID",
+                    "order"        => "ASC",
+                ]
             );
 
 
-            foreach ((array) $comments as $k => $comment) {
-                $commentId = $comment->comment_ID;
-                $data = [];
+            foreach ((array)$comments as $k => $comment) {
+                $commentId   = $comment->comment_ID;
+                $data        = [];
                 $commentMeta = get_metadata("comment", $commentId);
                 foreach ($this->fields as $key => $field) {
                     if (isset($commentMeta[$key])) {
@@ -70,7 +70,7 @@ class PersonalDataExporter implements wpdFormConst {
                             continue;
                         }
                         $data[] = [
-                            "name" => $field["name"],
+                            "name"  => $field["name"],
                             "value" => $value,
                         ];
                     }
@@ -78,10 +78,10 @@ class PersonalDataExporter implements wpdFormConst {
                 $data = apply_filters("wpdiscuz_privacy_personal_data_export", $data, $commentId);
                 if ($data) {
                     $export_items[] = [
-                        "group_id" => "comments",
+                        "group_id"    => "comments",
                         "group_label" => esc_html__("Comments"),
-                        "item_id" => "comment-$commentId",
-                        "data" => $data,
+                        "item_id"     => "comment-$commentId",
+                        "data"        => $data,
                     ];
                 }
             }
@@ -95,7 +95,7 @@ class PersonalDataExporter implements wpdFormConst {
 
     private function generateFieldData($data) {
         $value = "";
-        $data = maybe_unserialize($data);
+        $data  = maybe_unserialize($data);
         if (empty($data)) {
             return "";
         }

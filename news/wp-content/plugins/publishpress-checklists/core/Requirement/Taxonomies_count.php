@@ -26,6 +26,13 @@ class Taxonomies_count extends Base_counter implements Interface_parametrized
     public $name = 'taxonomies_count';
 
     /**
+     * The name of the group, used for the tabs
+     * 
+     * @var string
+     */
+    public $group = 'taxonomies';
+
+    /**
      * @var WP_Taxonomy
      */
     public $taxonomy;
@@ -60,11 +67,16 @@ class Taxonomies_count extends Base_counter implements Interface_parametrized
      */
     public function get_current_status($post, $option_value)
     {
+
+        if (!($post instanceof WP_Post)) {
+            $post = get_post($post);
+        }
+
         $terms = wp_get_post_terms($post->ID, $this->taxonomy->name);
 
         $count = count($terms);
 
-        return ($count >= $option_value[0]) && ($count <= $option_value[1]);
+        return ($count >= $option_value[0]) && ($option_value[1] == 0 || $count <= $option_value[1]);
     }
 
     /**
@@ -83,5 +95,7 @@ class Taxonomies_count extends Base_counter implements Interface_parametrized
         $subgroup = $this->taxonomy->hierarchical ? 'hierarchical' : 'non_hierarchical';
 
         $this->type = 'taxonomy_counter_' . $subgroup . '_' . $this->taxonomy->name;
+
+        $this->extra = $this->taxonomy->rest_base;
     }
 }

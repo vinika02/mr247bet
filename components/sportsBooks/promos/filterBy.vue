@@ -6,7 +6,7 @@ const { data: posts } = await useFetch(() => '/AWS/posts?perPage=20&page=1&categ
     {
         transform: (posts) =>
             posts.filter((post) =>
-                post.acf.sportsbookSubcategory.includes('Promos')
+                post?.acf.sportsbookSubcategory.includes('Promos')
             )
     }
 )
@@ -68,10 +68,10 @@ const { data: posts } = await useFetch(() => '/AWS/posts?perPage=20&page=1&categ
                 <div class="col-lg-9">
                     <div class="row">
                         <SportsBooksCard v-for="post in posts" :imgUrl="post?._embedded['wp:featuredmedia'][0]?.source_url"
-                            :name="post.acf?.sportsbookName" :sportsbookUrl="post.acf?.sportsbookUrl"
+                            :name="post?.acf?.sportsbookName" :sportsbookUrl="post?.acf?.sportsbookUrl"
                             :affiliateLink="post?.acf.affiliateLink" :affiliateTerms="post?.acf.affiliateTerms"
-                            :sportsbookTerms="post.acf?.sportsbookTerms" size="3" :key="post.id"
-                            :sportsbookRating="post.acf?.sportsbookRating" :fullPath="fullPath" :slug="post.slug" />
+                            :sportsbookTerms="post?.acf?.sportsbookTerms" size="3" :key="post?.id"
+                            :sportsbookRating="post?.acf?.sportsbookRating" :fullPath="fullPath" :slug="post?.slug" />
                     </div>
                     <!-- <CasinosPagination /> -->
                 </div>

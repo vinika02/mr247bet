@@ -20,10 +20,17 @@ class Filled_excerpt extends Base_counter
      */
     public $name = 'filled_excerpt';
 
+     /**
+     * The name of the group, used for the tabs
+     * 
+     * @var string
+     */
+    public $group = 'content';
+
     /**
      * @var int
      */
-    public $position = 50;
+    public $position = 90;
 
     /**
      * Initialize the language strings for the instance
@@ -32,8 +39,8 @@ class Filled_excerpt extends Base_counter
      */
     public function init_language()
     {
-        $this->lang['label']                = __('Numbers of characters in excerpt', 'publishpress-checklists');
-        $this->lang['label_settings']       = __('Numbers of characters in excerpt', 'publishpress-checklists');
+        $this->lang['label']                = __('Number of characters in excerpt', 'publishpress-checklists');
+        $this->lang['label_settings']       = __('Number of characters in excerpt', 'publishpress-checklists');
         $this->lang['label_min_singular']   = __('Minimum of %d character in excerpt', 'publishpress-checklists');
         $this->lang['label_min_plural']     = __('Minimum of %d characters in excerpt', 'publishpress-checklists');
         $this->lang['label_max_singular']   = __('Maximum of %d character in excerpt', 'publishpress-checklists');
@@ -55,6 +62,6 @@ class Filled_excerpt extends Base_counter
     {
         $count = strlen(trim(get_the_excerpt($post)));
 
-        return ($count >= $option_value[0]) && ($count <= $option_value[1]);
+        return ($count >= $option_value[0]) && ($option_value[1] == 0 || $count <= $option_value[1]);
     }
 }

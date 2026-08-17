@@ -8,7 +8,7 @@ const { data: posts } = await useFetch(() => '/AWS/posts?perPage=20&page=1&categ
     {
         transform: (posts) =>
             posts.filter((post) =>
-                post.acf.casinoSubcategory.includes('Crypto')
+                post?.acf.casinoSubcategory.includes('Crypto')
             )
     }
 )
@@ -18,8 +18,8 @@ const { data: posts } = await useFetch(() => '/AWS/posts?perPage=20&page=1&categ
 
 
 // posts.value.forEach(post => {
-//     // console.log('casinoName:', post.acf?.casinoName)
-//     console.log('casinoName:', post.acf?.casinoSubcategory)
+//     // console.log('casinoName:', post?.acf?.casinoName)
+//     console.log('casinoName:', post?.acf?.casinoSubcategory)
 // });
 
 
@@ -84,10 +84,10 @@ const { data: posts } = await useFetch(() => '/AWS/posts?perPage=20&page=1&categ
                 <div class="col-lg-9">
                     <div class="row">
                         <CasinosCard v-for="post in posts" :imgUrl="post?._embedded['wp:featuredmedia'][0]?.source_url"
-                            :name="post.acf?.casinoName" :casinoUrl="post.acf?.casinoUrl"
+                            :name="post?.acf?.casinoName" :casinoUrl="post?.acf?.casinoUrl"
                             :affiliateLink="post?.acf.affiliateLink" :affiliateTerms="post?.acf.affiliateTerms"
-                            :casinoTerms="post.acf?.casinoTerms" size="3" :key="post.id"
-                            :casinoRating="post.acf?.casinoRating" :fullPath="fullPath" :slug="post.slug" />
+                            :casinoTerms="post?.acf?.casinoTerms" size="3" :key="post?.id"
+                            :casinoRating="post?.acf?.casinoRating" :fullPath="fullPath" :slug="post?.slug" />
                     </div>
                     <!-- <CasinosPagination /> -->
                 </div>

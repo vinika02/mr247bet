@@ -1,27 +1,38 @@
 <script setup>
-const { pending, data: featuredCasinos } = await useLazyFetch(() => '/AWS/posts?perPage=20&page=1&categories=28',
-    {
-        transform: (featuredCasinos) =>
-            featuredCasinos.filter((casino) =>
-                casino.acf.casinoSubcategory.includes('Featured')
-            )
+const { pending, data: featuredCasinos } = await useLazyFetch(
+  () => '/AWS/posts?perPage=20&page=1&categories=28',
+  {
+    transform: (data) => {
+      return data
+        // ✅ remove undefined / null
+        .filter(casino => casino && casino.acf)
+
+        // ✅ ensure subcategory exists + includes 'Featured'
+        .filter(casino =>
+          Array.isArray(casino.acf.casinoSubcategory) &&
+          casino.acf.casinoSubcategory.includes('Featured')
+        )
+
+        // ✅ limit to 6 immediately
+        .slice(0, 6);
     }
-)
-// console.log('featuredCasinos:', featuredCasinos.value)
+  }
+);
 
 let orderedFeaturedCasinos = computed(() => {
-    if (featuredCasinos.value) {
-        let pledoo = featuredCasinos.value[1]
-        let dreamVegas = featuredCasinos.value[2]
-        let playOjo = featuredCasinos.value[3]
-        let slotNite = featuredCasinos.value[4]
-        let pubCasino = featuredCasinos.value[5]
-        let tonyBet = featuredCasinos.value[0]
-        return [playOjo, pledoo, slotNite, dreamVegas, pubCasino, tonyBet]
-    } else {
-        return
-    }
-})
+  const list = featuredCasinos.value;
+
+  if (!list || list.length === 0) return [];
+
+  return [
+    list[3],
+    list[1],
+    list[4],
+    list[2],
+    list[5],
+    list[0],
+  ].filter(Boolean); // ✅ removes any undefined just in case
+});
 
 // console.log('orderedFeaturedCasinos:', orderedFeaturedCasinos)
 
@@ -33,14 +44,14 @@ useState('featuredCasinos', () => orderedFeaturedCasinos.value)
     <!-- ======= Featured Casinos ======= -->
     <section id="featured" class="featured sections-bg">
         <div class="container position-relative">
-            <div class="row gy-4 mt-5">
+            <div class="row justify-content-center gy-4 mt-5">
                 <div class="section-header">
                     <h2>Featured Casinos</h2>
                 </div>
                 <div v-if="pending">
                     Loading...
                 </div>
-                <CardFeatured v-else v-for="casino in orderedFeaturedCasinos" :casino="casino" :key="casino.id" />
+                <CardFeatured v-else v-for="casino in orderedFeaturedCasinos" :casino="casino" :key="casino?.id" />
             </div>
             <!-- ======= Promotion ======= -->
             <div class="row gy-4 mt-4">

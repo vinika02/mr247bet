@@ -1,5 +1,8 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  site: {
+    url: 'https://www.mr247bet.com'
+  },
+
   runtimeConfig: {
     wpURI: process.env.WP_URI,
     public: {
@@ -7,25 +10,30 @@ export default defineNuxtConfig({
     },
     indexable: true,
   },
+
   robots: {
-    // sitemap: ["/0-sitemap.xml"],
     disallow: ["/news", "/news/**"],
   },
+
   routeRules: {
     "/**": { index: true },
     "/news": { robots: "noindex,nofollow" },
     "/news/**": { robots: "noindex,nofollow" },
   },
+
   sitemap: {
     enabled: true,
     sitemaps: true,
   },
+
   nitro: {
     prerender: {
       crawlLinks: true,
       routes: ["/"],
+      failOnError: false
     },
   },
+
   app: {
     head: {
       charset: "utf-8",
@@ -44,7 +52,7 @@ export default defineNuxtConfig({
           href: "/mr247bet-16x16.png",
         },
         {
-          href: "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap",
+          href: "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap",
           rel: "stylesheet",
         },
       ],
@@ -67,10 +75,11 @@ export default defineNuxtConfig({
     "~/assets/vendor/glightbox/css/glightbox.min.css",
     "~/assets/vendor/swiper/swiper-bundle.min.css",
   ],
+
   modules: [
     "nuxt-simple-robots",
     "@nuxt/devtools",
-    "@nuxt/image-edge",
+    "@nuxt/image",
     "nuxt-simple-sitemap",
   ],
-});
+})

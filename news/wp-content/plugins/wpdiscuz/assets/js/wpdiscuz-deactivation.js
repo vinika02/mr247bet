@@ -2,7 +2,7 @@ jQuery(document).ready(function ($) {
 
     var deactivateUrl = '';
 
-    $(document).on('click', '#the-list tr[data-plugin="wpdiscuz/class.WpdiscuzCore.php"] .deactivate a', function (e) {
+    $('body').on('click', '#the-list tr[data-plugin="wpdiscuz/class.WpdiscuzCore.php"] .deactivate a', function (e) {
         e.preventDefault();
         $('#wpdDeactivationReasonAnchor').trigger('click');
         deactivateUrl = $(this).attr('href');
@@ -13,13 +13,13 @@ jQuery(document).ready(function ($) {
     $('.wpd-deactivation-reason-more-info').slideUp(500);
     $('.wpd-deactivation-reason-more-info', parentItem).slideDown(500);
 
-    $(document).on('change', '.wpd-deactivation-reason', function (e) {
+    $('body').on('change', '.wpd-deactivation-reason', function (e) {
         $('.wpd-deactivation-reason-more-info').slideUp(500);
         var parentItem = $(this).parents('.wpd-deactivation-reason-item');
         $('.wpd-deactivation-reason-more-info', parentItem).slideDown(500);
     });
 
-    $(document).on('click', '.wpd-deactivate', function (e) {
+    $('body').on('click', '.wpd-deactivate', function (e) {
         if (isChecked($(this))) {
             var formData = '';
             if ($(this).hasClass('wpd-submit')) {
@@ -29,6 +29,7 @@ jQuery(document).ready(function ($) {
                 var receiveEmail = $('[name=deactivation_feedback_receive_email]', parentItem).prop('checked');
                 var receiverEmail = $('[name=deactivation_feedback_email]', parentItem);
                 var isValid = true;
+
 
                 if (reasonDesc.length && reasonDesc.is(':visible')) {
                     var attr = reasonDesc.prop('required');
@@ -49,14 +50,15 @@ jQuery(document).ready(function ($) {
                     }
                     $('.wpd-loading', this).toggleClass('wpdiscuz-hidden');
                 } else {
-                    alert(deactivationObj.msgReasonDescRequired);
+                    alert(wpdDeactivationObj.msgReasonDescRequired);
                     return false;
                 }
             } else {
                 formData = 'never_show=1';
             }
-            
+
             if (formData) {
+                formData += '&_wpnonce=' + wpdDeactivationObj.deactivationNonce;
                 $.ajax({
                     type: 'POST',
                     url: ajaxurl,
@@ -67,7 +69,7 @@ jQuery(document).ready(function ($) {
                 }).done(function (response) {
                     try {
                         var r = $.parseJSON(response);
-                        var locHref = deactivateUrl ? deactivationObj.adminUrl + deactivateUrl : location.href;
+                        var locHref = deactivateUrl ? wpdDeactivationObj.adminUrl + deactivateUrl : location.href;
                         if (r.code == 'dismiss_and_deactivate') {
                             setTimeout(function () {
                                 location.href = locHref;
@@ -85,7 +87,7 @@ jQuery(document).ready(function ($) {
                 });
             }
         } else {
-            alert(deactivationObj.msgReasonRequired);
+            alert(wpdDeactivationObj.msgReasonRequired);
         }
     });
 

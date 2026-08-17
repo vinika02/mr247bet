@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package     PublishPress\Checklists
  * @author      PublishPress <help@publishpress.com>
@@ -21,9 +22,16 @@ class Featured_image extends Base_simple
     public $name = 'featured_image';
 
     /**
+     * The name of the group, used for the tabs
+     * 
+     * @var string
+     */
+    public $group = 'featured_image';
+
+    /**
      * @var int
      */
-    public $position = 100;
+    public $position = 102;
 
     /**
      * Initialize the language strings for the instance
@@ -32,8 +40,8 @@ class Featured_image extends Base_simple
      */
     public function init_language()
     {
-        $this->lang['label']          = __('Featured image', 'publishpress-checklists');
-        $this->lang['label_settings'] = __('Featured image', 'publishpress-checklists');
+        $this->lang['label']          = __('Featured image is added', 'publishpress-checklists');
+        $this->lang['label_settings'] = __('Featured image is added', 'publishpress-checklists');
     }
 
     /**

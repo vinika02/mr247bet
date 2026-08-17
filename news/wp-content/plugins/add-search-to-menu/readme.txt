@@ -1,15 +1,15 @@
 === Ivory Search - WordPress Search Plugin ===
 Contributors: ivorysearch, vinod dalvi
 Donate link: https://ivorysearch.com/pricing/
-Tags: search, woocommerce search, image search, ajax search, search shortcode, live search, inverted index-based search, exclude from search, search widget, search menu, search plugin, custom search, search by sku, search by post type, search by category, relevance search, search forms
+Tags: search, woocommerce search, image search, ajax search, file search
 Requires at least: 3.9
-Tested up to: 5.9
+Tested up to: 6.9
 Requires PHP: 5.2.4
-Stable tag: 5.4.5
+Stable tag: 5.5.14
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Advanced WordPress custom search plugin. Includes Search Form Customizer, WooCommerce Search, AJAX Search & Live Search support!
+Advanced WordPress custom search plugin. Provides Search Form Customizer, WooCommerce Search, AJAX Search & Live Search support!
 
 == Description ==
 
@@ -197,45 +197,64 @@ Yes we do. We try our best to help free users with customisation requests and we
 
 == Changelog ==
 
-= 5.4.5 =
-* Fixed - Call to undefined function parse_blocks
+= 5.5.14 =
+* Improved - Plugin translation
 
-= 5.4.4 =
+= 5.5.13 =
+* Updated - Freemius SDK 2.13.0
+* Fixed - Limited to only admin users what post type can be displayed in admin area.
+
+= 5.5.12 =
+* Updated - Freemius SDK 2.12.2
+* Fixed - Legacy JavaScript issue by updating simplebar version to 6.3.2
+
+= 5.5.11 =
+* Fixed - Uncaught Error: Call to a member function is_index_search() on null 
+
+= 5.5.10 =
+* Updated - Freemius SDK 2.12.0
+* Fixed - Stopwords were getting searched in categories of AJAX search results
+* Fixed - Conflict between WooCommerce product and custom product post types
+* Fixed - Use of "self" in callables is deprecated in class-is-index-helper.php 433
+
+= 5.5.9 =
+* Updated - Freemius SDK 2.11.0
+
+= 5.5.8 =
+* Updated - Freemius SDK 2.9.0
+
+= 5.5.7 =
+* Fixed - Searching content of password protected posts
+* Fixed - Warning: Undefined variable $replacement
+* Added - Button role to menu search icon to improve accessibility
+* Updated - Freemius SDK 2.7.4
+
+= 5.5.6 =
+* Fixed - Missing Authorization to Authenticated (Subscriber+) Index Creation
+* Updated - Freemius SDK 2.7.0
+
+= 5.5.5 =
+* Fixed - Synonym word searching was case-sensitive
+* Updated - Freemius SDK 2.6.2
+
+= 5.5.4 =
+* Fixed - Error: Call to undefined function mysql_get_server_info 
+* Fixed - Passing args to wc_get_product is deprecated
+* Updated - Freemius SDK 2.6.0
+
+= 5.5.3 =
+* Added - WooCommerce High-Performance Order Storage (HPOS) Compatibility
+* Updated - Freemius SDK 2.5.12
+
+= 5.5.2 =
+* Fixed - Plugin option "Index posts marked as 'No Index' in Yoast SEO" not working.
+* Fixed - Plugin option  "Do not use Default Search Form to control WordPress default search functionality"
+* Updated - Freemius SDK 2.5.10
+
+= 5.5.1 =
 * Updated - Freemius SDK
-* Fixed - Security fix
 
-= 5.4.3 =
-* Fixed - AJAX add to cart was not adhering to quantity field.
-* Fixed - Undefined index: action error.
-
-= 5.4.2 =
-* Improved - Compatibility with Weglot plugin.
-* Improved - Compatibility with TablePress plugin.
-* Fixed - Warning: trim() expects parameter 1 to be string, array given.
-* Fixed - Notice: Undefined index: s
-* Fixed - Media search in admin area was not working.
-* Fixed - Google analytics search was working on all pages.
-
-= 5.4.1 =
-* Fixed - PHP 5 issue 'Default value for parameters with a class type hint can only be NULL'.
-
-= 5.4 =
-* Fixed - PHP 5.2 compatibility issue.
-* Fixed - Index build max execution time not working.
-
-= 5.3 =
-* Fixed - Compatibility issue with MySQL 5.7
-* Fixed - MySQL > 8 REGEXP compatibility issue.
-* Fixed - PHP compatibility issues with static var.
-* Fixed - PHP < 5.3 compatibility issue.
-
-= 5.2 =
-* Fixed - For some plugins -1 appearing instead of search.
-
-= 5.1 =
-* Fixed - Media library search in admin area was not working.
-
-= 5.0 =
-* Added - Faster search with inverted index-based search engine.
-* Added - Index and search  shortcode contents.
-* Added - Index and search TablePress shortcode contents.
+= 5.5 =
+* Updated - Freemius SDK
+* Moved - Custom CSS code from website footer to header.
+* Moved - Customizer CSS code from form tag to header.

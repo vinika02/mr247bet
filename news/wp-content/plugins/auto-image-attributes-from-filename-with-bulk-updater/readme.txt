@@ -1,20 +1,20 @@
 === Auto Image Attributes From Filename With Bulk Updater (Add Alt Text, Image Title For Image SEO) ===
 Contributors: arunbasillal
 Donate link: https://imageattributespro.com/?utm_source=wordpress.org&utm_medium=donate-link
-Tags: image title, image caption, image description, alt text, bulk edit images, bulk rename images, auto image attributes, auto image alt text, remove underscores, image seo
+Tags: image seo, image title, alt text, bulk edit images, accessibility
 Requires at least: 3.5.0
-Tested up to: 5.9.3
+Tested up to: 6.9
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Automatically Add Image Title, Caption, Description And Alt Text From Filename. Includes a bulk updater to update existing images in the Media Library. Great for Image SEO.
+Automatically add Image Alt Text, Title, Caption and Description from Filename. Bulk update existing images. Great for Image SEO and Accessibility.
 
 == Description ==
 
-Automatically add Image attributes such as Image Title, Image Caption, Description And Alt Text from Image Filename. 
+Automatically add Image attributes such as Image Alt Text, Image Title, Image Caption and Image Description from Image Filename. 
 
-The plugin can update image attributes for both new images and existing images in the media library. 
+The plugin can update image attributes for both new image uploads and existing images in the media library. Great for Image SEO and Accessibility.
 
 https://www.youtube.com/watch?v=V5SOU4okOfU
 
@@ -43,6 +43,7 @@ With this plugin you can:
 * Remove commas from filename.
 * Remove all numbers from filename.
 * Choose to turn off any of the above mentioned features.
+* Display image attributes as columns in Media Library list view.
 
 With the bulk updater you can: 
 
@@ -53,7 +54,7 @@ If your image filename is *My_image-name.jpg*, your Image Title, Caption, Descri
 
 The plugin settings and bulk updater are in WordPress Admin > Settings > Image Attributes. Here you can choose which attributes to update for NEW uploads. 
 
-Please remember to take a database backup before running the bulk updater. The bulk updater updates ALL attributes for existing images in the Media Library and ignores the settings set for NEW uploads.
+**Please remember to take a database backup before running the bulk updater (or anything bulk in general). The bulk updater updates ALL attributes for existing images in the Media Library and ignores the settings set for NEW uploads.**
 
 ## Image Attributes Pro
 
@@ -71,7 +72,7 @@ The pro add-on can update the image attributes from not just the image filename,
 * Use post title as alt text. If image is not attached to a post, image filename will be used instead.
 * Use post title as caption. If image is not attached to a post, image filename will be used instead.
 * Use post title as description. If image is not attached to a post, image filename will be used instead.
-* Build your own attributes using custom tags like `%filename%`, `%posttitle%`, `%sitetitle%`, `%category%`, `%tag%`, `%yoastfocuskw%`, `%rankmathfocuskw%`, `%seopresstargetkw%`. Each custom tag will be replaced  with it's value. You can combine them as you please!
+* Build your own attributes using custom tags like `%filename%`, `%posttitle%`, `%sitetitle%`, `%category%`, `%tag%`, `%wc_variation%`, `%yoastfocuskw%`, `%yoastseotitle%`, `%rankmathfocuskw%`, `%seopresstargetkw%` and [many more](https://imageattributespro.com/custom-image-attribute-tags/?utm_source=wordpress.org&utm_medium=readme). Each custom tag will be replaced  with it's value. You can combine them as you please!
 * Use Yoast Focus Keyword and Rank Math Focus Keyword as image attributes.
 * Clear any image attribute by setting it as blank / empty. 
 * Exclude images from Bulk Updater. A meta box and a checkbox is added to the `Media Library` > `Edit Media` sidebar. When checked, the bulk updater will not update the attributes of that image in the media library or in posts / products where the image is used. 
@@ -96,21 +97,24 @@ The pro add-on can update the image attributes from not just the image filename,
 
 * Update image title and alt text **for images inserted into posts and custom post types**. Not just the media library. [What is the difference?](https://imageattributespro.com/how-wordpress-store-image-attributes/?utm_source=wordpress.org&utm_medium=readme)
 * Fine tune all settings. Choose what to update.
-* Update image titles / alt text in media library only. Image titles / alt text in existing posts will be left unchanged.
-* Update image titles / alt text in media library and existing posts.
-* Update image titles / alt text in media library and existing posts only if no title / alt text is set. Existing image titles / alt text will not be changed.
+* Update image titles / alt text in media library and / or existing posts.
+* Update image titles / alt text in media library and / or existing posts only if no title / alt text is set. Existing image titles / alt text will be preserved.
 * Update image caption and description in the media library. Existing image captions and descriptions can be preserved.
-* Build your own attributes using custom tags like `%filename%`, `%posttitle%`, `%sitetitle%`, `%category%`, `%tag%`, `%yoastfocuskw%`, `%rankmathfocuskw%`, `%seopresstargetkw%`. Each custom tag will be replaced  with it's value. You can combine them as you please!
+* Build your own attributes using custom tags like `%filename%`, `%posttitle%`, `%sitetitle%`, `%category%`, `%tag%`, `%yoastfocuskw%`, `%yoastseotitle%`, `%rankmathfocuskw%`, `%seopresstargetkw%` and [many more](https://imageattributespro.com/custom-image-attribute-tags/?utm_source=wordpress.org&utm_medium=readme). Each custom tag will be replaced  with it's value. You can combine them as you please!
 * Choose to turn off any of the above mentioned features.
+* Choose specific post types to bulk update.
+* Bulk update image attributes in [ACF's WYSIWYG Editor](https://imageattributespro.com/acf-compatibility/?utm_source=wordpress.org&utm_medium=readme) and [Divi theme](https://imageattributespro.com/divi-compatibility/?utm_source=wordpress.org&utm_medium=readme).
 * Modify auto generated image attributes using the [iaffpro_image_attributes filter](https://imageattributespro.com/codex/iaffpro_image_attributes/?utm_source=wordpress.org&utm_medium=readme).
-* Choose specific post types to bulk update using the [iaffpro_included_post_types filter](https://imageattributespro.com/codex/iaffpro_included_post_types/?utm_source=wordpress.org&utm_medium=readme).
-* Disable updating of attributes in media library completely using the [iaffpro_update_media_library filter](https://imageattributespro.com/codex/iaffpro_update_media_library/?utm_source=wordpress.org&utm_medium=readme).
+* Disable updating of attributes in media library completely and just updated attributes in Post HTML or vice versa.
 * Add or remove custom image attributes using the [iaffpro_html_image_markup_post_update filter](https://imageattributespro.com/codex/iaffpro_html_image_markup_post_update/?utm_source=wordpress.org&utm_medium=readme)
 
 **Other Image Attributes Pro features:**
 
+* Bulk edit image attributes from the Media Library quickly and easily. [Read more.](https://imageattributespro.com/media-library-bulk-editing/?utm_source=wordpress.org&utm_medium=readme)
 * Bulk Update image attributes from WordPress Media Library. Select images and choose `Update image attributes` Bulk action in Media Library (list view). [Read more.](https://imageattributespro.com/bulk-actions/?utm_source=wordpress.org&utm_medium=readme)
 * Bulk Update image attributes from WordPress admin page for Posts, Pages and WooCommerce Products. Select the posts, pages or WooCommerce products in bulk and choose "Update image attributes" Bulk action. [Read more.](https://imageattributespro.com/bulk-actions/?utm_source=wordpress.org&utm_medium=readme)
+* Copy image attributes to post HTML while updating in Media Library. Any changes made to image attributes in the media library will be automatically synced to the corresponding post HTML. [Read more.](https://imageattributespro.com/auto-copy-image-attributes-to-post-html-from-media-library/?utm_source=wordpress.org&utm_medium=readme)
+* Update image attributes on post publish or update. Automatically updates image attributes when a post is published or updated. Ensures image attributes are always consistent with settings. [Read more.](https://imageattributespro.com/update-image-attributes-on-save-post/?utm_source=wordpress.org&utm_medium=readme)
 
 For screenshots, FAQ and full list of features, please see the [product website](https://imageattributespro.com/?utm_source=wordpress.org&utm_medium=readme).
 
@@ -146,8 +150,69 @@ I am glad to hear that! You can either [upgrade to pro](https://imageattributesp
 2. Preview of the Advanced settings screen. Seen only when the preview is enabled.
 2. Preview of the Bulk Updater settings screen. Seen only when the preview is enabled.
 4. Bulk Updater
+5. Image attributes displayed in the Media Library as columns.
 
 == Changelog ==
+
+= 4.9 =
+* Date: 17.December.2025
+* Tested with WordPress 6.9
+* Compatibility with Image Attributes Pro version 4.9. [Check what's new in 4.9](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog).
+
+= 4.7.1 =
+* Date: 20.October.2025
+* Bug Fix: Fixed a bug in 4.7 that prevented the automatic generation of image attributes. 
+
+= 4.7 =
+* Date: 20.October.2025
+* Enhancement: Updated event log messaging for cases where image attributes are not updated.
+* Enhancement: Compatibility with Image Attributes Pro version 4.7. [Check what's new in 4.7](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog).
+* Bug Fix: Disable the use of EXIF data as image title.
+
+= 4.6 =
+* Date: 07.October.2025
+* Tested with WordPress 6.8.3
+* Tested with PHP 8.4.10
+* Enhancement: Compatibility with Image Attributes Pro version 4.6. [Check what's new in 4.6](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog).
+
+= 4.4 =
+* Date: 09.November.2023.
+* Tested with WordPress 6.4.1.
+* New Feature: Display image attributes in the Media Library columns (list view) to easily read image attributes without opening each image. Image Attributes Pro let's you edit image attributes from the Media Library in bulk. [Read more.](https://imageattributespro.com/media-library-bulk-editing/?utm_source=wordpress.org&utm_medium=changelog)
+* Enhancement: Activate Image Attributes Pro from plugin sidebar if pro plugin is installed.
+* UI Enhancement: Improved placeholder text in settings text boxes and made them lighter to avoid confusion.
+
+= 4.3.1 =
+* Date: 25.April.2023.
+* Bug Fix: Fix a bug where trailing commas were used with unset and function calls. This is unsupported in PHP versions older than 7.3.
+
+= 4.3 =
+* Date: 25.April.2023.
+* Enhancement: Compatibility with Image Attributes Pro version 4.3. [Check what's new in 4.3](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog).
+* Bug Fix: Fixed an issue where non English characters in image filename were not being read correctly. This fix will resolve such issues for new uploads going forward. Since information is already lost when WordPress sanitize the filename, there is no way to recover it once the image upload is complete.
+
+= 4.2 =
+* Date: 28.March.2023.
+* Tested with WordPress 6.2.
+* Enhancement: `!IMPORTANT!` Files were renamed and moved around for better organization. If you see any PHP errors, it should be temporary and deactivating and activation the plugin should fix it.
+* Enhancement: Compatibility with Image Attributes Pro version 4.2. [Check what's new in 4.2](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog).
+* I18n: Plugin is translated to [Ukrainian](https://translate.wordpress.org/locale/uk/default/wp-plugins/auto-image-attributes-from-filename-with-bulk-updater/) thanks to [@kleindberg](https://profiles.wordpress.org/kleindberg/).
+
+= 4.1 =
+* Date: 01.February.2023.
+* Enhancement: Compatibility with Image Attributes Pro version 4.1. [Check what's new in 4.1](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog).
+
+= 4.0 =
+* Date: 13.December.2022.
+* Tested with WordPress 6.1.1.
+* Enhancement: Compatibility with Image Attributes Pro version 4.0. [Check what's new in 4.0](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog).
+
+= 3.3 =
+* Date: 10.November.2022.
+* Tested with WordPress 6.1.
+* Enhancement: Compatibility with Image Attributes Pro version 3.2. [Check what's new in 3.2](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog).
+* Bug Fix: Fixed a UI issue where the buttons for Custom Attribute Tags were not working in certain cases.
+* I18n: Plugin is translated to Polish thanks to Robert from [RobertLajka.pl](https://robertlajka.pl/).
 
 = 3.2 =
 * Date: 27.April.2022.
@@ -231,6 +296,66 @@ I am glad to hear that! You can either [upgrade to pro](https://imageattributesp
 * First release of the plugin.
 
 == Upgrade Notice ==
+
+= 4.9 =
+* Date: 17.December.2025 
+* Tested with WordPress 6.9 
+* Compatibility with Image Attributes Pro version 4.9. [Check what's new in 4.9](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog). 
+
+= 4.7.1 =
+* Date: 20.October.2025 
+* Bug Fix: Fixed a bug in 4.7 that prevented the automatic generation of image attributes. 
+
+= 4.7 =
+* Date: 20.October.2025 
+* Enhancement: Updated event log messaging for cases where image attributes are not updated. 
+* Enhancement: Compatibility with Image Attributes Pro version 4.7. [Check what's new in 4.7](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog). 
+* Bug Fix: Disable the use of EXIF data as image title. 
+
+= 4.6 =
+* Date: 07.October.2025
+* Tested with WordPress 6.8.3
+* Tested with PHP 8.4.10
+* Enhancement: Compatibility with Image Attributes Pro version 4.6. [Check what's new in 4.6](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog).
+
+= 4.4 =
+* Date: 09.November.2023.
+* Tested with WordPress 6.4.1.
+* New Feature: Display image attributes in the Media Library columns (list view) to easily read image attributes without opening each image. Image Attributes Pro let's you edit image attributes from the Media Library in bulk. [Read more.](https://imageattributespro.com/media-library-bulk-editing/?utm_source=wordpress.org&utm_medium=changelog)
+* Enhancement: Activate Image Attributes Pro from plugin sidebar if pro plugin is installed.
+* UI Enhancement: Improved placeholder text in settings text boxes and made them lighter to avoid confusion.
+
+= 4.3.1 =
+* Date: 25.April.2023.
+* Bug Fix: Fix a bug where trailing commas were used with unset and function calls. This is unsupported in PHP versions older than 7.3.
+
+= 4.3 =
+* Date: 25.April.2023.
+* Enhancement: Compatibility with Image Attributes Pro version 4.3. [Check what's new in 4.3](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog).
+* Bug Fix: Fixed an issue where non English characters in image filename were not being read correctly. This fix will resolve such issues for new uploads going forward. Since information is already lost when WordPress sanitize the filename, there is no way to recover it once the image upload is complete.
+
+= 4.2 =
+* Date: 28.March.2023.
+* Tested with WordPress 6.2.
+* Enhancement: `!IMPORTANT!` Files were renamed and moved around for better organization. If you see any PHP errors, it should be temporary and deactivating and activation the plugin should fix it.
+* Enhancement: Compatibility with Image Attributes Pro version 4.2. [Check what's new in 4.2](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog).
+* I18n: Plugin is translated to [Ukrainian](https://translate.wordpress.org/locale/uk/default/wp-plugins/auto-image-attributes-from-filename-with-bulk-updater/) thanks to [@kleindberg](https://profiles.wordpress.org/kleindberg/).
+
+= 4.1 =
+* Date: 01.February.2023.
+* Enhancement: Compatibility with Image Attributes Pro version 4.1. [Check what's new in 4.1](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog).
+
+= 4.0 =
+* Date: 13.December.2022.
+* Tested with WordPress 6.1.1.
+* Enhancement: Compatibility with Image Attributes Pro version 4.0. [Check what's new in 4.0](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog).
+
+= 3.3 =
+* Date: 10.November.2022.
+* Tested with WordPress 6.1.
+* Enhancement: Compatibility with Image Attributes Pro version 3.2. [Check what's new in 3.2](https://imageattributespro.com/changelog/?utm_source=wordpress.org&utm_medium=changelog).
+* Bug Fix: Fixed a UI issue where the buttons for Custom Attribute Tags were not working in certain cases.
+* I18n: Plugin is translated to Polish thanks to Robert from [RobertLajka.pl](https://robertlajka.pl/).
 
 = 3.2 =
 * Date: 27.April.2022. 

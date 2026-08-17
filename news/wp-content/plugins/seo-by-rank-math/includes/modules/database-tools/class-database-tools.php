@@ -9,9 +9,13 @@
 namespace RankMath\Tools;
 
 use RankMath\Helper;
+use RankMath\Helpers\Str;
+use RankMath\Helpers\Arr;
+use RankMath\Helpers\Schedule;
 use RankMath\Installer;
 use RankMath\Traits\Hooker;
-use MyThemeShop\Helpers\Conditional;
+use RankMath\Helpers\DB as DB_Helper;
+use RankMath\Helpers\Sitepress;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -26,12 +30,13 @@ class Database_Tools {
 	 * Constructor.
 	 */
 	public function __construct() {
-		if ( Conditional::is_heartbeat() || ! Helper::is_advanced_mode() ) {
+		if ( Helper::is_heartbeat() || ! Helper::is_advanced_mode() ) {
 			return;
 		}
 
 		Yoast_Blocks::get();
-		Remove_Schema::get();
+		AIOSEO_Blocks::get();
+		Update_Score::get();
 		$this->hooks();
 	}
 
@@ -39,11 +44,7 @@ class Database_Tools {
 	 * Register version control hooks.
 	 */
 	public function hooks() {
-		if ( ! Helper::is_plugin_active_for_network() || current_user_can( 'manage_options' ) ) {
-			$this->filter( 'rank_math/tools/pages', 'add_tools_page', 11 );
-		}
-
-		if ( Conditional::is_rest() ) {
+		if ( Helper::is_rest() && Str::contains( 'toolsAction', add_query_arg( [] ) ) ) {
 			foreach ( $this->get_tools() as $id => $tool ) {
 				if ( ! method_exists( $this, $id ) ) {
 					continue;
@@ -55,30 +56,12 @@ class Database_Tools {
 	}
 
 	/**
-	 * Display Tools data.
+	 * Get localized JSON data to be used on the Database Tools view of the Status & Tools page.
 	 */
-	public function display() {
-		?>
-		<table class='rank-math-status-table striped rank-math-tools-table widefat rank-math-box'>
-
-			<tbody class='tools'>
-
-				<?php foreach ( $this->get_tools() as $id => $tool ) : ?>
-					<tr class='<?php echo sanitize_html_class( $id ); ?>'>
-						<th>
-							<h4 class='name'><?php echo esc_html( $tool['title'] ); ?></h4>
-							<p class="description"><?php echo esc_html( $tool['description'] ); ?></p>
-						</th>
-						<td class='run-tool'>
-							<a href='#' class='button button-large button-link-delete tools-action' data-action='<?php echo esc_attr( $id ); ?>' data-confirm="<?php echo isset( $tool['confirm_text'] ) ? esc_attr( $tool['confirm_text'] ) : 'false'; ?>"><?php echo esc_html( $tool['button_text'] ); ?></a>
-						</td>
-					</tr>
-				<?php endforeach; ?>
-
-			</tbody>
-
-		</table>
-		<?php
+	public static function get_json_data() {
+		return [
+			'tools' => self::get_tools(),
+		];
 	}
 
 	/**
@@ -87,7 +70,7 @@ class Database_Tools {
 	public function clear_transients() {
 		global $wpdb;
 
-		$transients = $wpdb->get_col(
+		$transients = DB_Helper::get_col(
 			"SELECT `option_name` AS `name`
 			FROM  $wpdb->options
 			WHERE `option_name` LIKE '%\\_transient\\_rank_math%'
@@ -104,7 +87,7 @@ class Database_Tools {
 		$count = 0;
 		foreach ( $transients as $transient ) {
 			delete_option( $transient );
-			$count++;
+			++$count;
 		}
 
 		// Translators: placeholder is the number of transients deleted.
@@ -112,20 +95,21 @@ class Database_Tools {
 	}
 
 	/**
-	 * Function to reset the SEO Analysis.
+	 * Function to reset the SEO Analyzer.
 	 */
 	public function clear_seo_analysis() {
 		$stored = get_option( 'rank_math_seo_analysis_results' );
 		if ( empty( $stored ) ) {
 			return [
 				'status'  => 'error',
-				'message' => __( 'SEO Analysis data has already been cleared.', 'rank-math' ),
+				'message' => __( 'SEO Analyzer data has already been cleared.', 'rank-math' ),
 			];
 		}
 
 		delete_option( 'rank_math_seo_analysis_results' );
+		delete_option( 'rank_math_seo_analysis_date' );
 
-		return __( 'SEO Analysis data successfully deleted.', 'rank-math' );
+		return __( 'SEO Analyzer data successfully deleted.', 'rank-math' );
 	}
 
 	/**
@@ -134,7 +118,7 @@ class Database_Tools {
 	public function delete_links() {
 		global $wpdb;
 
-		$exists = $wpdb->get_var( "SELECT EXISTS ( SELECT 1 FROM {$wpdb->prefix}rank_math_internal_links )" );
+		$exists = DB_Helper::get_var( "SELECT EXISTS ( SELECT 1 FROM {$wpdb->prefix}rank_math_internal_links )" );
 		if ( empty( $exists ) ) {
 			return [
 				'status'  => 'error',
@@ -142,8 +126,8 @@ class Database_Tools {
 			];
 		}
 
-		$wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}rank_math_internal_links" );
-		$wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}rank_math_internal_meta" );
+		DB_Helper::query( "TRUNCATE TABLE {$wpdb->prefix}rank_math_internal_links" );
+		DB_Helper::query( "TRUNCATE TABLE {$wpdb->prefix}rank_math_internal_meta" );
 
 		return __( 'Internal Links successfully deleted.', 'rank-math' );
 	}
@@ -154,7 +138,7 @@ class Database_Tools {
 	public function delete_log() {
 		global $wpdb;
 
-		$exists = $wpdb->get_var( "SELECT EXISTS ( SELECT 1 FROM {$wpdb->prefix}rank_math_404_logs )" );
+		$exists = DB_Helper::get_var( "SELECT EXISTS ( SELECT 1 FROM {$wpdb->prefix}rank_math_404_logs )" );
 		if ( empty( $exists ) ) {
 			return [
 				'status'  => 'error',
@@ -162,7 +146,7 @@ class Database_Tools {
 			];
 		}
 
-		$wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}rank_math_404_logs;" );
+		DB_Helper::query( "TRUNCATE TABLE {$wpdb->prefix}rank_math_404_logs;" );
 
 		return __( '404 Log successfully deleted.', 'rank-math' );
 	}
@@ -173,7 +157,7 @@ class Database_Tools {
 	public function delete_redirections() {
 		global $wpdb;
 
-		$exists = $wpdb->get_var( "SELECT EXISTS ( SELECT 1 FROM {$wpdb->prefix}rank_math_redirections )" );
+		$exists = DB_Helper::get_var( "SELECT EXISTS ( SELECT 1 FROM {$wpdb->prefix}rank_math_redirections )" );
 		if ( empty( $exists ) ) {
 			return [
 				'status'  => 'error',
@@ -181,8 +165,8 @@ class Database_Tools {
 			];
 		}
 
-		$wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}rank_math_redirections;" );
-		$wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}rank_math_redirections_cache;" );
+		DB_Helper::query( "TRUNCATE TABLE {$wpdb->prefix}rank_math_redirections;" );
+		DB_Helper::query( "TRUNCATE TABLE {$wpdb->prefix}rank_math_redirections_cache;" );
 
 		return __( 'Redirection rules successfully deleted.', 'rank-math' );
 	}
@@ -201,10 +185,10 @@ class Database_Tools {
 
 		// Analytics module.
 		if ( Helper::is_module_active( 'analytics' ) ) {
-			as_enqueue_async_action(
+			Schedule::async_action(
 				'rank_math/analytics/workflow/create_tables',
 				[],
-				'workflow'
+				'rank-math'
 			);
 		}
 
@@ -217,7 +201,7 @@ class Database_Tools {
 	public function maybe_recreate_actionscheduler_tables() {
 		global $wpdb;
 
-		if ( Conditional::is_woocommerce_active() ) {
+		if ( Helper::is_woocommerce_active() ) {
 			return;
 		}
 
@@ -236,7 +220,7 @@ class Database_Tools {
 			'actionscheduler_claims',
 		];
 
-		$found_tables = $wpdb->get_col( "SHOW TABLES LIKE '{$wpdb->prefix}actionscheduler%'" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$found_tables = DB_Helper::get_col( "SHOW TABLES LIKE '{$wpdb->prefix}actionscheduler%'" );
 		foreach ( $table_list as $table_name ) {
 			if ( ! in_array( $wpdb->prefix . $table_name, $found_tables, true ) ) {
 				$this->recreate_actionscheduler_tables();
@@ -280,40 +264,22 @@ class Database_Tools {
 	}
 
 	/**
-	 * Function to delete old schema data.
+	 * Function to convert AIOSEO blocks in posts to Rank Math blocks (TOC).
 	 *
 	 * @return string
 	 */
-	public function delete_old_schema() {
-		$meta = Remove_Schema::get()->find();
-		if ( empty( $meta ) ) {
+	public function aioseo_blocks() {
+		$posts = AIOSEO_Blocks::get()->find_posts();
+		if ( empty( $posts['posts'] ) ) {
 			return [
 				'status'  => 'error',
-				'message' => __( 'No data found to delete.', 'rank-math' ),
+				'message' => __( 'No posts found to convert.', 'rank-math' ),
 			];
 		}
 
-		Remove_Schema::get()->start( $meta );
+		AIOSEO_Blocks::get()->start( $posts['posts'] );
 
-		return __( 'Deletion started. A success message will be shown here once the process completes. You can close this page.', 'rank-math' );
-	}
-
-	/**
-	 * Add subpage to Status & Tools screen.
-	 *
-	 * @param array $pages Pages.
-	 * @return array       New pages.
-	 */
-	public function add_tools_page( $pages ) {
-		$pages['tools'] = [
-			'url'   => 'status',
-			'args'  => 'view=tools',
-			'cap'   => 'manage_options',
-			'title' => __( 'Database Tools', 'rank-math' ),
-			'class' => '\\RankMath\\Tools\\Database_Tools',
-		];
-
-		return $pages;
+		return __( 'Conversion started. A success message will be shown here once the process completes. You can close this page.', 'rank-math' );
 	}
 
 	/**
@@ -321,14 +287,14 @@ class Database_Tools {
 	 *
 	 * @return array
 	 */
-	private function get_tools() {
+	private static function get_tools() {
 		$tools = [];
 
 		if ( Helper::is_module_active( 'seo-analysis' ) ) {
 			$tools['clear_seo_analysis'] = [
-				'title'       => __( 'Flush SEO Analysis Data', 'rank-math' ),
-				'description' => __( "Need a clean slate or not able to run the SEO Analysis tool? Flushing the analysis data might fix the issue. Flushing SEO Analysis data is entirely safe and doesn't remove any critical data from your website.", 'rank-math' ),
-				'button_text' => __( 'Clear SEO Analysis', 'rank-math' ),
+				'title'       => __( 'Flush SEO Analyzer Data', 'rank-math' ),
+				'description' => __( "Need a clean slate or not able to run the SEO Analyzer tool? Flushing the analysis data might fix the issue. Flushing SEO Analyzer data is entirely safe and doesn't remove any critical data from your website.", 'rank-math' ),
+				'button_text' => __( 'Clear SEO Analyzer', 'rank-math' ),
 			];
 		}
 
@@ -365,8 +331,18 @@ class Database_Tools {
 		if ( is_array( $block_posts ) && ! empty( $block_posts['count'] ) ) {
 			$tools['yoast_blocks'] = [
 				'title'        => __( 'Yoast Block Converter', 'rank-math' ),
-				'description'  => __( 'Convert FAQ & HowTo Blocks created using Yoast. Use this option to easily move your previous blocks into Rank Math.', 'rank-math' ),
+				'description'  => __( 'Convert FAQ, HowTo, & Table of Contents Blocks created using Yoast. Use this option to easily move your previous blocks into Rank Math.', 'rank-math' ),
 				'confirm_text' => __( 'Are you sure you want to convert Yoast blocks into Rank Math blocks? This action is irreversible.', 'rank-math' ),
+				'button_text'  => __( 'Convert Blocks', 'rank-math' ),
+			];
+		}
+
+		$aio_block_posts = AIOSEO_Blocks::get()->find_posts();
+		if ( is_array( $aio_block_posts ) && ! empty( $aio_block_posts['count'] ) ) {
+			$tools['aioseo_blocks'] = [
+				'title'        => __( 'AIOSEO Block Converter', 'rank-math' ),
+				'description'  => __( 'Convert TOC block created using AIOSEO. Use this option to easily move your previous blocks into Rank Math.', 'rank-math' ),
+				'confirm_text' => __( 'Are you sure you want to convert AIOSEO blocks into Rank Math blocks? This action is irreversible.', 'rank-math' ),
 				'button_text'  => __( 'Convert Blocks', 'rank-math' ),
 			];
 		}
@@ -389,13 +365,50 @@ class Database_Tools {
 			];
 		}
 
-		if ( Helper::is_module_active( 'rich-snippet' ) && ! empty( Remove_Schema::get()->find() ) ) {
-			$tools['delete_old_schema'] = [
-				'title'        => __( 'Delete Old Schema Data', 'rank-math' ),
-				'description'  => __( 'Delete the schema data from the old format (<1.0.48). Note: This process is irreversible and will delete all the metadata prefixed with rank_math_snippet.', 'rank-math' ),
-				'confirm_text' => __( 'Are you sure you want to delete the old schema data? This action is irreversible.', 'rank-math' ),
-				'button_text'  => __( 'Delete', 'rank-math' ),
+		if ( ! empty( Update_Score::get()->find() ) ) {
+			$tools['update_seo_score'] = [
+				'title'       => __( 'Update SEO Scores', 'rank-math' ),
+				'description' => __( 'This tool will calculate the SEO score for the posts/pages that have a Focus Keyword set. Note: This process may take some time and the browser tab must be kept open while it is running.', 'rank-math' ),
+				'button_text' => __( 'Recalculate Scores', 'rank-math' ),
 			];
+		}
+
+		if ( Helper::is_module_active( 'analytics' ) && Helper::has_cap( 'analytics' ) ) {
+
+			Arr::insert(
+				$tools,
+				[
+					'analytics_clear_caches' => [
+						'title'       => __( 'Purge Analytics Cache', 'rank-math' ),
+						'description' => __( 'Clear analytics cache to re-calculate all the stats again.', 'rank-math' ),
+						'button_text' => __( 'Clear Cache', 'rank-math' ),
+					],
+				],
+				3
+			);
+
+			$description = __( 'Missing some posts/pages in the Analytics data? Clear the index and build a new one for more accurate stats.', 'rank-math' );
+
+			$sitepress = Sitepress::get()->is_active() ? Sitepress::get()->get_var() : false;
+			if ( Sitepress::get()->is_per_domain() && ! empty( $sitepress->get_setting( 'auto_adjust_ids', null ) ) ) {
+				$description .= '<br /><br /><i>' . sprintf(
+					/* translators: 1: settings URL, 2: settings text */
+					__( 'To properly rebuild Analytics posts in secondary languages, please disable the %1$s when using a different domain per language.', 'rank-math' ),
+					'<a href="' . esc_url( admin_url( 'admin.php?page=sitepress-multilingual-cms/menu/languages.php#lang-sec-8' ) ) . '">' . __( 'Make themes work multilingual option in WPML settings', 'rank-math' ) . '</a>'
+				) . '</i>';
+			}
+
+			Arr::insert(
+				$tools,
+				[
+					'analytics_reindex_posts' => [
+						'title'       => __( 'Rebuild Index for Analytics', 'rank-math' ),
+						'description' => $description,
+						'button_text' => __( 'Rebuild Index', 'rank-math' ),
+					],
+				],
+				3
+			);
 		}
 
 		/**
@@ -403,7 +416,7 @@ class Database_Tools {
 		 *
 		 * @param array $tools The tools.
 		 */
-		$tools = $this->do_filter( 'database/tools', $tools );
+		$tools = apply_filters( 'rank_math/database/tools', $tools );
 
 		return $tools;
 	}
