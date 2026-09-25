@@ -3,547 +3,184 @@ definePageMeta({
     layout: 'blank'
 })
 
-const route = useRoute()
 const pageTitle = 'MR247BET Featured Offer — FreddyVegas'
-const pageDescription = 'MR247BET featured FreddyVegas welcome offer.'
-const targetBase = 'https://www.freddyvegas.com/deep/player--register/mediaCode/textlink/affiliate/49149'
+const pageDescription = 'MR247BET featured offer: the FreddyVegas welcome package — 666% + 250 Free Spins across three deposits. New players only, 18+.'
 
-// Preserve any query params from the incoming link (e.g. email tracking) and
-// forward them onto the FreddyVegas affiliate deep link.
-const trackedHref = computed(() => {
-    const url = new URL(targetBase)
-    for (const [key, value] of Object.entries(route.query)) {
-        if (value === undefined) continue
-        url.searchParams.set(key, Array.isArray(value) ? value[0] : value)
-    }
-    return url.toString()
-})
+// AFFILIATE TRACKING — single source of truth.
+// Every call-to-action on this page points to this one tracked deep-link.
+// There are NO other outbound links on this page (no untracked leaks).
+// To attribute per placement later, vary the mediaCode segment.
+const AFF_LINK = 'https://www.freddyvegas.com/deep/player--register/mediaCode/textlink/affiliate/49149'
 
 useHead({
     title: pageTitle,
-    link: [
-        { rel: 'canonical', href: 'https://www.mr247bet.com' + route.path },
+    meta: [
+        { name: 'description', content: pageDescription },
+        { name: 'robots', content: 'noindex,nofollow' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
     ],
-})
-
-useServerSeoMeta({
-    description: pageDescription,
-    ogTitle: pageTitle,
-    ogType: 'website',
-    ogUrl: 'https://www.mr247bet.com' + route.path,
-    ogSiteName: 'Mr247Bet',
-    ogLocale: 'en_US',
-    ogDescription: pageDescription,
-    twitterCard: 'summary_large_image',
-    twitterTitle: pageTitle,
-    twitterDescription: pageDescription,
+    link: [
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap' },
+    ],
+    bodyAttrs: {
+        style: 'background:#08070F',
+    },
 })
 </script>
 
 <template>
     <div class="fv-page">
-        <header class="wrap fv-topbar">
-            <div class="brand">
-                <img src="~/assets/img/mr247bet.svg" alt="mr247bet-logo" class="brand-logo">
-                <small>FEATURED PICKS</small>
+        <div class="topbar">
+            <div class="brand"><img src="~/assets/img/mr247bet.svg" alt="mr247bet-logo" class="brand-logo"> <span style="color:var(--faint);font-weight:600">· Featured Offer</span></div>
+            <span class="pill18">18+</span>
+        </div>
+        <header class="hero">
+            <div class="wrap">
+                <div class="eyebrow">★ MR247BET Featured Offer</div>
+                <h1><span class="thin">Step into</span>FreddyVegas</h1>
+                <div class="offer">666%<span class="plus">+</span><span class="fs">250 Free Spins</span></div>
+                <p class="lede">A three-part welcome package for new players, highlighted by MR247BET.</p>
+                <div class="cta-row">
+                    <a class="fv-btn btn-gold" :href="AFF_LINK" target="_blank" rel="noopener sponsored">Claim the offer →</a>
+                    <a class="fv-btn btn-ghost" href="#breakdown">See breakdown</a>
+                </div>
+                <p class="disc">New players only. Promotional terms and wagering requirements apply.</p>
             </div>
-            <div class="age">18+ · Play responsibly</div>
         </header>
-
-        <main>
-            <section class="wrap fv-hero">
-                <div>
-                    <div class="eyebrow">★ MR247BET Featured Offer</div>
-                    <h1>Step into <span class="grad">FreddyVegas</span></h1>
-                    <div class="offerline"><b>666%</b> + 250 Free Spins</div>
-                    <p class="sub">A three-part welcome package for new players — highlighted by MR247BET.</p>
-                    <div class="cta-row">
-                        <a class="cta" :href="trackedHref" rel="nofollow sponsored">VIEW THE OFFER →</a>
-                        <a class="cta secondary" href="#breakdown">SEE BREAKDOWN</a>
-                    </div>
-                    <p class="micro">New players only. Promotional terms and wagering requirements apply.</p>
+        <section class="band" id="breakdown">
+            <div class="wrap">
+                <div class="sec-label">Welcome package · 3 deposits</div>
+                <h2 class="sec-title">The breakdown</h2>
+                <p class="sec-sub">One package, split across your first three qualifying deposits.</p>
+                <div class="deps">
+                    <div class="dep"><div class="no">01</div><div class="pct">222%</div><div class="up">up to €2,000</div><div class="spins">+ 100 Free Spins</div><div class="when">First qualifying deposit</div></div>
+                    <div class="dep"><div class="no">02</div><div class="pct">222%</div><div class="up">up to €1,000</div><div class="spins">+ 50 Free Spins</div><div class="when">Second qualifying deposit</div></div>
+                    <div class="dep"><div class="no">03</div><div class="pct">222%</div><div class="up">up to €500</div><div class="spins">+ 100 Free Spins</div><div class="when">Third qualifying deposit</div></div>
                 </div>
-
-                <aside class="hero-card" id="breakdown">
-                    <div class="fv">Freddy<span>Vegas</span></div>
-                    <div class="package-label">WELCOME PACKAGE · 3 DEPOSITS</div>
-
-                    <div class="cards">
-                        <div class="offer-card">
-                            <div class="num">01</div>
-                            <div><strong>222% up to €2,000 + 100 Free Spins</strong><span>First qualifying deposit</span></div>
-                        </div>
-                        <div class="offer-card">
-                            <div class="num">02</div>
-                            <div><strong>222% up to €1,000 + 50 Free Spins</strong><span>Second qualifying deposit</span></div>
-                        </div>
-                        <div class="offer-card">
-                            <div class="num">03</div>
-                            <div><strong>222% up to €500 + 100 Free Spins</strong><span>Third qualifying deposit</span></div>
-                        </div>
-                    </div>
-                </aside>
-            </section>
-
-            <section class="wrap trust" aria-label="Offer highlights">
-                <div>★ Featured by MR247BET</div>
-                <div>🔒 Secure redirect to FreddyVegas</div>
-                <div>📱 Built mobile-first</div>
-            </section>
-
-            <section class="wrap section">
-                <h2>One offer. Three stages.</h2>
-                <p class="section-intro">Keep the journey simple: arrive from the email, understand the featured package immediately, then continue directly to FreddyVegas.</p>
-
-                <div class="steps">
-                    <article class="step">
-                        <span class="tag">Stage 01</span>
-                        <h3>Start with 222%</h3>
-                        <p>Up to €2,000 plus 100 Free Spins on the first qualifying deposit.</p>
-                    </article>
-                    <article class="step">
-                        <span class="tag">Stage 02</span>
-                        <h3>Continue with 222%</h3>
-                        <p>Up to €1,000 plus 50 Free Spins on the second qualifying deposit.</p>
-                    </article>
-                    <article class="step">
-                        <span class="tag">Stage 03</span>
-                        <h3>Finish with 222%</h3>
-                        <p>Up to €500 plus 100 Free Spins on the third qualifying deposit.</p>
-                    </article>
+                <div class="badges">
+                    <span class="fv-badge">★ <b>Featured</b> by MR247BET</span>
+                    <span class="fv-badge">🔒 Secure redirect to <b>FreddyVegas</b></span>
+                    <span class="fv-badge">📱 Built <b>mobile-first</b></span>
                 </div>
-            </section>
-
-            <section class="wrap final">
-                <h2>Ready to see the FreddyVegas offer?</h2>
-                <p>You'll continue to FreddyVegas to review the full promotion details, eligibility and terms before participating.</p>
-                <a class="cta" :href="trackedHref" rel="nofollow sponsored">CONTINUE TO FREDDYVEGAS →</a>
-            </section>
-        </main>
-
+            </div>
+        </section>
+        <section class="band how">
+            <div class="wrap">
+                <div class="sec-label">One offer · three stages</div>
+                <h2 class="sec-title">How it works</h2>
+                <div class="steps3">
+                    <div class="st"><div class="stn">1</div><h3>Start with 222%</h3><p>Up to €2,000 plus 100 Free Spins on your first qualifying deposit.</p></div>
+                    <div class="st"><div class="stn">2</div><h3>Continue with 222%</h3><p>Up to €1,000 plus 50 Free Spins on your second qualifying deposit.</p></div>
+                    <div class="st"><div class="stn">3</div><h3>Finish with 222%</h3><p>Up to €500 plus 100 Free Spins on your third qualifying deposit.</p></div>
+                </div>
+            </div>
+        </section>
+        <section class="band">
+            <div class="wrap terms">
+                <div class="sec-label">Good to know</div>
+                <h2 class="sec-title">Key terms</h2>
+                <ul>
+                    <li><span>Offer available to <b>new players only</b>, 18+.</span></li>
+                    <li><span>Applies to the first three qualifying deposits.</span></li>
+                    <li><span>Bonuses and free spins carry <b>wagering requirements</b>.</span></li>
+                    <li><span>Full bonus terms, eligibility and country restrictions are shown on FreddyVegas before you opt in.</span></li>
+                </ul>
+                <p class="note">You'll continue to FreddyVegas to review the full promotion details and terms before participating.</p>
+            </div>
+        </section>
+        <section class="band final">
+            <div class="wrap">
+                <h2 class="sec-title">Ready to play?</h2>
+                <p class="sec-sub">Continue to FreddyVegas to claim the welcome package.</p>
+                <a class="fv-btn btn-gold" :href="AFF_LINK" target="_blank" rel="noopener sponsored">Continue to FreddyVegas →</a>
+            </div>
+        </section>
         <footer>
-            <div class="wrap foot">
-                <div>
-                    <strong class="foot-title">MR247BET Featured Offer</strong>
-                    <p>This page highlights a third-party promotional offer and redirects visitors to FreddyVegas. 18+ only. Terms, eligibility and wagering requirements apply.</p>
-                    <p>Gambling can be addictive. Please play responsibly.</p>
-                </div>
-                <div>
-                    <p><a href="https://www.freddyvegas.com/en/bonus_terms" rel="nofollow">Bonus Terms</a></p>
-                    <p><a href="https://www.freddyvegas.com/en/" rel="nofollow">FreddyVegas</a></p>
-                </div>
+            <div class="wrap">
+                <p class="rg">This page highlights a third-party promotional offer and redirects visitors to FreddyVegas. <strong>18+ only.</strong> Terms, eligibility and wagering requirements apply. Gambling can be addictive — please play responsibly.</p>
+                <p class="fine">© MR247BET · Featured Offer</p>
             </div>
         </footer>
+        <div class="sticky">
+            <a class="fv-btn btn-gold" :href="AFF_LINK" target="_blank" rel="noopener sponsored">Claim the offer →</a>
+        </div>
     </div>
 </template>
 
 <style scoped>
+/* Ported from the supplied freddyvegas-landing.html (REL-265).
+   Global selectors (body, *) are scoped to .fv-page, and .btn/.badge are
+   renamed fv-btn/fv-badge so the site's Bootstrap styles don't bleed in. */
 .fv-page {
-    --bg: #070913;
-    --panel: #0f1322;
-    --panel2: #151a2d;
-    --text: #f7f8fb;
-    --muted: #a8afc2;
-    --gold: #ffc928;
-    --gold2: #ffad0a;
-    --red: #ff4a55;
-    --line: rgba(255, 255, 255, .10);
-    --shadow: 0 24px 80px rgba(0, 0, 0, .48);
-
-    margin: 0;
-    min-height: 100vh;
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    color: var(--text);
-    background:
-        radial-gradient(circle at 78% 0%, rgba(255, 201, 40, .16), transparent 30%),
-        radial-gradient(circle at 12% 22%, rgba(255, 74, 85, .13), transparent 30%),
-        var(--bg);
-    line-height: 1.5;
+    --bg: #08070F; --bg2: #0F0E1C; --card: #16152A; --card2: #1D1B34; --line: #2A2844;
+    --gold: #F6C948; --gold-2: #E0A81E; --violet: #8B5CF6; --violet-2: #6D3BE0;
+    --text: #F5F3FA; --muted: #A7A3BE; --faint: #6E6A88; --good: #3ED08A;
+    background: var(--bg); color: var(--text); font-family: "Manrope", system-ui, -apple-system, Segoe UI, Roboto, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; min-height: 100vh;
 }
-
-.fv-page * {
-    box-sizing: border-box;
-}
-
-.fv-page a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.wrap {
-    width: min(1120px, calc(100% - 32px));
-    margin: auto;
-}
-
-.fv-topbar {
-    min-height: 72px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--line);
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 900;
-    letter-spacing: .04em;
-    font-size: 22px;
-}
-
-.brand-logo {
-    height: 34px;
-    width: auto;
-}
-
-.brand small {
-    display: block;
-    font-size: 9px;
-    letter-spacing: .19em;
-    color: var(--muted);
-    font-weight: 800;
-    margin-top: 2px;
-}
-
-.age {
-    border: 1px solid rgba(255, 255, 255, .18);
-    border-radius: 99px;
-    padding: 7px 11px;
-    color: #d7dbea;
-    font-size: 12px;
-    font-weight: 800;
-}
-
-.fv-hero {
-    display: grid;
-    grid-template-columns: 1.08fr .92fr;
-    gap: 54px;
-    align-items: center;
-    padding: 78px 0 50px;
-}
-
-.eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 99px;
-    background: rgba(255, 201, 40, .10);
-    border: 1px solid rgba(255, 201, 40, .24);
-    color: #ffe58d;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-}
-
-h1 {
-    font-size: clamp(46px, 6vw, 78px);
-    line-height: .98;
-    margin: 20px 0 16px;
-    letter-spacing: -.055em;
-}
-
-.grad {
-    background: linear-gradient(90deg, #fff 0%, #ffe187 42%, var(--gold) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-.sub {
-    font-size: clamp(18px, 2vw, 22px);
-    color: #c6cada;
-    max-width: 640px;
-    margin: 0 0 26px;
-}
-
-.offerline {
-    font-size: clamp(31px, 4vw, 52px);
-    font-weight: 950;
-    letter-spacing: -.04em;
-    margin: 10px 0 8px;
-}
-
-.offerline b {
-    color: var(--gold);
-}
-
-.micro {
-    color: var(--muted);
-    font-size: 13px;
-}
-
-.cta-row {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin: 28px 0 14px;
-}
-
-.cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    min-height: 54px;
-    padding: 0 24px;
-    border-radius: 14px;
-    font-weight: 950;
-    background: linear-gradient(135deg, var(--gold), var(--gold2));
-    color: #16130b;
-    box-shadow: 0 16px 38px rgba(255, 185, 15, .22);
-    transition: .18s ease;
-}
-
-.cta:hover {
-    transform: translateY(-1px);
-    filter: brightness(1.05);
-}
-
-.secondary {
-    background: transparent;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, .17);
-    box-shadow: none;
-}
-
-.hero-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 26px;
-    padding: 28px;
-    background:
-        linear-gradient(145deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .015)),
-        var(--panel);
-    border: 1px solid rgba(255, 255, 255, .12);
-    box-shadow: var(--shadow);
-}
-
-.hero-card:before {
-    content: "";
-    position: absolute;
-    width: 260px;
-    height: 260px;
-    border-radius: 50%;
-    background: rgba(255, 201, 40, .12);
-    right: -90px;
-    top: -100px;
-    filter: blur(6px);
-}
-
-.fv {
-    font-weight: 950;
-    letter-spacing: -.04em;
-    font-size: 34px;
-    margin-bottom: 4px;
-}
-
-.fv span {
-    color: var(--gold);
-}
-
-.package-label {
-    color: var(--muted);
-    font-size: 13px;
-}
-
-.cards {
-    display: grid;
-    gap: 12px;
-    margin-top: 22px;
-}
-
-.offer-card {
-    display: grid;
-    grid-template-columns: 48px 1fr;
-    gap: 14px;
-    align-items: center;
-    padding: 15px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, .035);
-    border: 1px solid rgba(255, 255, 255, .085);
-}
-
-.num {
-    width: 42px;
-    height: 42px;
-    border-radius: 13px;
-    display: grid;
-    place-items: center;
-    background: rgba(255, 201, 40, .12);
-    border: 1px solid rgba(255, 201, 40, .26);
-    color: var(--gold);
-    font-weight: 950;
-}
-
-.offer-card strong {
-    display: block;
-    font-size: 17px;
-}
-
-.offer-card span {
-    color: var(--muted);
-    font-size: 13px;
-}
-
-.trust {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    padding: 26px 0 54px;
-}
-
-.trust div {
-    text-align: center;
-    padding: 16px;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    background: rgba(255, 255, 255, .025);
-    color: #d9ddec;
-    font-size: 13px;
-    font-weight: 800;
-}
-
-.section {
-    padding: 46px 0;
-}
-
-.section h2 {
-    font-size: clamp(30px, 4vw, 46px);
-    letter-spacing: -.04em;
-    margin: 0 0 12px;
-}
-
-.section-intro {
-    color: var(--muted);
-    max-width: 660px;
-    margin-bottom: 25px;
-}
-
-.steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-}
-
-.step {
-    padding: 22px;
-    border-radius: 18px;
-    background: var(--panel);
-    border: 1px solid var(--line);
-}
-
-.step .tag {
-    display: inline-block;
-    color: var(--gold);
-    font-size: 12px;
-    font-weight: 950;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-}
-
-.step h3 {
-    margin: 0 0 6px;
-    font-size: 20px;
-}
-
-.step p {
-    margin: 0;
-    color: var(--muted);
-    font-size: 14px;
-}
-
-.final {
-    margin: 48px auto 72px;
-    padding: 34px;
-    border-radius: 24px;
-    text-align: center;
-    background: linear-gradient(145deg, rgba(255, 201, 40, .13), rgba(255, 74, 85, .07));
-    border: 1px solid rgba(255, 201, 40, .18);
-}
-
-.final h2 {
-    margin: 0 0 8px;
-    font-size: clamp(30px, 4vw, 44px);
-    letter-spacing: -.04em;
-}
-
-.final p {
-    margin: 0 auto 22px;
-    color: #ccd0dc;
-    max-width: 620px;
-}
-
-footer {
-    padding: 28px 0 44px;
-    border-top: 1px solid var(--line);
-    color: #888fa3;
-    font-size: 11px;
-}
-
-footer .foot {
-    display: flex;
-    justify-content: space-between;
-    gap: 24px;
-    align-items: flex-start;
-}
-
-footer .foot-title {
-    color: #c7cbd8;
-}
-
-footer p {
-    margin: 4px 0;
-    max-width: 780px;
-}
-
-footer a {
-    text-decoration: underline;
-}
-
-@media(max-width:820px) {
-    .fv-hero {
-        grid-template-columns: 1fr;
-        gap: 30px;
-        padding-top: 50px;
-    }
-
-    .trust,
-    .steps {
-        grid-template-columns: 1fr;
-    }
-
-    .fv-topbar {
-        min-height: 64px;
-    }
-
-    footer .foot {
-        display: block;
-    }
-}
-
-@media(max-width:520px) {
-    .wrap {
-        width: min(100% - 22px, 1120px);
-    }
-
-    .fv-hero {
-        padding-top: 34px;
-    }
-
-    .hero-card {
-        padding: 20px;
-    }
-
-    .cta {
-        width: 100%;
-    }
-
-    h1 {
-        font-size: 48px;
-    }
-}
+.fv-page * { box-sizing: border-box; margin: 0 }
+@media (prefers-reduced-motion:reduce) { .fv-page * { animation: none !important; transition: none !important } }
+.fv-page a { color: inherit }
+.wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 20px }
+.topbar { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; max-width: 1080px; margin: 0 auto; gap: 12px }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 800; letter-spacing: .02em; font-size: 15px }
+.brand-logo { height: 30px; width: auto }
+.pill18 { font-size: 12px; font-weight: 700; color: var(--gold); border: 1px solid var(--gold-2); border-radius: 999px; padding: 4px 10px; letter-spacing: .04em }
+.hero { position: relative; text-align: center; padding: 34px 0 48px; overflow: hidden }
+.hero::before { content: ""; position: absolute; inset: -40% 50% auto 50%; transform: translateX(-50%); width: 900px; max-width: 140vw; height: 640px; background: radial-gradient(closest-side, rgba(246,201,72,.22), rgba(139,92,246,.10) 55%, transparent 72%); pointer-events: none; z-index: 0 }
+.hero > * { position: relative; z-index: 1 }
+.eyebrow { font-size: 12.5px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px }
+h1 { font-family: "Anton", Impact, sans-serif; font-weight: 400; letter-spacing: .005em; line-height: .98; font-size: clamp(34px, 8vw, 66px); text-transform: uppercase; color: var(--text) }
+h1 .thin { display: block; font-size: .4em; letter-spacing: .14em; color: var(--muted); font-family: "Manrope"; font-weight: 700; text-transform: uppercase; margin-bottom: 10px }
+.offer { font-family: "Anton", Impact, sans-serif; font-size: clamp(46px, 13vw, 120px); line-height: .9; margin-top: 14px; background: linear-gradient(180deg, #FFE9A8, var(--gold) 45%, var(--gold-2)); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 6px 30px rgba(246,201,72,.25)) }
+.offer .plus { -webkit-text-fill-color: var(--text); color: var(--text); font-size: .42em; vertical-align: middle; margin: 0 .12em; filter: none }
+.offer .fs { display: block; font-size: .34em; letter-spacing: .04em; color: var(--text); -webkit-text-fill-color: var(--text); filter: none; margin-top: 6px }
+.lede { color: var(--muted); max-width: 44ch; margin: 20px auto 0; font-size: clamp(15px, 2.4vw, 18px) }
+.cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 30px }
+.fv-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 800; font-size: 16px; border-radius: 14px; padding: 16px 30px; text-decoration: none; cursor: pointer; border: 0; transition: transform .12s ease, box-shadow .12s ease; letter-spacing: .01em }
+.fv-page .btn-gold { background: linear-gradient(180deg, var(--gold), var(--gold-2)); color: #26200A; box-shadow: 0 10px 30px rgba(246,201,72,.28) }
+.fv-page .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 14px 38px rgba(246,201,72,.38); color: #26200A }
+.fv-page .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--line) }
+.fv-page .btn-ghost:hover { border-color: var(--gold-2); color: var(--gold) }
+.disc { color: var(--faint); font-size: 12.5px; margin-top: 22px }
+section { position: relative; z-index: 1; overflow: visible }
+.band { padding: 44px 0 }
+.sec-label { text-align: center; font-size: 12.5px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--violet); margin-bottom: 8px }
+.sec-title { font-family: "Anton", Impact, sans-serif; font-weight: 400; color: var(--text); text-transform: uppercase; text-align: center; font-size: clamp(26px, 5vw, 40px); line-height: 1; letter-spacing: .01em; margin-bottom: 8px }
+.sec-sub { text-align: center; color: var(--muted); max-width: 52ch; margin: 0 auto 30px }
+.deps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px }
+@media(max-width:760px) { .deps { grid-template-columns: 1fr } }
+.dep { background: linear-gradient(180deg, var(--card2), var(--card)); border: 1px solid var(--line); border-radius: 18px; padding: 26px 22px; position: relative; overflow: hidden }
+.dep::after { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--violet)) }
+.dep .no { font-family: "Anton", Impact, sans-serif; font-size: 40px; color: var(--line); line-height: 1 }
+.dep .pct { font-family: "Anton", Impact, sans-serif; font-size: clamp(30px, 6vw, 42px); color: var(--gold); line-height: 1; margin-top: 6px }
+.dep .up { font-weight: 800; font-size: 19px; margin-top: 4px }
+.dep .spins { color: var(--violet); font-weight: 700; margin-top: 10px; font-size: 15px }
+.dep .when { color: var(--faint); font-size: 13px; margin-top: 12px; border-top: 1px solid var(--line); padding-top: 12px }
+.badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 28px }
+.fv-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 9px 16px; font-size: 13.5px; color: var(--muted); font-weight: 600 }
+.fv-badge b { color: var(--text); font-weight: 700 }
+.how { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line) }
+.steps3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 10px }
+@media(max-width:760px) { .steps3 { grid-template-columns: 1fr } }
+.st { text-align: center; padding: 8px }
+.st .stn { width: 44px; height: 44px; border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; font-family: "Anton"; font-size: 20px; color: var(--gold); border: 1px solid var(--gold-2); background: rgba(246,201,72,.06) }
+.st h3 { font-family: "Manrope", system-ui, sans-serif; font-size: 17px; font-weight: 800; margin-bottom: 4px; color: var(--text) }
+.st p { color: var(--muted); font-size: 14px }
+.terms { max-width: 760px; margin: 0 auto }
+.terms ul { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px }
+.terms li { display: flex; gap: 10px; color: var(--muted); font-size: 14px; align-items: flex-start }
+.terms li::before { content: ""; flex: 0 0 auto; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); margin-top: 8px }
+.terms .note { color: var(--faint); font-size: 13px; margin-top: 16px; text-align: center }
+.final { text-align: center; padding: 54px 0 60px }
+.final::before { content: ""; position: absolute; inset: auto 50% 0 50%; transform: translateX(-50%); width: 760px; max-width: 120vw; height: 340px; background: radial-gradient(closest-side, rgba(139,92,246,.20), transparent 72%); z-index: 0; pointer-events: none }
+.final > * { position: relative; z-index: 1 }
+footer { background: #050409; border-top: 1px solid var(--line); padding: 30px 0 120px; text-align: center }
+footer .rg { color: var(--muted); font-size: 13px; max-width: 640px; margin: 0 auto; line-height: 1.7 }
+footer .rg strong { color: var(--gold) }
+footer .fine { color: var(--faint); font-size: 12px; margin-top: 14px }
+.sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: linear-gradient(180deg, rgba(8,7,15,0), var(--bg) 34%); display: none }
+.sticky .fv-btn { width: 100%; padding: 16px }
+@media(max-width:760px) { .sticky { display: block } footer { padding-bottom: 120px } }
 </style>

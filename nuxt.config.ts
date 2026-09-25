@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     "/**": { index: true },
     "/news": { robots: "noindex,nofollow" },
     "/news/**": { robots: "noindex,nofollow" },
+    "/freddyvegas": { robots: "noindex,nofollow" },
   },
 
   sitemap: {
